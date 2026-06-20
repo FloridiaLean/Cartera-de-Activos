@@ -37,7 +37,7 @@ Construir una plataforma web que permita:
 
 ## 🛠️ Tecnologías que se utilizarán
 
-Este proyecto evolucionará hacia un stack full-stack:
+Este proyecto evolucionará hacia un app web full-stack:
 
 ### Backend
 
