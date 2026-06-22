@@ -1,13 +1,49 @@
-# Cartera de Activos
+# 📊 Cartera de Activos
 
-Proyecto en desarrollo para la gestión y análisis de una cartera de inversiones.
+Sistema en desarrollo para el registro, análisis y gestión de una cartera de inversiones.
 
-## 🚀 Estado del proyecto
+El proyecto implementa actualmente la **lógica central en Python** para el manejo de operaciones financieras (compras y ventas de activos), y será evolucionado progresivamente hacia una aplicación web full-stack con Flask.
 
-Este proyecto se encuentra en una **etapa temprana de desarrollo**, pero está evolucionando progresivamente hacia una aplicación web completa.
+---
 
-Actualmente funciona como una lógica base en Python para el registro y análisis de operaciones financieras. En las próximas etapas será transformado en una aplicación full-stack.
+## 🚀 Estado actual del proyecto
 
+El sistema ya cuenta con una base funcional en Python que permite:
+
+- Registro de operaciones de compra y venta de activos.
+- Control de cantidad de activos en cartera.
+- Cálculo de capital invertido por activo.
+- Cálculo de precio promedio de compra.
+- Registro de capital recuperado por ventas.
+- Cálculo de ganancia realizada.
+- Generación de un resumen completo por activo.
+- Generación de un resumen total de cartera.
+
+---
+
+## 🧠 Ejemplo de salida actual
+
+El sistema genera un resumen estructurado como lista de diccionarios:
+
+```python
+[
+    {
+        'activo': 'BTC',
+        'cantidad_actual': 0.0031,
+        'capital_invertido': 300,
+        'precio_promedio': 64500,
+        'capital_recuperado': 140,
+        'ganancia_realizada': 11
+    },
+    {
+        'activo': 'ETH',
+        'cantidad_actual': 0.14,
+        'capital_invertido': 270,
+        'precio_promedio': 1450,
+        'capital_recuperado': 18,
+        'ganancia_realizada': 2
+    }
+]
 ---
 
 ## 🎯 Objetivo
@@ -35,7 +71,7 @@ Construir una plataforma web que permita:
 
 ---
 
-## 🛠️ Tecnologías que se utilizarán
+## 🛠️ Tecnologías 
 
 Este proyecto evolucionará hacia un app web full-stack:
 
@@ -59,10 +95,14 @@ Este proyecto evolucionará hacia un app web full-stack:
 
 ## 📌 Estado actual
 
-El proyecto se encuentra en fase inicial:
+🚧 Estado del desarrollo
 
-* La lógica de negocio está implementada en Python.
-* Se está diseñando la transición hacia una arquitectura web.
+El proyecto se encuentra en fase inicial pero funcional:
+
+✔ Lógica de operaciones implementada
+✔ Sistema de cálculo financiero funcionando
+✔ Resúmenes por activo y cartera listos
+🚧 Preparado para migración a backend web
 * Se irán agregando capas de frontend, backend y base de datos progresivamente.
 
 ---
@@ -82,5 +122,7 @@ El proyecto se encuentra en fase inicial:
 ## 👨‍💻 Autor
 
 Leandro Floridia
-
+Programación en Python
+Desarrollo web
+Ciencia de datos aplicada a finanzas
 Proyecto personal en desarrollo como parte de mi aprendizaje en programación, desarrollo web y ciencia de datos.
