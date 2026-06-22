@@ -78,27 +78,71 @@ def precio_promedio(operaciones,activo):
     cantidad = cantidad_monedas(operaciones,activo)
     return capital / cantidad
 
-agregar_compra(operaciones,'ETH',50,1000)
-agregar_compra(operaciones,'BTC',50,50000)
-agregar_compra(operaciones,'BTC',50,65000)
-agregar_compra(operaciones,'BTC',50,67000)
+def capital_recuperado(operaciones,activo):
+    
+    capital = 0
+    for operacion in obtener_operaciones_activo(operaciones,activo):
+        if operacion['tipo'] == 'venta':
+            capital += operacion['cantidad'] * operacion['precio_venta']
+    return capital
+
+def ganancia_realizada(operaciones,activo):
+    
+    precio_prom = precio_promedio(operaciones,activo)
+    ganancia_venta = 0
+    for operacion in obtener_operaciones_activo(operaciones,activo):
+        if operacion['tipo'] == 'venta':
+            ganancia_venta += (operacion['precio_venta'] - precio_prom) * operacion['cantidad']
+    return ganancia_venta 
+
+def resumen_activo(operaciones,activo):
+    
+    cantidad_actual = cantidad_monedas_actual(operaciones,activo)
+    inversion = capital_invertido(operaciones,activo)
+    promedio = precio_promedio(operaciones,activo)
+    recuperado = capital_recuperado(operaciones,activo)
+    ganancia = ganancia_realizada(operaciones,activo)
+    
+    resumen = {
+        'activo': activo,
+        'capital_invertido': inversion,
+        'cantidad_actual': cantidad_actual,
+        'precio_promedio': promedio,
+        'capital_recuperado': recuperado,
+        'ganancia_realizada': ganancia
+    }
+    return resumen
+
+def resumen_cartera(operaciones):
+    
+    resumenes = []
+    
+    activos = obtener_activos(operaciones)
+    
+    for activo in activos:
+        resumen = resumen_activo(operaciones,activo)
+        resumenes.append(resumen)
+    return resumenes
+
+agregar_compra(operaciones,'BTC',100,65000)
+agregar_compra(operaciones,'BTC',50,62400)
+agregar_compra(operaciones,'BTC',50,60000)
+agregar_compra(operaciones,'BTC',100,67000)
+agregar_venta(operaciones,'BTC',0.001,70000)
 agregar_venta(operaciones,'BTC',0.001,70000)
 
-activos = obtener_activos(operaciones)
-operaciones_btc = obtener_operaciones_activo(operaciones,'BTC')
-cantidad_activo = cantidad_monedas_actual(operaciones,'BTC')
-cantidad_total = cantidad_monedas(operaciones,'BTC')
-inversion = capital_invertido(operaciones,'BTC')
-promedio = precio_promedio(operaciones,'BTC')
+agregar_compra(operaciones,'ETH',50,1400)
+agregar_compra(operaciones,'ETH',100,1300)
+agregar_compra(operaciones,'ETH',50,1600)
+agregar_compra(operaciones,'ETH',70,1550)
+agregar_venta(operaciones,'ETH',0.001,1800)
+
+agregar_compra(operaciones,'SOL',50,120)
+agregar_compra(operaciones,'SOL',50,110)
+agregar_compra(operaciones,'SOL',50,100)
+agregar_compra(operaciones,'SOL',50,90)
+agregar_venta(operaciones,'BTC',0.5,130)
 
 
-print("----- Activos Invertidos -----")
-print(activos)
-print("----- Operaciones Realizadas -----")
-print(operaciones_btc)
-print("----- Cantidad de Activo -----")
-print(cantidad_activo)
-print("----- Cantidad Dinero Invertido -----")
-print(inversion)
-print("-----Precio Promedio de Compra -----")
-print(promedio)
+resumen_completo = resumen_cartera(operaciones)
+print(resumen_completo)
