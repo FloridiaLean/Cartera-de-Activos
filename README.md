@@ -44,6 +44,7 @@ El sistema genera un resumen estructurado como lista de diccionarios:
         'ganancia_realizada': 2
     }
 ]
+```
 ---
 
 ## 🎯 Objetivo
