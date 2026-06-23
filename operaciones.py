@@ -1,11 +1,11 @@
-def agregar_compra(operaciones,activo,inversion,precio_compra):
+def agregar_compra(operaciones,activo,monto_invertido,precio_compra):
     
-    cantidad = inversion / precio_compra
+    cantidad = monto_invertido / precio_compra
     
     nueva_operacion = {
         'activo': activo,
         'tipo' : 'compra',
-        'inversion' : float(inversion),
+        'monto_invertido' : float(monto_invertido),
         'precio_compra' : float(precio_compra),
         'cantidad' : float(cantidad)
     }
@@ -13,10 +13,10 @@ def agregar_compra(operaciones,activo,inversion,precio_compra):
 
 def agregar_venta(operaciones,activo,cantidad,precio_venta):
     
-    if cantidad > cantidad_monedas_actual(operaciones,activo):
+    if cantidad > obtener_cantidad_actual(operaciones,activo):
         return False
     else:
-        nueva_operacion= {
+        nueva_operacion = {
             'activo': activo,
             'tipo': 'venta',
             'cantidad': float(cantidad),
@@ -25,13 +25,13 @@ def agregar_venta(operaciones,activo,cantidad,precio_venta):
         operaciones.append(nueva_operacion)
         return True
 
-def obtener_operaciones_activo(operaciones,activo):
+def obtener_operaciones_por_activo(operaciones,activo):
     
-    resultado = []
+    operaciones_del_activo = []
     for operacion in operaciones:
         if activo == operacion['activo']:
-            resultado.append(operacion)
-    return resultado
+            operaciones_del_activo.append(operacion)
+    return operaciones_del_activo
 
 def obtener_activos(operaciones):
     activos = []
@@ -40,24 +40,24 @@ def obtener_activos(operaciones):
             activos.append(operacion['activo'])
     return activos
 
-def cantidad_monedas_actual(operaciones,activo):
+def obtener_cantidad_actual(operaciones,activo):
     
-    cantidad = 0 
+    cantidad_actual = 0 
     for operacion in operaciones:
         if operacion['activo'] != activo:
             continue
         if operacion['tipo'] == 'compra':
-            cantidad += operacion['cantidad'] 
+            cantidad_actual += operacion['cantidad'] 
         else:
-            cantidad -= operacion['cantidad'] 
-    return cantidad
+            cantidad_actual -= operacion['cantidad'] 
+    return cantidad_actual
 
-def cantidad_monedas(operaciones,activo):
+def obtener_cantidad_total(operaciones,activo):
     
-    cantidad = 0 
+    cantidad_total = 0 
     for operacion in operaciones:
         if operacion['activo'] != activo:
             continue
         if operacion['tipo'] == 'compra':
-            cantidad += operacion['cantidad'] 
-    return cantidad
+            cantidad_total += operacion['cantidad'] 
+    return cantidad_total

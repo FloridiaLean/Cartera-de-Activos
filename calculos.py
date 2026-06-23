@@ -1,75 +1,67 @@
 from operaciones import (
-    obtener_operaciones_activo,
+    obtener_operaciones_por_activo,
     obtener_activos,
-    cantidad_monedas,
-    cantidad_monedas_actual
+    obtener_cantidad_total,
+    obtener_cantidad_actual
 )
 
-def cantidad_monedas(operaciones,activo):
+def calcular_capital_invertido(operaciones,activo):
     
-    cantidad = 0 
-    for operacion in operaciones:
-        if operacion['activo'] != activo:
-            continue
-        if operacion['tipo'] == 'compra':
-            cantidad += operacion['cantidad'] 
-    return cantidad
-
-def capital_invertido(operaciones,activo):
-    
-    capital = 0
-    for operacion in obtener_operaciones_activo(operaciones,activo):
+    capital_invertido = 0
+    for operacion in obtener_operaciones_por_activo(operaciones,activo):
         if operacion['tipo'] == 'compra': 
-            capital += operacion['inversion']
-    return capital
+            capital_invertido += operacion['monto_invertido']
+    return capital_invertido
 
-def precio_promedio(operaciones,activo):
-    capital = capital_invertido(operaciones,activo)
-    cantidad = cantidad_monedas(operaciones,activo)
+def calcular_precio_promedio(operaciones,activo):
+    
+    capital = calcular_capital_invertido(operaciones,activo)
+    cantidad = obtener_cantidad_total(operaciones,activo)
     return capital / cantidad
 
-def capital_recuperado(operaciones,activo):
+def calcular_capital_recuperado(operaciones,activo):
     
-    capital = 0
-    for operacion in obtener_operaciones_activo(operaciones,activo):
+    capital_recuperado = 0
+    for operacion in obtener_operaciones_por_activo(operaciones,activo):
         if operacion['tipo'] == 'venta':
-            capital += operacion['cantidad'] * operacion['precio_venta']
-    return capital
+            capital_recuperado += operacion['cantidad'] * operacion['precio_venta']
+    return capital_recuperado
 
-def ganancia_realizada(operaciones,activo):
+def calcular_ganancia_realizada(operaciones,activo):
     
-    precio_prom = precio_promedio(operaciones,activo)
-    ganancia_venta = 0
-    for operacion in obtener_operaciones_activo(operaciones,activo):
+    precio_promedio = calcular_precio_promedio(operaciones,activo)
+    ganancia_realizada_total = 0
+    
+    for operacion in obtener_operaciones_por_activo(operaciones,activo):
         if operacion['tipo'] == 'venta':
-            ganancia_venta += (operacion['precio_venta'] - precio_prom) * operacion['cantidad']
-    return ganancia_venta 
+            ganancia_realizada_total += (operacion['precio_venta'] - precio_promedio) * operacion['cantidad']
+    return ganancia_realizada_total 
 
-def resumen_activo(operaciones,activo):
+def generar_resumen_activo(operaciones,activo):
     
-    cantidad_actual = cantidad_monedas_actual(operaciones,activo)
-    inversion = capital_invertido(operaciones,activo)
-    promedio = precio_promedio(operaciones,activo)
-    recuperado = capital_recuperado(operaciones,activo)
-    ganancia = ganancia_realizada(operaciones,activo)
+    cantidad_actual = obtener_cantidad_actual(operaciones,activo)
+    monto_invertido = calcular_capital_invertido(operaciones,activo)
+    precio_promedio = calcular_precio_promedio(operaciones,activo)
+    capital_recuperado = calcular_capital_recuperado(operaciones,activo)
+    ganancia_realizada = calcular_ganancia_realizada(operaciones,activo)
     
     resumen = {
         'activo': activo,
-        'capital_invertido': inversion,
+        'monto_invertido': monto_invertido,
         'cantidad_actual': cantidad_actual,
-        'precio_promedio': promedio,
-        'capital_recuperado': recuperado,
-        'ganancia_realizada': ganancia
+        'precio_promedio': precio_promedio,
+        'capital_recuperado': capital_recuperado,
+        'ganancia_realizada': ganancia_realizada
     }
     return resumen
 
-def resumen_cartera(operaciones):
+def generar_resumen_cartera(operaciones):
     
     resumenes = []
     
     activos = obtener_activos(operaciones)
     
     for activo in activos:
-        resumen = resumen_activo(operaciones,activo)
+        resumen = generar_resumen_activo(operaciones,activo)
         resumenes.append(resumen)
     return resumenes

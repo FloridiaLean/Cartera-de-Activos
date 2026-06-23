@@ -5,8 +5,8 @@ from operaciones import (
 )
 
 from calculos import (
-    resumen_activo,
-    resumen_cartera
+    generar_resumen_activo,
+    generar_resumen_cartera
 )
 
 operaciones = []
@@ -14,4 +14,4 @@ operaciones = []
 agregar_compra(operaciones, "BTC", 1000, 50000)
 agregar_compra(operaciones, "ETH", 500, 2500)
 
-print(resumen_cartera(operaciones))
+print(generar_resumen_cartera(operaciones))
