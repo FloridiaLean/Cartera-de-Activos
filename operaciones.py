@@ -1,10 +1,25 @@
+def generar_id(operaciones):
+    
+    id_mayor = 0 
+    
+    for operacion in operaciones:
+        id_operacion = operacion['id']
+        
+        if id_operacion > id_mayor:
+            id_mayor = id_operacion 
+    
+    return id_mayor + 1
+
 def agregar_compra(operaciones,activo,monto_invertido,precio_compra):
     
     cantidad = monto_invertido / precio_compra
+    id_operacion = generar_id(operaciones)
     
     nueva_operacion = {
-        'activo': activo,
+        'id': id_operacion,
+        'fecha': 'fecha',
         'tipo' : 'compra',
+        'activo': activo,
         'monto_invertido' : float(monto_invertido),
         'precio_compra' : float(precio_compra),
         'cantidad' : float(cantidad)
@@ -13,14 +28,20 @@ def agregar_compra(operaciones,activo,monto_invertido,precio_compra):
 
 def agregar_venta(operaciones,activo,cantidad,precio_venta):
     
+    monto_recibido = cantidad * precio_venta
+    id_operacion = generar_id(operaciones)
+    
     if cantidad > obtener_cantidad_actual(operaciones,activo):
         return False
     else:
         nueva_operacion = {
-            'activo': activo,
+            'id': id_operacion,
+            'fecha': 'fecha',
             'tipo': 'venta',
+            'activo': activo,
             'cantidad': float(cantidad),
-            'precio_venta': float(precio_venta)
+            'precio_venta': float(precio_venta),
+            'monto_recibido' : float(monto_recibido)
         }
         operaciones.append(nueva_operacion)
         return True
