@@ -1,3 +1,5 @@
+from datetime import datetime
+
 def generar_id(operaciones):
     
     id_mayor = 0 
@@ -10,14 +12,22 @@ def generar_id(operaciones):
     
     return id_mayor + 1
 
+def obtener_fecha_actual():
+    
+    fecha = datetime.now()
+    fecha_formateada = fecha.strftime("%d/%m/%Y %H:%M")
+
+    return fecha_formateada
+
 def agregar_compra(operaciones,activo,monto_invertido,precio_compra):
     
     cantidad = monto_invertido / precio_compra
     id_operacion = generar_id(operaciones)
+    fecha = obtener_fecha_actual()
     
     nueva_operacion = {
         'id': id_operacion,
-        'fecha': 'fecha',
+        'fecha': fecha,
         'tipo' : 'compra',
         'activo': activo,
         'monto_invertido' : float(monto_invertido),
@@ -30,13 +40,14 @@ def agregar_venta(operaciones,activo,cantidad,precio_venta):
     
     monto_recibido = cantidad * precio_venta
     id_operacion = generar_id(operaciones)
+    fecha = obtener_fecha_actual()
     
     if cantidad > obtener_cantidad_actual(operaciones,activo):
         return False
     else:
         nueva_operacion = {
             'id': id_operacion,
-            'fecha': 'fecha',
+            'fecha': fecha,
             'tipo': 'venta',
             'activo': activo,
             'cantidad': float(cantidad),
