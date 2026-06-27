@@ -42,10 +42,7 @@ def agregar_venta(operaciones,activo,cantidad,precio_venta):
     id_operacion = generar_id(operaciones)
     fecha = obtener_fecha_actual()
     
-    if cantidad > obtener_cantidad_actual(operaciones,activo):
-        return False
-    else:
-        nueva_operacion = {
+    nueva_operacion = {
             'id': id_operacion,
             'fecha': fecha,
             'tipo': 'venta',
@@ -54,8 +51,8 @@ def agregar_venta(operaciones,activo,cantidad,precio_venta):
             'precio_venta': float(precio_venta),
             'monto_recibido' : float(monto_recibido)
         }
-        operaciones.append(nueva_operacion)
-        return True
+    operaciones.append(nueva_operacion)
+    return True
 
 def obtener_operaciones_por_activo(operaciones,activo):
     
@@ -71,25 +68,3 @@ def obtener_activos(operaciones):
         if operacion['activo'] not in activos:
             activos.append(operacion['activo'])
     return activos
-
-def obtener_cantidad_actual(operaciones,activo):
-    
-    cantidad_actual = 0 
-    for operacion in operaciones:
-        if operacion['activo'] != activo:
-            continue
-        if operacion['tipo'] == 'compra':
-            cantidad_actual += operacion['cantidad'] 
-        else:
-            cantidad_actual -= operacion['cantidad'] 
-    return cantidad_actual
-
-def obtener_cantidad_total(operaciones,activo):
-    
-    cantidad_total = 0 
-    for operacion in operaciones:
-        if operacion['activo'] != activo:
-            continue
-        if operacion['tipo'] == 'compra':
-            cantidad_total += operacion['cantidad'] 
-    return cantidad_total

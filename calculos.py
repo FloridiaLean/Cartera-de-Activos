@@ -1,57 +1,67 @@
 from operaciones import (
     obtener_operaciones_por_activo,
     obtener_activos,
-    obtener_cantidad_total,
-    obtener_cantidad_actual
 )
 
-def calcular_capital_invertido(operaciones,activo):
+def analizar_activo(operaciones,activo):
     
-    capital_invertido = 0
-    for operacion in obtener_operaciones_por_activo(operaciones,activo):
-        if operacion['tipo'] == 'compra': 
-            capital_invertido += operacion['monto_invertido']
-    return capital_invertido
-
-def calcular_precio_promedio(operaciones,activo):
-    
-    capital = calcular_capital_invertido(operaciones,activo)
-    cantidad = obtener_cantidad_total(operaciones,activo)
-    return capital / cantidad
-
-def calcular_capital_recuperado(operaciones,activo):
-    
+    capital_historico = 0
+    cantidad_total = 0
+    cantidad_actual = 0
     capital_recuperado = 0
-    for operacion in obtener_operaciones_por_activo(operaciones,activo):
-        if operacion['tipo'] == 'venta':
-            capital_recuperado += operacion['cantidad'] * operacion['precio_venta']
-    return capital_recuperado
+    
+    ventas = []
+    
+    operaciones_activo = obtener_operaciones_por_activo(operaciones,activo)
+    
+    for operacion in operaciones_activo:
+        if operacion['tipo'] == 'compra':
+            capital_historico += operacion['monto_invertido']
+            cantidad_total += operacion['cantidad']
+            cantidad_actual += operacion['cantidad']
+        else:
+            cantidad_actual -= operacion['cantidad']
+            capital_recuperado += operacion['monto_recibido']
+            ventas.append(operacion)
+    
+    if cantidad_total == 0:
+        precio_promedio = 0 
+    else:
+        precio_promedio = capital_historico / cantidad_total   
+    
+    ganancia_realizada = 0
+    for venta in ventas:
+            ganancia_realizada += (venta['precio_venta'] - precio_promedio) * venta['cantidad']
+    
+    return {
+    "capital_historico": capital_historico,
+    "cantidad_total": cantidad_total,
+    "cantidad_actual": cantidad_actual,
+    "capital_recuperado": capital_recuperado,
+    "precio_promedio": precio_promedio,
+    'ganancia_realizada': ganancia_realizada,
+}
 
-def calcular_ganancia_realizada(operaciones,activo):
+def validar_venta(analisis_activo,cantidad):
     
-    precio_promedio = calcular_precio_promedio(operaciones,activo)
-    ganancia_realizada_total = 0
+    cantidad_actual = analisis_activo['cantidad_actual']
     
-    for operacion in obtener_operaciones_por_activo(operaciones,activo):
-        if operacion['tipo'] == 'venta':
-            ganancia_realizada_total += (operacion['precio_venta'] - precio_promedio) * operacion['cantidad']
-    return ganancia_realizada_total 
+    if cantidad > cantidad_actual:
+        return False
+    
+    return True
 
 def generar_resumen_activo(operaciones,activo):
     
-    cantidad_actual = obtener_cantidad_actual(operaciones,activo)
-    monto_invertido = calcular_capital_invertido(operaciones,activo)
-    precio_promedio = calcular_precio_promedio(operaciones,activo)
-    capital_recuperado = calcular_capital_recuperado(operaciones,activo)
-    ganancia_realizada = calcular_ganancia_realizada(operaciones,activo)
+    analisis = analizar_activo(operaciones,activo)
     
     resumen = {
         'activo': activo,
-        'monto_invertido': monto_invertido,
-        'cantidad_actual': cantidad_actual,
-        'precio_promedio': precio_promedio,
-        'capital_recuperado': capital_recuperado,
-        'ganancia_realizada': ganancia_realizada
+        'capital_historico': analisis['capital_historico'],
+        'cantidad_actual': analisis['cantidad_actual'],
+        'precio_promedio': analisis['precio_promedio'],
+        'capital_recuperado': analisis['capital_recuperado'],
+        'ganancia_realizada': analisis['ganancia_realizada']
     }
     return resumen
 
