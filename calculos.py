@@ -34,12 +34,12 @@ def analizar_activo(operaciones,activo):
             ganancia_realizada += (venta['precio_venta'] - precio_promedio) * venta['cantidad']
     
     return {
-    "capital_historico": capital_historico,
-    "cantidad_total": cantidad_total,
-    "cantidad_actual": cantidad_actual,
-    "capital_recuperado": capital_recuperado,
-    "precio_promedio": precio_promedio,
-    'ganancia_realizada': ganancia_realizada,
+    "capital_historico": float(capital_historico),
+    "cantidad_total": float(cantidad_total),
+    "cantidad_actual": float(cantidad_actual),
+    "capital_recuperado": float(capital_recuperado),
+    "precio_promedio": float(precio_promedio),
+    'ganancia_realizada': float(ganancia_realizada),
 }
 
 def validar_venta(analisis_activo,cantidad):
