@@ -21,21 +21,6 @@ def obtener_fecha_actual():
 
 def agregar_compra(operaciones,activo,monto_invertido,precio_compra):
     
-    activo = activo.strip()
-    activo = activo.upper()
-    
-    if monto_invertido <= 0:
-        print("El monto invertido debe ser mayor a 0")
-        return False
-    
-    if precio_compra <= 0:
-        print("El precio de compra del activo tiene que ser mayor a 0")
-        return False
-    
-    if activo == "":
-        print("El nombre del activo no es valido")
-        return False
-    
     cantidad = monto_invertido / precio_compra
     
     id_operacion = generar_id(operaciones)

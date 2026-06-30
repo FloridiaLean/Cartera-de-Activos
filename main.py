@@ -9,12 +9,13 @@ from calculos import (
     generar_resumen_cartera
 )
 from servicios import (
-    registrar_venta
+    registrar_venta,
+    registrar_compra
 )
 
 operaciones = []
 
-agregar_compra(operaciones, "BTC", 250, 50000 )
+registrar_compra(operaciones, "BTC", 250, 50000 )
 registrar_venta(operaciones, "BTC", 0.004, 60000)
 
 print(generar_resumen_cartera(operaciones))
