@@ -1,4 +1,8 @@
-from operaciones import agregar_venta,agregar_compra
+from operaciones import (
+    agregar_venta,
+    agregar_compra,
+    obtener_operaciones_por_activo
+)
 
 from calculos import (
     analizar_activo,
@@ -33,6 +37,11 @@ def registrar_venta(operaciones,activo,cantidad,precio_venta):
     
     if activo == "":
         print("El nombre del activo no es valido")
+        return False
+    
+    operaciones_activo = obtener_operaciones_por_activo(operaciones,activo)
+    if not operaciones_activo:
+        print("El activo no existe en la cartera.")
         return False
     
     analisis = analizar_activo(operaciones,activo)
