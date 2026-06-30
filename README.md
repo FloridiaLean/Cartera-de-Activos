@@ -25,12 +25,13 @@ El sistema ya cuenta con una base funcional en Python que permite:
 
 ---
 
-```
+
 
 🏗️ Arquitectura actual
 
 El proyecto se encuentra dividido en módulos con responsabilidades específicas:
 
+```
 main.py ──> servicios.py ──> operaciones.py / calculos.py
                              └─ (Responsabilidad de cada módulo)
 ```
