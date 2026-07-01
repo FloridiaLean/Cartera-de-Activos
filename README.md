@@ -147,6 +147,7 @@ La siguiente etapa consistirá en incorporar persistencia utilizando archivos JS
 
 ## 🧩 Próximos pasos
 
+* 🟡 Posiciones (en desarrollo)
 * [ ] Incorporar persistencia mediante JSON.
 * [ ] Refactorizar funciones reutilizables cuando sea necesario.
 * [ ] Crear API con Flask.
