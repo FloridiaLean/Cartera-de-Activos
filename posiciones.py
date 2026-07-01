@@ -34,7 +34,7 @@ def crear_posicion(posiciones,activo):
     
     posiciones.append(nueva_posicion)
     
-    return True
+    return nueva_posicion
 
 def obtener_posicion_por_id(posiciones, id_posicion): 
     

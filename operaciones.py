@@ -19,7 +19,7 @@ def obtener_fecha_actual():
 
     return fecha_formateada
 
-def agregar_compra(operaciones,activo,monto_invertido,precio_compra):
+def agregar_compra(operaciones,posicion_id,activo,monto_invertido,precio_compra):
     
     cantidad = monto_invertido / precio_compra
     
@@ -29,6 +29,7 @@ def agregar_compra(operaciones,activo,monto_invertido,precio_compra):
     nueva_operacion = {
         'id': id_operacion,
         'fecha': fecha,
+        'posicion_id': posicion_id,
         'tipo' : 'compra',
         'activo': activo,
         'monto_invertido' : float(monto_invertido),

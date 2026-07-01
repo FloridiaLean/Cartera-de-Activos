@@ -9,11 +9,16 @@ from calculos import (
     validar_venta
 )
 
-def registrar_compra(operaciones,activo,monto_invertido,precio_compra):
+from posiciones import (
+    crear_posicion,
+    obtener_posicion_por_id
+)
+
+def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,precio_compra):
     
     activo = activo.strip()
     activo = activo.upper()
-    
+        
     if activo == "":
         print("El nombre del activo no es valido")
         return False
@@ -26,7 +31,17 @@ def registrar_compra(operaciones,activo,monto_invertido,precio_compra):
         print("El precio de compra del activo tiene que ser mayor a 0")
         return False
     
-    agregar_compra(operaciones,activo,monto_invertido,precio_compra)
+    if posicion_id is None:
+        nueva_posicion = crear_posicion(posiciones,activo)
+        id_actual = nueva_posicion['id']
+    else:
+        posicion = obtener_posicion_por_id(posiciones,posicion_id)
+        if posicion is None:
+            print("La posición con el ID proporcionado no existe.")
+            return False
+        id_actual = posicion_id
+            
+    agregar_compra(operaciones,id_actual,activo,monto_invertido,precio_compra)
     
     return True
     
