@@ -74,4 +74,5 @@ def generar_resumen_cartera(operaciones):
     for activo in activos:
         resumen = generar_resumen_activo(operaciones,activo)
         resumenes.append(resumen)
+    
     return resumenes
