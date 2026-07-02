@@ -1,11 +1,13 @@
 from operaciones import (
     agregar_venta,
     agregar_compra,
-    obtener_operaciones_por_activo
+    obtener_operaciones_por_activo,
+    obtener_operaciones_por_posicion
 )
 
 from calculos import (
     analizar_activo,
+    analizar_posicion,
     validar_venta
 )
 
@@ -58,12 +60,17 @@ def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_ve
         print("El nombre del activo no es valido")
         return False
     
-    operaciones_activo = obtener_operaciones_por_activo(operaciones,activo)
-    if not operaciones_activo:
-        print("El activo no existe en la cartera.")
+    posicion = obtener_posicion_por_id(posiciones,posicion_id)
+    if posicion is None:
+        print("La posición con el ID proporcionado no existe.")
+        return False
+    posicion_id = posicion['id']
+        
+    if posicion['activo'] != activo:
+        print(f"No puede agregar una venta de {activo} a una posición de {posicion['activo']}.")
         return False
     
-    analisis = analizar_activo(operaciones,activo)
+    analisis = analizar_posicion(operaciones,posicion_id)
     
     if cantidad <= 0:
         print("La cantidad ingresada tiene que ser mayor a 0")
@@ -77,7 +84,7 @@ def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_ve
         print("No tiene la cantidad suficiente para realizar esta venta")
         return False
     
-    agregar_venta(operaciones,activo,cantidad,precio_venta)
+    agregar_venta(operaciones,posicion_id,activo,cantidad,precio_venta)
     
     return True
 

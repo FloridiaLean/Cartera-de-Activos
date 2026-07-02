@@ -1,9 +1,48 @@
 from operaciones import (
     obtener_operaciones_por_activo,
+    obtener_operaciones_por_posicion,
     obtener_activos,
 )
+
 def analizar_posicion(operaciones,posicion_id):
-    pass
+    
+    capital_historico = 0
+    cantidad_total = 0
+    cantidad_actual = 0
+    capital_recuperado = 0
+    
+    ventas = []
+    
+    operaciones_posicion = obtener_operaciones_por_posicion(operaciones,posicion_id)
+    
+    for operacion in operaciones_posicion:
+        if operacion['tipo'] == 'compra':
+            capital_historico += operacion['monto_invertido']
+            cantidad_total += operacion['cantidad']
+            cantidad_actual += operacion['cantidad']
+        else:
+            cantidad_actual -= operacion['cantidad']
+            capital_recuperado += operacion['monto_recibido']
+            ventas.append(operacion)
+    
+    if cantidad_total == 0:
+        precio_promedio = 0 
+    else:
+        precio_promedio = capital_historico / cantidad_total   
+    
+    ganancia_realizada = 0
+    for venta in ventas:
+            ganancia_realizada += (venta['precio_venta'] - precio_promedio) * venta['cantidad']
+    
+    return {
+    "capital_historico": float(capital_historico),
+    "cantidad_total": float(cantidad_total),
+    "cantidad_actual": float(cantidad_actual),
+    "capital_recuperado": float(capital_recuperado),
+    "precio_promedio": float(precio_promedio),
+    'ganancia_realizada': float(ganancia_realizada),
+}
+    
 
 def analizar_activo(operaciones,activo):
     
@@ -44,9 +83,9 @@ def analizar_activo(operaciones,activo):
     'ganancia_realizada': float(ganancia_realizada),
 }
 
-def validar_venta(analisis_activo,cantidad):
+def validar_venta(analisis,cantidad):
     
-    cantidad_actual = analisis_activo['cantidad_actual']
+    cantidad_actual = analisis['cantidad_actual']
     
     if cantidad > cantidad_actual:
         return False
