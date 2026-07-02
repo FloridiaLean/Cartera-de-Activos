@@ -2,6 +2,8 @@ from operaciones import (
     obtener_operaciones_por_activo,
     obtener_activos,
 )
+def analizar_posicion(operaciones,posicion_id):
+    pass
 
 def analizar_activo(operaciones,activo):
     

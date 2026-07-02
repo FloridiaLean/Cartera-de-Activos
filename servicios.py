@@ -33,19 +33,23 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
     
     if posicion_id is None:
         nueva_posicion = crear_posicion(posiciones,activo)
-        id_actual = nueva_posicion['id']
+        id_posicion = nueva_posicion['id']
     else:
         posicion = obtener_posicion_por_id(posiciones,posicion_id)
         if posicion is None:
             print("La posición con el ID proporcionado no existe.")
             return False
-        id_actual = posicion_id
+        id_posicion = posicion['id']
+        
+        if posicion['activo'] != activo:
+            print(f"No puede agregar una compra de {activo} a una posición de {posicion['activo']}.")
+            return False
             
-    agregar_compra(operaciones,id_actual,activo,monto_invertido,precio_compra)
+    agregar_compra(operaciones,id_posicion,activo,monto_invertido,precio_compra)
     
     return True
     
-def registrar_venta(operaciones,activo,cantidad,precio_venta):
+def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_venta):
     
     activo = activo.strip()
     activo = activo.upper()

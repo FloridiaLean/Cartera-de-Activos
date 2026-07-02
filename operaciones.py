@@ -39,7 +39,7 @@ def agregar_compra(operaciones,posicion_id,activo,monto_invertido,precio_compra)
     operaciones.append(nueva_operacion)
     return True
 
-def agregar_venta(operaciones,activo,cantidad,precio_venta):
+def agregar_venta(operaciones,posicion_id,activo,cantidad,precio_venta):
     
     monto_recibido = cantidad * precio_venta
     
@@ -49,6 +49,7 @@ def agregar_venta(operaciones,activo,cantidad,precio_venta):
     nueva_operacion = {
             'id': id_operacion,
             'fecha': fecha,
+            'posicion_id': posicion_id,
             'tipo': 'venta',
             'activo': activo,
             'cantidad': float(cantidad),
@@ -67,6 +68,15 @@ def obtener_operaciones_por_activo(operaciones,activo):
             operaciones_del_activo.append(operacion)
     
     return operaciones_del_activo
+
+def obtener_operaciones_por_posicion(operaciones, posicion_id):
+    
+    operaciones_de_posicion = []
+    
+    for operacion in operaciones:
+        if operacion['posicion_id'] == posicion_id:
+            operaciones_de_posicion.append(operacion)
+    return operaciones_de_posicion
 
 def obtener_activos(operaciones):
     

@@ -21,11 +21,11 @@ def obtener_fecha_actual():
 
 def crear_posicion(posiciones,activo):
     
-    id_posicion = generar_id_posicion(posiciones)
+    posicion_id = generar_id_posicion(posiciones)
     fecha_apertura = obtener_fecha_actual()
     
     nueva_posicion = {
-    'id': id_posicion,
+    'id': posicion_id,
     'activo': activo,
     'estado': 'ABIERTA',
     'fecha_apertura': fecha_apertura,
