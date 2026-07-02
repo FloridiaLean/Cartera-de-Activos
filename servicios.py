@@ -13,6 +13,7 @@ from calculos import (
 
 from posiciones import (
     crear_posicion,
+    cerrar_posicion,
     obtener_posicion_por_id
 )
 
@@ -85,6 +86,10 @@ def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_ve
         return False
     
     agregar_venta(operaciones,posicion_id,activo,cantidad,precio_venta)
+    
+    analisis_actualizado = analizar_posicion(operaciones,posicion_id)
+    if analisis_actualizado['cantidad_actual'] == 0:
+        cerrar_posicion(posiciones,posicion_id)
     
     return True
 
