@@ -3,6 +3,9 @@ from operaciones import (
     obtener_operaciones_por_posicion,
     obtener_activos,
 )
+from posiciones import (
+    obtener_posicion_por_id
+)
 
 def analizar_posicion(operaciones,posicion_id):
     
@@ -114,6 +117,39 @@ def generar_resumen_cartera(operaciones):
     
     for activo in activos:
         resumen = generar_resumen_activo(operaciones,activo)
+        resumenes.append(resumen)
+    
+    return resumenes
+
+def generar_resumen_posicion(operaciones,posiciones,posicion_id):
+    
+    analisis = analizar_posicion(operaciones,posicion_id)
+    posicion = obtener_posicion_por_id(posiciones,posicion_id)
+    
+    if posicion is None:
+        return None
+    
+    resumen = {
+        'posicion': posicion_id,
+        'activo': posicion['activo'],
+        'estado': posicion['estado'],
+        'fecha_apertura': posicion['fecha_apertura'],
+        'fecha_cierre': posicion['fecha_cierre'],
+        'capital_historico': analisis['capital_historico'],
+        'cantidad_actual': analisis['cantidad_actual'],
+        'cantidad_total': analisis['cantidad_total'],
+        'precio_promedio': analisis['precio_promedio'],
+        'capital_recuperado': analisis['capital_recuperado'],
+        'ganancia_realizada': analisis['ganancia_realizada']
+    }
+    return resumen
+
+def generar_resumen_todas_posiciones(operaciones,posiciones):
+    
+    resumenes = []
+    
+    for posicion in posiciones:
+        resumen = generar_resumen_posicion(operaciones,posiciones,posicion['id'])
         resumenes.append(resumen)
     
     return resumenes

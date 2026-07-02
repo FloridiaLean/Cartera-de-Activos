@@ -44,6 +44,10 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
             return False
         id_posicion = posicion['id']
         
+        if posicion['estado'] != 'ABIERTA':
+            print("No puede agregar una compra a una posición cerrada.")
+            return False
+        
         if posicion['activo'] != activo:
             print(f"No puede agregar una compra de {activo} a una posición de {posicion['activo']}.")
             return False
@@ -65,13 +69,17 @@ def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_ve
     if posicion is None:
         print("La posición con el ID proporcionado no existe.")
         return False
-    posicion_id = posicion['id']
-        
+    id_posicion = posicion['id']
+    
+    if posicion['estado'] != 'ABIERTA':
+            print("No puede agregar una venta a una posición cerrada.")
+            return False
+            
     if posicion['activo'] != activo:
         print(f"No puede agregar una venta de {activo} a una posición de {posicion['activo']}.")
         return False
     
-    analisis = analizar_posicion(operaciones,posicion_id)
+    analisis = analizar_posicion(operaciones,id_posicion)
     
     if cantidad <= 0:
         print("La cantidad ingresada tiene que ser mayor a 0")
@@ -85,11 +93,11 @@ def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_ve
         print("No tiene la cantidad suficiente para realizar esta venta")
         return False
     
-    agregar_venta(operaciones,posicion_id,activo,cantidad,precio_venta)
+    agregar_venta(operaciones,id_posicion,activo,cantidad,precio_venta)
     
-    analisis_actualizado = analizar_posicion(operaciones,posicion_id)
+    analisis_actualizado = analizar_posicion(operaciones,id_posicion)
     if analisis_actualizado['cantidad_actual'] == 0:
-        cerrar_posicion(posiciones,posicion_id)
+        cerrar_posicion(posiciones,id_posicion)
     
     return True
 
