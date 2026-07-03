@@ -1,14 +1,11 @@
 from operaciones import (
     agregar_venta,
     agregar_compra,
-    obtener_operaciones_por_activo,
-    obtener_operaciones_por_posicion
 )
 
 from calculos import (
     analizar_activo,
-    analizar_posicion,
-    validar_venta
+    analizar_posicion
 )
 
 from posiciones import (
@@ -17,40 +14,41 @@ from posiciones import (
     obtener_posicion_por_id
 )
 
+from utilidades import (
+    normalizar_activo
+)
+
+from validaciones import (
+    validar_activo,
+    validar_precio,
+    validar_monto,
+    validar_cantidad,
+    validar_posicion,
+    validar_venta
+)
+
 def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,precio_compra):
     
-    activo = activo.strip()
-    activo = activo.upper()
+    activo = normalizar_activo(activo)
         
-    if activo == "":
-        print("El nombre del activo no es valido")
+    if not validar_activo(activo):
         return False
     
-    if monto_invertido <= 0:
-        print("El monto invertido debe ser mayor a 0")
+    if not validar_monto(monto_invertido):
         return False
-    
-    if precio_compra <= 0:
-        print("El precio de compra del activo tiene que ser mayor a 0")
+
+    if not validar_precio(precio_compra):
         return False
     
     if posicion_id is None:
         nueva_posicion = crear_posicion(posiciones,activo)
         id_posicion = nueva_posicion['id']
     else:
-        posicion = obtener_posicion_por_id(posiciones,posicion_id)
+        posicion = validar_posicion(posiciones, posicion_id, activo)
+        
         if posicion is None:
-            print("La posición con el ID proporcionado no existe.")
             return False
         id_posicion = posicion['id']
-        
-        if posicion['estado'] != 'ABIERTA':
-            print("No puede agregar una compra a una posición cerrada.")
-            return False
-        
-        if posicion['activo'] != activo:
-            print(f"No puede agregar una compra de {activo} a una posición de {posicion['activo']}.")
-            return False
             
     agregar_compra(operaciones,id_posicion,activo,monto_invertido,precio_compra)
     
@@ -58,35 +56,23 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
     
 def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_venta):
     
-    activo = activo.strip()
-    activo = activo.upper()
+    activo = normalizar_activo(activo)
     
-    if activo == "":
-        print("El nombre del activo no es valido")
+    if not validar_activo(activo):
         return False
     
-    posicion = obtener_posicion_por_id(posiciones,posicion_id)
+    posicion = validar_posicion(posiciones, posicion_id, activo)
+    
     if posicion is None:
-        print("La posición con el ID proporcionado no existe.")
         return False
     id_posicion = posicion['id']
     
-    if posicion['estado'] != 'ABIERTA':
-            print("No puede agregar una venta a una posición cerrada.")
-            return False
-            
-    if posicion['activo'] != activo:
-        print(f"No puede agregar una venta de {activo} a una posición de {posicion['activo']}.")
-        return False
-    
     analisis = analizar_posicion(operaciones,id_posicion)
     
-    if cantidad <= 0:
-        print("La cantidad ingresada tiene que ser mayor a 0")
+    if not validar_cantidad(cantidad):
         return False
     
-    if precio_venta <= 0:
-        print("El precio de venta del activo tiene que ser mayor a 0")
+    if not validar_precio(precio_venta):
         return False
     
     if not validar_venta(analisis,cantidad):

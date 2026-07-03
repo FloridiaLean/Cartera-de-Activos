@@ -1,4 +1,4 @@
-from datetime import datetime
+from utilidades import obtener_fecha_actual
 
 def generar_id(operaciones):
     
@@ -11,13 +11,6 @@ def generar_id(operaciones):
             id_mayor = id_operacion 
     
     return id_mayor + 1
-
-def obtener_fecha_actual():
-    
-    fecha = datetime.now()
-    fecha_formateada = fecha.strftime("%d/%m/%Y %H:%M")
-
-    return fecha_formateada
 
 def agregar_compra(operaciones,posicion_id,activo,monto_invertido,precio_compra):
     

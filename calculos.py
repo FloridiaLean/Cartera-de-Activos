@@ -42,27 +42,17 @@ def analizar_operaciones(operaciones):
     "precio_promedio": float(precio_promedio),
     'ganancia_realizada': float(ganancia_realizada),
 }
-    
+
 def analizar_posicion(operaciones,posicion_id):
     
     operaciones_posicion = obtener_operaciones_por_posicion(operaciones,posicion_id)
     return analizar_operaciones(operaciones_posicion)
-    
 
 def analizar_activo(operaciones,activo):
     
     operaciones_activo = obtener_operaciones_por_activo(operaciones,activo)
     
     return analizar_operaciones(operaciones_activo)
-
-def validar_venta(analisis,cantidad):
-    
-    cantidad_actual = analisis['cantidad_actual']
-    
-    if cantidad > cantidad_actual:
-        return False
-    
-    return True
 
 def generar_resumen_activo(operaciones,activo):
     
