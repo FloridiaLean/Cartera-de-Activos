@@ -50,7 +50,7 @@ Entre las funcionalidades implementadas se encuentran:
 
 
 
-🏗️ Arquitectura actual
+## 🏗️ Arquitectura actual
 
 El proyecto se encuentra dividido en módulos con responsabilidades específicas:
 
