@@ -4,24 +4,47 @@ Sistema en desarrollo para el registro, análisis y gestión de una cartera de i
 
 El proyecto implementa actualmente la **lógica central en Python** organizada por capas y módulos, permitiendo registrar operaciones financieras, calcular métricas de la cartera, y preparar la aplicación para su futura evolucion hacia una aplicación web full-stack con Flask.
 
+Este proyecto no busca únicamente construir una aplicación de gestión de inversiones. También documenta mi proceso de aprendizaje en desarrollo de software, aplicando progresivamente principios de arquitectura, refactorización y buenas prácticas mientras evoluciona desde una aplicación de consola hacia una aplicación web completa.
+
 ---
 
 ## 🚀 Estado actual del proyecto
 
-El sistema ya cuenta con una base funcional en Python que permite:
+El sistema cuenta actualmente con un núcleo funcional desarrollado en Python, organizado mediante una arquitectura modular basada en separación de responsabilidades.
 
-- Registrar compras y ventas de activos.
-- Validar operaciones antes de ser registradas.
-- Controlar que no sea posible vender una cantidad superior a la disponible.
-- Normalizar los datos ingresados por el usuario.
-- Calcular automáticamente la cantidad adquirida según el monto invertido y el precio de compra.
-- Calcular capital histórico invertido.
-- Calcular cantidad actual de cada activo.
-- Calcular precio promedio de compra.
-- Calcular capital recuperado mediante ventas.
-- Calcular ganancia realizada.
-- Generación de un resumen completo por activo.
-- Generación de un resumen total de cartera.
+Entre las funcionalidades implementadas se encuentran:
+
+### Gestión de operaciones
+- Registro de compras y ventas de activos.
+- Cálculo automático de la cantidad adquirida según el monto invertido y el precio de compra.
+- Asociación de operaciones a posiciones de inversión.
+- Validación de operaciones antes de ser registradas.
+
+### Gestión de posiciones
+- Creación automática de posiciones al realizar la primera compra de un activo.
+- Control de posiciones abiertas y cerradas.
+- Cierre automático de posiciones cuando la cantidad disponible llega a cero.
+- Identificación única de cada posición.
+
+### Validaciones
+- Validación de activos ingresados por el usuario.
+- Validación de montos, precios y cantidades.
+- Control de disponibilidad antes de ejecutar una venta.
+- Verificación de consistencia entre activos y posiciones.
+- Normalización automática de los datos ingresados.
+
+### Análisis financiero
+- Cálculo de capital histórico invertido.
+- Cálculo de cantidad total adquirida.
+- Cálculo de cantidad actualmente disponible.
+- Cálculo de precio promedio de compra.
+- Cálculo de capital recuperado mediante ventas.
+- Cálculo de ganancia realizada.
+
+### Resúmenes y reportes
+- Generación de resúmenes por posición.
+- Generación de resúmenes por activo.
+- Generación de resúmenes completos de cartera.
 
 ---
 
@@ -32,11 +55,25 @@ El sistema ya cuenta con una base funcional en Python que permite:
 El proyecto se encuentra dividido en módulos con responsabilidades específicas:
 
 ```
-main.py ──> servicios.py ──> operaciones.py / calculos.py
-                             └─ (Responsabilidad de cada módulo)
+
+main.py
+    │
+    ▼
+servicios.py
+    │
+    ├──────────────┐
+    ▼              ▼
+validaciones.py   operaciones.py
+    │              │
+    ▼              ▼
+utilidades.py    posiciones.py
+          │
+          ▼
+      calculos.py
+
 ```
 
-Responsabilidad de cada módulo
+### Responsabilidad de cada módulo
 
 main.py
 
@@ -55,6 +92,28 @@ operaciones.py
 - Registra las operaciones.
 - Obtiene operaciones y activos registrados.
 
+posiciones.py
+
+- Gestiona las posiciones de inversión.
+- Crea posiciones.
+- Cierra posiciones.
+- Consulta posiciones por ID.
+
+validaciones.py
+
+- Centraliza las reglas de validación.
+- Valida activos.
+- Valida montos.
+- Valida precios.
+- Valida cantidades.
+- Valida posiciones.
+
+utilidades.py
+
+- Normalización de datos.
+- Obtención de la fecha actual.
+- Funciones reutilizables.
+
 calculos.py
 
 - Analiza cada activo.
@@ -66,17 +125,42 @@ Esta separación facilita el mantenimiento del proyecto y prepara la lógica par
 ---
 ## 🧠 Ejemplo de salida actual
 
-El sistema genera un resumen estructurado como lista de diccionarios:
+El sistema genera un resumen detallado de cada posición registrada en la cartera:
+```
+=================================================
+Posición #: 1
+=================================================
+Activo: BTC
+Estado: ABIERTA
+=================================================
+Fecha de apertura: 03/07/2026 13:20
+Fecha de cierre: -
+=================================================
+Capital histórico: 250.0
+Capital recuperado: 0.0
+=================================================
+Cantidad total: 0.0034149825378876775
+Cantidad actual: 0.0034149825378876775
+=================================================
+Precio promedio: 73206.816499459
+Ganancia realizada: 0.0
+=================================================
+```
 
-```python
+```
 [
     {
+        'posicion': 1,
         'activo': 'BTC',
-        'cantidad_actual': 0.0031,
-        'capital_invertido': 300,
-        'precio_promedio': 64500,
-        'capital_recuperado': 140,
-        'ganancia_realizada': 11
+        'estado': 'ABIERTA',
+        'fecha_apertura': '03/07/2026 13:20',
+        'fecha_cierre': None,
+        'capital_historico': 250.0,
+        'capital_recuperado': 0.0,
+        'cantidad_total': 0.0034,
+        'cantidad_actual': 0.0034,
+        'precio_promedio': 73206.81,
+        'ganancia_realizada': 0.0
     },
 ]
 ```
@@ -95,24 +179,12 @@ Construir una plataforma web que permita:
 
 ---
 
-## 🧠 Funcionalidades actuales (Python)
-
-* Registro de compras de activos.
-* Registro de ventas de activos.
-* Cálculo de cantidad adquirida según inversión y precio.
-* Control de cantidad actual por activo.
-* Cálculo de capital invertido.
-* Cálculo de precio promedio de compra.
-* Consulta de operaciones por activo.
-
----
-
 ## 🛠️ Tecnologías 
 
 ### Backend
 
-* JSON (próxima etapa de persistencia)
 * Python
+* JSON (próxima etapa de persistencia)
 * Flask (API y servidor web)
 * Base de datos (SQLite / PostgreSQL en etapas futuras)
 
@@ -134,12 +206,15 @@ Construir una plataforma web que permita:
 
 Actualmente el proyecto cuenta con:
 
-✅ Arquitectura modular.
+✅ Arquitectura modular por responsabilidades.
 ✅ Separación entre lógica de negocio, cálculos y operaciones.
-✅ Validaciones para compras y ventas.
+✅ Registro de compras y ventas
+✅ Validaciones centralizadas
+✅ Normalización de datos.
 ✅ Control de disponibilidad antes de vender un activo.
 ✅ Cálculo de métricas financieras.
-✅ Resúmenes por activo y cartera.
+✅ Resúmenes por posicion, activo y cartera.
+✅ Refactorización del núcleo para eliminar código duplicado.
 
 La siguiente etapa consistirá en incorporar persistencia utilizando archivos JSON antes de migrar posteriormente a una base de datos.
 
@@ -147,9 +222,8 @@ La siguiente etapa consistirá en incorporar persistencia utilizando archivos JS
 
 ## 🧩 Próximos pasos
 
-* 🟡 Posiciones (en desarrollo)
-* [ ] Incorporar persistencia mediante JSON.
-* [ ] Refactorizar funciones reutilizables cuando sea necesario.
+* [ ] Incorporar persistencia mediante archivos JSON.
+* [ ] Implementar carga automática de la cartera.
 * [ ] Crear API con Flask.
 * [ ] Conectar base de datos.
 * [ ] Desarrollar interfaz web con HTML/CSS/JS.
