@@ -202,19 +202,19 @@ Construir una plataforma web que permita:
 
 ## 📌 Estado actual
 
-🚧 Estado del desarrollo
+### 🚧 Estado del desarrollo
 
 Actualmente el proyecto cuenta con:
 
-✅ Arquitectura modular por responsabilidades.
-✅ Separación entre lógica de negocio, cálculos y operaciones.
-✅ Registro de compras y ventas
-✅ Validaciones centralizadas
-✅ Normalización de datos.
-✅ Control de disponibilidad antes de vender un activo.
-✅ Cálculo de métricas financieras.
-✅ Resúmenes por posicion, activo y cartera.
-✅ Refactorización del núcleo para eliminar código duplicado.
+- ✅ Arquitectura modular por responsabilidades.
+- ✅ Separación entre lógica de negocio, cálculos y operaciones.
+- ✅ Registro de compras y ventas
+- ✅ Validaciones centralizadas
+- ✅ Normalización de datos.
+- ✅ Control de disponibilidad antes de vender un activo.
+- ✅ Cálculo de métricas financieras.
+- ✅ Resúmenes por posicion, activo y cartera.
+- ✅ Refactorización del núcleo para eliminar código duplicado.
 
 La siguiente etapa consistirá en incorporar persistencia utilizando archivos JSON antes de migrar posteriormente a una base de datos.
 
