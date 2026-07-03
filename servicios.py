@@ -82,7 +82,8 @@ def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_ve
     agregar_venta(operaciones,id_posicion,activo,cantidad,precio_venta)
     
     analisis_actualizado = analizar_posicion(operaciones,id_posicion)
-    if analisis_actualizado['cantidad_actual'] == 0:
+    
+    if analisis_actualizado['cantidad_actual'] <= 1e-8:
         cerrar_posicion(posiciones,id_posicion)
     
     return True

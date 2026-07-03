@@ -6,6 +6,7 @@ from operaciones import (
 from posiciones import (
     obtener_posicion_por_id
 )
+
 def analizar_operaciones(operaciones):
     
     capital_historico = 0

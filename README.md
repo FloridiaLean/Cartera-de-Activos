@@ -136,14 +136,14 @@ Estado: ABIERTA
 Fecha de apertura: 03/07/2026 13:20
 Fecha de cierre: -
 =================================================
-Capital histórico: 250.0
-Capital recuperado: 0.0
+Capital histórico: $250.00
+Capital recuperado: $0.00
 =================================================
-Cantidad total: 0.0034149825378876775
-Cantidad actual: 0.0034149825378876775
+Cantidad total: 0.00341498 BTC
+Cantidad actual: 0.00341498 BTC
 =================================================
-Precio promedio: 73206.816499459
-Ganancia realizada: 0.0
+Precio promedio: $73,206.82
+Ganancia realizada: $0.00
 =================================================
 ```
 
