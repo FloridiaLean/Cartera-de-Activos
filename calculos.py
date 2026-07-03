@@ -6,8 +6,7 @@ from operaciones import (
 from posiciones import (
     obtener_posicion_por_id
 )
-
-def analizar_posicion(operaciones,posicion_id):
+def analizar_operaciones(operaciones):
     
     capital_historico = 0
     cantidad_total = 0
@@ -16,9 +15,7 @@ def analizar_posicion(operaciones,posicion_id):
     
     ventas = []
     
-    operaciones_posicion = obtener_operaciones_por_posicion(operaciones,posicion_id)
-    
-    for operacion in operaciones_posicion:
+    for operacion in operaciones:
         if operacion['tipo'] == 'compra':
             capital_historico += operacion['monto_invertido']
             cantidad_total += operacion['cantidad']
@@ -27,7 +24,7 @@ def analizar_posicion(operaciones,posicion_id):
             cantidad_actual -= operacion['cantidad']
             capital_recuperado += operacion['monto_recibido']
             ventas.append(operacion)
-    
+            
     if cantidad_total == 0:
         precio_promedio = 0 
     else:
@@ -45,46 +42,18 @@ def analizar_posicion(operaciones,posicion_id):
     "precio_promedio": float(precio_promedio),
     'ganancia_realizada': float(ganancia_realizada),
 }
+    
+def analizar_posicion(operaciones,posicion_id):
+    
+    operaciones_posicion = obtener_operaciones_por_posicion(operaciones,posicion_id)
+    return analizar_operaciones(operaciones_posicion)
     
 
 def analizar_activo(operaciones,activo):
     
-    capital_historico = 0
-    cantidad_total = 0
-    cantidad_actual = 0
-    capital_recuperado = 0
-    
-    ventas = []
-    
     operaciones_activo = obtener_operaciones_por_activo(operaciones,activo)
     
-    for operacion in operaciones_activo:
-        if operacion['tipo'] == 'compra':
-            capital_historico += operacion['monto_invertido']
-            cantidad_total += operacion['cantidad']
-            cantidad_actual += operacion['cantidad']
-        else:
-            cantidad_actual -= operacion['cantidad']
-            capital_recuperado += operacion['monto_recibido']
-            ventas.append(operacion)
-    
-    if cantidad_total == 0:
-        precio_promedio = 0 
-    else:
-        precio_promedio = capital_historico / cantidad_total   
-    
-    ganancia_realizada = 0
-    for venta in ventas:
-            ganancia_realizada += (venta['precio_venta'] - precio_promedio) * venta['cantidad']
-    
-    return {
-    "capital_historico": float(capital_historico),
-    "cantidad_total": float(cantidad_total),
-    "cantidad_actual": float(cantidad_actual),
-    "capital_recuperado": float(capital_recuperado),
-    "precio_promedio": float(precio_promedio),
-    'ganancia_realizada': float(ganancia_realizada),
-}
+    return analizar_operaciones(operaciones_activo)
 
 def validar_venta(analisis,cantidad):
     
