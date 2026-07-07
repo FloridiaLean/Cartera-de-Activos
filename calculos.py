@@ -57,7 +57,11 @@ def analizar_activo(operaciones,activo):
 
 def generar_resumen_activo(operaciones,activo):
     
-    analisis = analizar_activo(operaciones,activo)
+    operaciones_activo = obtener_operaciones_por_activo(operaciones, activo)
+    if len(operaciones_activo) == 0:
+        return None
+    
+    analisis = analizar_operaciones(operaciones)
     
     resumen = {
         'activo': activo,
@@ -83,8 +87,12 @@ def generar_resumen_cartera(operaciones):
 
 def generar_resumen_posicion(operaciones,posiciones,posicion_id):
     
-    analisis = analizar_posicion(operaciones,posicion_id)
     posicion = obtener_posicion_por_id(posiciones,posicion_id)
+    
+    if posicion is None:
+        return None
+    
+    analisis = analizar_posicion(operaciones,posicion_id)
     
     if posicion is None:
         return None

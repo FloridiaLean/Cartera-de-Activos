@@ -4,6 +4,7 @@ from servicios import (
 )
 from visualizacion import (
     mostrar_resumen_posicion,
+    mostrar_resumen_posiciones,
     mostrar_resumen_activo
 )
 from calculos import (
@@ -11,59 +12,73 @@ from calculos import (
     generar_resumen_todas_posiciones,
     generar_resumen_activo
 )
+from utilidades import (
+    leer_float,
+    leer_int,
+    pausar,
+    normalizar_activo
+)
 
 def menu_registrar_compra(operaciones,posiciones):
     
     activo = input("Ingrese el activo que desea comprar: ")
-    monto_inversion = float(input("Ingrese el monto de inversión: "))
-    precio_compra = float(input("Ingrese el precio de compra: "))
+    monto_inversion = leer_float("Ingrese el monto de inversión: ")
+    precio_compra = leer_float("Ingrese el precio de compra: ")
     
     exito = registrar_compra(operaciones,posiciones,None,activo,monto_inversion,precio_compra)
     
     if exito:
         print(f"Compra registrada correctamente.")
 
-    input("\nPresione ENTER para volver al menú...")
+    pausar()
 
 def menu_registrar_venta(operaciones,posiciones):
     
-    posicion_id = int(input("Ingrese el ID de la posicion: "))
+    posicion_id = leer_int("Ingrese el ID de la posicion: ")
     activo = input("Ingrese el activo que desea vender: ")
-    cantidad = float(input("Ingrese la cantidad a vender: "))
-    precio_venta = float(input("Ingrese el precio al que vendio: "))
+    cantidad = leer_float("Ingrese la cantidad a vender: ")
+    precio_venta = leer_float("Ingrese el precio al que vendio: ")
     
     exito = registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_venta)
     
     if exito:
         print(f"Venta registrada correctamente.")
 
-    input("\nPresione ENTER para volver al menú...")
+    pausar()
 
 def menu_mostrar_posicion(operaciones,posiciones):
     
-    posicion_id = int(input("Ingrese el ID de la posicion: "))
-
-    resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
-    mostrar_resumen_posicion(resumen)
+    posicion_id = leer_int("Ingrese el ID de la posicion: ")
     
-    input("\nPresione ENTER para volver al menú...")
+    resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
+    
+    if resumen is None:
+        print("La posiciones no existe")
+    else:
+        mostrar_resumen_posicion(resumen)
+    
+    pausar()
 
 def menu_mostrar_posiciones(operaciones,posiciones):
     
-    resumen = generar_resumen_todas_posiciones
+    resumenes = generar_resumen_todas_posiciones(operaciones,posiciones)
+    mostrar_resumen_posiciones(resumenes)
     
-    input("\nPresione ENTER para volver al menú...")
-    pass
+    pausar()
 
-
-def menu_mostrar_resumen_activo(operaciones,activo):
+def menu_mostrar_resumen_activo(operaciones):
     
     activo = input("Ingrese el nombre del activo: ")
+    activo = normalizar_activo(activo)
     
     resumen = generar_resumen_activo(operaciones,activo)
-    mostrar_resumen_activo(resumen)
     
-    input("\nPresione ENTER para volver al menú...")
+    if resumen is None:
+        print(f"No existen operaciones para el activo {activo}.")
+    else:
+        mostrar_resumen_activo(resumen)
+    
+    pausar()
 
 def menu_principal(operaciones,posiciones):
     
@@ -86,8 +101,8 @@ def menu_principal(operaciones,posiciones):
         if opcion == "1": menu_registrar_compra(operaciones,posiciones)
         elif opcion == "2": menu_registrar_venta(operaciones,posiciones)
         elif opcion == "3": menu_mostrar_posicion(operaciones,posiciones)
-        elif opcion == "4": print("Mostrar todas las posiciones")
-        elif opcion == "5": menu_mostrar_resumen_activo(operaciones,posiciones)
+        elif opcion == "4": menu_mostrar_posiciones(operaciones,posiciones)
+        elif opcion == "5": menu_mostrar_resumen_activo(operaciones)
         elif opcion == "6": break
         else:
             print("Opción inválida. Por favor, seleccione una opción válida.")

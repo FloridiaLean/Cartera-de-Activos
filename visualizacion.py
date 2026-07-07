@@ -27,6 +27,16 @@ def mostrar_resumen_posicion(resumen):
     print(f"Ganancia realizada: {formatear_dinero(resumen['ganancia_realizada'])}")
     print("=================================================")
 
+def mostrar_resumen_posiciones(resumenes):
+    
+    if len(resumenes) == 0:
+        print("No hay posiciones registradas.")
+        return
+    
+    for resumen in resumenes:
+        mostrar_resumen_posicion(resumen)
+        print()
+
 def mostrar_resumen_activo(resumen):
     print("========= Resumen de Activo =========")
     print("=================================================")

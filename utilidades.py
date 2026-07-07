@@ -30,3 +30,22 @@ def formatear_precio(valor):
     precio_formateado = f"${valor:,.2f}"
     
     return precio_formateado
+
+def leer_float(mensaje):
+    
+    while True:
+        try:
+            return float(input(mensaje))
+        except ValueError:
+            print("Debe ingresar un número válido.")
+
+def leer_int(mensaje):
+    
+    while True:
+        try:
+            return int(input(mensaje))
+        except ValueError:
+            print("Debe ingresar un número entero.")
+
+def pausar():
+    input("\nPresione ENTER para continuar...")
