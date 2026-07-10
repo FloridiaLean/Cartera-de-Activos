@@ -25,12 +25,6 @@ def formatear_cantidad(cantidad,activo):
     
     return cantidad_formateada
 
-def formatear_precio(valor):
-    
-    precio_formateado = f"${valor:,.2f}"
-    
-    return precio_formateado
-
 def leer_float(mensaje):
     
     while True:

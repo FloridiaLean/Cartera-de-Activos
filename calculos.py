@@ -61,7 +61,7 @@ def generar_resumen_activo(operaciones,activo):
     if len(operaciones_activo) == 0:
         return None
     
-    analisis = analizar_operaciones(operaciones)
+    analisis = analizar_operaciones(operaciones_activo)
     
     resumen = {
         'activo': activo,
@@ -93,9 +93,6 @@ def generar_resumen_posicion(operaciones,posiciones,posicion_id):
         return None
     
     analisis = analizar_posicion(operaciones,posicion_id)
-    
-    if posicion is None:
-        return None
     
     resumen = {
         'posicion': posicion_id,

@@ -3,7 +3,14 @@
         "id": 1,
         "activo": "BTC",
         "estado": "ABIERTA",
-        "fecha_apertura": "07/07/2026 16:24",
+        "fecha_apertura": "10/07/2026 16:30",
+        "fecha_cierre": null
+    },
+    {
+        "id": 2,
+        "activo": "BTC",
+        "estado": "ABIERTA",
+        "fecha_apertura": "10/07/2026 16:32",
         "fecha_cierre": null
     }
 ]

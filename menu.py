@@ -5,6 +5,8 @@ from servicios import (
 from visualizacion import (
     mostrar_resumen_posicion,
     mostrar_resumen_posiciones,
+    mostrar_operaciones,
+    mostrar_operacion,
     mostrar_resumen_activo
 )
 from calculos import (
@@ -18,18 +20,59 @@ from utilidades import (
     pausar,
     normalizar_activo
 )
+from posiciones import (
+    obtener_posicion_abierta_por_activo,
+    obtener_posiciones_abiertas_por_activo,
+    obtener_posicion_por_id
+)
 
 def menu_registrar_compra(operaciones,posiciones):
     
-    activo = input("Ingrese el activo que desea comprar: ")
+    activo = normalizar_activo(input("Ingrese el activo que desea comprar: "))
+    
+    posiciones_abiertas = obtener_posiciones_abiertas_por_activo(posiciones,activo)
+    
+    exito = False
+    id_posicion = None
+    
+    if  len(posiciones_abiertas) == 0:
+        id_posicion = None
+    else:
+        print("\n=================================================")
+        print("Se encontraron las siguientes posiciones abiertas:")
+        print("=================================================\n")
+        
+        for posicion in posiciones_abiertas:
+            posicion_id = posicion["id"]
+            resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
+            mostrar_resumen_posicion(resumen)
+            
+        print("\n0. Para crear una nueva posición.") 
+        print("Ingrese la Posición # para agregar a una existente.\n") 
+        
+        while True:
+            
+            id_posicion = leer_int("Ingrese el ID de la posición: ")
+            
+            if id_posicion == 0:    
+                id_posicion = None
+                break
+            else:
+                posicion = obtener_posicion_por_id(posiciones_abiertas,id_posicion)
+                
+                if posicion is not None:
+                    break
+                
+                print("La posición seleccionada no existe.")
+    
     monto_inversion = leer_float("Ingrese el monto de inversión: ")
     precio_compra = leer_float("Ingrese el precio de compra: ")
     
-    exito = registrar_compra(operaciones,posiciones,None,activo,monto_inversion,precio_compra)
+    exito = registrar_compra(operaciones,posiciones,id_posicion,activo,monto_inversion,precio_compra)    
     
     if exito:
         print(f"Compra registrada correctamente.")
-
+    
     pausar()
 
 def menu_registrar_venta(operaciones,posiciones):
@@ -53,7 +96,7 @@ def menu_mostrar_posicion(operaciones,posiciones):
     resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
     
     if resumen is None:
-        print("La posiciones no existe")
+        print("La posicion no existe")
     else:
         mostrar_resumen_posicion(resumen)
     
@@ -80,6 +123,12 @@ def menu_mostrar_resumen_activo(operaciones):
     
     pausar()
 
+def menu_mostrar_operaciones(operaciones):
+    
+    mostrar_operaciones(operaciones)
+        
+    pausar()
+
 def menu_principal(operaciones,posiciones):
     
     while True:
@@ -94,7 +143,8 @@ def menu_principal(operaciones,posiciones):
     3. Mostrar posición
     4. Mostrar todas las posiciones
     5. Mostrar resumen por activo
-    6. Salir
+    6. Mostrar operaciones
+    7. Salir
 ''')
         opcion = input("Seleccione la opción: ")
         
@@ -103,6 +153,7 @@ def menu_principal(operaciones,posiciones):
         elif opcion == "3": menu_mostrar_posicion(operaciones,posiciones)
         elif opcion == "4": menu_mostrar_posiciones(operaciones,posiciones)
         elif opcion == "5": menu_mostrar_resumen_activo(operaciones)
-        elif opcion == "6": break
+        elif opcion == "6": menu_mostrar_operaciones(operaciones)
+        elif opcion == "7": break
         else:
             print("Opción inválida. Por favor, seleccione una opción válida.")

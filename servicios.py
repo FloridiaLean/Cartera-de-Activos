@@ -1,6 +1,6 @@
 from operaciones import (
     agregar_venta,
-    agregar_compra,
+    agregar_compra
 )
 from calculos import (
     analizar_activo,
@@ -8,7 +8,7 @@ from calculos import (
 )
 from posiciones import (
     crear_posicion,
-    cerrar_posicion,
+    cerrar_posicion
 )
 from utilidades import (
     normalizar_activo
@@ -23,7 +23,7 @@ from validaciones import (
 )
 from persistencia import (
     guardar_operaciones,
-    guardar_posiciones,
+    guardar_posiciones
 )
 
 def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,precio_compra):
@@ -42,6 +42,7 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
     if posicion_id is None:
         nueva_posicion = crear_posicion(posiciones,activo)
         id_posicion = nueva_posicion['id']
+        
     else:
         posicion = validar_posicion(posiciones, posicion_id, activo)
         

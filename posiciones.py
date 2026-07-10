@@ -29,16 +29,16 @@ def crear_posicion(posiciones,activo):
     
     return nueva_posicion
 
-def obtener_posicion_por_id(posiciones, posicion_id): 
+def obtener_posicion_por_id(posiciones,posicion_id): 
     
     for posicion in posiciones:
         if posicion_id == posicion['id']:
             return posicion
     return None
 
-def cerrar_posicion(posiciones, posicion_id):
+def cerrar_posicion(posiciones,posicion_id):
     
-    posicion = obtener_posicion_por_id(posiciones, posicion_id)
+    posicion = obtener_posicion_por_id(posiciones,posicion_id)
     
     if  posicion is None:
         print("Posición no encontrada")
@@ -48,3 +48,19 @@ def cerrar_posicion(posiciones, posicion_id):
     posicion['fecha_cierre'] = obtener_fecha_actual()
     
     return posicion
+
+def obtener_posicion_abierta_por_activo(posiciones,activo):
+    
+    for posicion in posiciones:
+        if posicion['activo'] == activo and posicion['estado'] == 'ABIERTA':
+            return posicion
+    return None
+
+def obtener_posiciones_abiertas_por_activo(posiciones,activo):
+    
+    posiciones_abiertas = []
+    
+    for posicion in posiciones:
+        if posicion['activo'] == activo and posicion['estado'] == 'ABIERTA':
+            posiciones_abiertas.append(posicion)
+    return posiciones_abiertas

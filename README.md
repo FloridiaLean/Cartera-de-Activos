@@ -1,131 +1,137 @@
 # 📊 Cartera de Activos
 
-Sistema en desarrollo para el registro, análisis y gestión de una cartera de inversiones.
+Aplicación en desarrollo para la gestión y análisis de una cartera de inversiones, desarrollada con Python y una arquitectura modular, diseñada para evolucionar hacia una aplicación web completa utilizando Flask.
 
-El proyecto implementa actualmente la **lógica central en Python** organizada por capas y módulos, permitiendo registrar operaciones financieras, calcular métricas de la cartera, y preparar la aplicación para su futura evolucion hacia una aplicación web full-stack con Flask.
+El foco del proyecto no es únicamente el resultado final, sino también el aprendizaje progresivo de conceptos como:
 
-Este proyecto no busca únicamente construir una aplicación de gestión de inversiones. También documenta mi proceso de aprendizaje en desarrollo de software, aplicando progresivamente principios de arquitectura, refactorización y buenas prácticas mientras evoluciona desde una aplicación de consola hacia una aplicación web completa.
+- Programación orientada a funciones.
+- Modularización.
+- Separación de responsabilidades.
+- Persistencia de datos.
+- Validaciones.
+- Arquitectura escalable.
+- Control de versiones con Git.
+
+---
+
+## 🎯 Objetivo
+
+Construir una plataforma web que permita:
+
+* Registrar compras y ventas de activos.
+* Gestionar una cartera de inversiones en tiempo real.
+* Visualizar rendimiento y métricas clave.
+* Consultar rendimiento histórico.
+* Persistir información en una base de datos.
+* Ofrecer una interfaz web intuitiva.
+
+---
+
+## ⭐ Características principales
+
+- Arquitectura modular.
+- Persistencia automática en JSON.
+- Gestión de múltiples posiciones por activo.
+- Cálculos financieros automáticos.
+- Menú interactivo en consola.
+- Preparado para migrar a Flask y SQLite.
 
 ---
 
 ## 🚀 Estado actual del proyecto
 
+🚧 En desarrollo activo.
+
 El sistema cuenta actualmente con un núcleo funcional desarrollado en Python, organizado mediante una arquitectura modular basada en separación de responsabilidades.
 
 Entre las funcionalidades implementadas se encuentran:
 
-### Gestión de operaciones
-- Registro de compras y ventas de activos.
-- Cálculo automático de la cantidad adquirida según el monto invertido y el precio de compra.
-- Asociación de operaciones a posiciones de inversión.
-- Validación de operaciones antes de ser registradas.
-
-### Gestión de posiciones
-- Creación automática de posiciones al realizar la primera compra de un activo.
-- Control de posiciones abiertas y cerradas.
-- Cierre automático de posiciones cuando la cantidad disponible llega a cero.
-- Identificación única de cada posición.
-
-### Validaciones
-- Validación de activos ingresados por el usuario.
-- Validación de montos, precios y cantidades.
-- Control de disponibilidad antes de ejecutar una venta.
-- Verificación de consistencia entre activos y posiciones.
-- Normalización automática de los datos ingresados.
-
-### Análisis financiero
-- Cálculo de capital histórico invertido.
-- Cálculo de cantidad total adquirida.
-- Cálculo de cantidad actualmente disponible.
-- Cálculo de precio promedio de compra.
-- Cálculo de capital recuperado mediante ventas.
-- Cálculo de ganancia realizada.
-
-### Resúmenes y reportes
-- Generación de resúmenes por posición.
-- Generación de resúmenes por activo.
-- Generación de resúmenes completos de cartera.
+- Registro de compras.
+- Registro de ventas.
+- Creación automática de posiciones.
+- Posibilidad de agregar compras a posiciones existentes.
+- Posibilidad de crear múltiples posiciones para un mismo activo.
+- Cálculo automático de cantidad comprada.
+- Cálculo de precio promedio.
+- Capital histórico.
+- Capital recuperado.
+- Ganancia realizada.
+- Estado de la posición (Abierta / Cerrada).
+- Resumen individual por posición.
+- Resumen consolidado por activo.
+- Visualización de todas las operaciones.
+- Persistencia automática en JSON.
 
 ---
 
-
-
 ## 🏗️ Arquitectura actual
 
-El proyecto se encuentra dividido en módulos con responsabilidades específicas:
+### Flujo general de la aplicación
 
 ```
-
 main.py
     │
     ▼
-servicios.py
-    │
-    ├──────────────┐
-    ▼              ▼
-validaciones.py   operaciones.py
-    │              │
-    ▼              ▼
-utilidades.py    posiciones.py
-          │
-          ▼
-      calculos.py
-
+menu.py  ◄───────────────────────────────────────────┐
+    │                                                │
+    ▼                                                │
+servicios.py                                         │
+    │                                                │
+    ├──────────────┐──────────────┐                  │
+    ▼              ▼              ▼                  │
+validaciones.py   operaciones.py  persistencia.py    │
+    │              │                                 │
+    ▼              ▼                                 │
+utilidades.py    posiciones.py                       │
+    │                                                │
+    ▼                                                │
+calculos.py                                          │
+    │                                                │ 
+    ▼                                                │
+visualizacion.py  ───────────────────────────────────┘
 ```
 
-### Responsabilidad de cada módulo
+### Responsabilidad de los módulos
 
-main.py
+El proyecto está dividido por responsabilidades:
 
-- Punto de entrada del programa.
-- Simula la interacción del usuario.
-- Invoca la capa de servicios.
-
-servicios.py
-
-- Centraliza las reglas de negocio.
-- Valida compras y ventas.
-- Coordina el flujo de cada operación.
-
-operaciones.py
-
-- Registra las operaciones.
-- Obtiene operaciones y activos registrados.
-
-posiciones.py
-
-- Gestiona las posiciones de inversión.
-- Crea posiciones.
-- Cierra posiciones.
-- Consulta posiciones por ID.
-
-validaciones.py
-
-- Centraliza las reglas de validación.
-- Valida activos.
-- Valida montos.
-- Valida precios.
-- Valida cantidades.
-- Valida posiciones.
-
-utilidades.py
-
-- Normalización de datos.
-- Obtención de la fecha actual.
-- Funciones reutilizables.
-
-calculos.py
-
-- Analiza cada activo.
-- Calcula métricas financieras.
-- Genera resúmenes de la cartera.
+- menu.py → interacción con el usuario.
+- servicios.py → lógica de negocio.
+- operaciones.py → registro de operaciones.
+- posiciones.py → gestión de posiciones.
+- calculos.py → cálculos financieros.
+- visualizacion.py → impresión de información.
+- persistencia.py → lectura y escritura en JSON.
+- validaciones.py → validaciones de datos.
+- utilidades.py → funciones auxiliares.
 
 Esta separación facilita el mantenimiento del proyecto y prepara la lógica para futuras integraciones con Flask y una base de datos.
 
 ---
+
+## 🛠️ Tecnologías utilizadas 
+
+- Python
+- JSON
+- Git
+- GitHub
+
+## 🚀 Tecnologías planificadas
+
+- Flask
+- HTML
+- CSS
+- JavaScript
+- SQLite
+
+---
+
 ## 🧠 Ejemplo de salida actual
 
 El sistema genera un resumen detallado de cada posición registrada en la cartera:
+
+## Salida de consola:
+
 ```
 =================================================
 Posición #: 1
@@ -147,6 +153,8 @@ Ganancia realizada: $0.00
 =================================================
 ```
 
+## Estructura interna de los datos
+
 ```
 [
     {
@@ -164,69 +172,30 @@ Ganancia realizada: $0.00
     },
 ]
 ```
----
-
-## 🎯 Objetivo
-
-Construir una plataforma web que permita:
-
-* Registrar compras y ventas de activos.
-* Gestionar una cartera de inversiones en tiempo real.
-* Visualizar rendimiento y métricas clave.
-* Consultar rendimiento histórico.
-* Persistir información en una base de datos.
-* Ofrecer una interfaz web intuitiva.
 
 ---
 
-## 🛠️ Tecnologías 
+## 📚 Conceptos aplicados
 
-### Backend
+Durante el desarrollo de este proyecto se aplican conceptos como:
 
-* Python
-* JSON (próxima etapa de persistencia)
-* Flask (API y servidor web)
-* Base de datos (SQLite / PostgreSQL en etapas futuras)
-
-### Frontend
-
-* HTML
-* CSS
-* JavaScript
-
-### Otros
-
-* Git & GitHub para control de versiones
-
----
-
-## 📌 Estado actual
-
-### 🚧 Estado del desarrollo
-
-Actualmente el proyecto cuenta con:
-
-- ✅ Arquitectura modular por responsabilidades.
-- ✅ Separación entre lógica de negocio, cálculos y operaciones.
-- ✅ Registro de compras y ventas
-- ✅ Validaciones centralizadas
-- ✅ Normalización de datos.
-- ✅ Control de disponibilidad antes de vender un activo.
-- ✅ Cálculo de métricas financieras.
-- ✅ Resúmenes por posicion, activo y cartera.
-- ✅ Refactorización del núcleo para eliminar código duplicado.
-
-La siguiente etapa consistirá en incorporar persistencia utilizando archivos JSON antes de migrar posteriormente a una base de datos.
+- Separación de responsabilidades.
+- Programación modular.
+- Validación de datos.
+- Persistencia de información.
+- Arquitectura escalable.
+- Refactorización continua.
+- Control de versiones con Git.
 
 ---
 
 ## 🧩 Próximos pasos
 
-* [ ] Incorporar persistencia mediante archivos JSON.
-* [ ] Implementar carga automática de la cartera.
-* [ ] Crear API con Flask.
-* [ ] Conectar base de datos.
-* [ ] Desarrollar interfaz web con HTML/CSS/JS.
+* [ ] Editar operaciones.
+* [ ] Eliminar operaciones.
+* [ ] Cierre automático de posiciones.
+* [ ] Migración de JSON a SQLite.
+* [ ] Desarrollar una interfaz web con Flask.   
 * [ ] Crear un dashboard para visualizar la cartera.
 * [ ] Agregar cálculo de ganancias no realizadas.
 * [ ] Integrar precios de mercado mediante APIs.
@@ -246,3 +215,5 @@ Proyecto personal desarrollado como parte de mi proceso de aprendizaje en:
 - Git y GitHub
 
 El objetivo del proyecto es evolucionar progresivamente desde una aplicación de consola hasta una aplicación web completa, aplicando buenas prácticas de programación y diseño de software durante todo el proceso.
+
+---

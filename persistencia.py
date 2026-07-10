@@ -7,7 +7,6 @@ def guardar_operaciones(operaciones):
     with open(ARCHIVO_OPERACIONES, "w") as archivo:
         json.dump(operaciones, archivo, indent=4)
 
-
 def guardar_posiciones(posiciones):
     with open(ARCHIVO_POSICIONES, "w") as archivo:
         json.dump(posiciones, archivo, indent=4)

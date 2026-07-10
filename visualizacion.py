@@ -1,7 +1,6 @@
 from utilidades import (
     formatear_dinero,
-    formatear_cantidad,
-    formatear_precio
+    formatear_cantidad
 )
 
 def mostrar_resumen_posicion(resumen):
@@ -23,7 +22,7 @@ def mostrar_resumen_posicion(resumen):
     print(f"Cantidad total: {formatear_cantidad(resumen['cantidad_total'], resumen['activo'])}")
     print(f"Cantidad actual: {formatear_cantidad(resumen['cantidad_actual'], resumen['activo'])}")
     print("=================================================")
-    print(f"Precio promedio: {formatear_precio(resumen['precio_promedio'])}")
+    print(f"Precio promedio: {formatear_dinero(resumen['precio_promedio'])}")
     print(f"Ganancia realizada: {formatear_dinero(resumen['ganancia_realizada'])}")
     print("=================================================")
 
@@ -48,6 +47,37 @@ def mostrar_resumen_activo(resumen):
     print("=================================================")
     print(f"Cantidad actual: {formatear_cantidad(resumen['cantidad_actual'], resumen['activo'])}")
     print("=================================================")
-    print(f"Precio promedio: {formatear_precio(resumen['precio_promedio'])}")
+    print(f"Precio promedio: {formatear_dinero(resumen['precio_promedio'])}")
     print(f"Ganancia realizada: {formatear_dinero(resumen['ganancia_realizada'])}")
     print("=================================================")
+
+def mostrar_operacion(operacion):
+    print("========= Operación =========")
+    print(f"ID: {operacion['id']}")
+    print(f"Posición: {operacion['posicion_id']}")
+    print(f"Tipo: {operacion['tipo'].upper()}")
+    print(f"Activo: {operacion['activo']}")
+    print(f"Fecha: {operacion['fecha']}")
+    print("-----------------------------")
+
+    if operacion['tipo'] == 'compra':
+        print(f"Monto invertido: {formatear_dinero(operacion['monto_invertido'])}")
+        print(f"Precio compra: {formatear_dinero(operacion['precio_compra'])}")
+        print(f"Cantidad: {formatear_cantidad(operacion['cantidad'], operacion['activo'])}")
+        
+    else:
+        print(f"Cantidad : {formatear_cantidad(operacion['cantidad'], operacion['activo'])}")
+        print(f"Precio venta: {formatear_dinero(operacion['precio_venta'])}")
+        print(f"Monto recibido: {formatear_dinero(operacion['monto_recibido'])}")
+        
+    print("=============================")
+
+def mostrar_operaciones(operaciones):
+
+    if len(operaciones) == 0:
+        print("No hay operaciones registradas.")
+        return
+    
+    for operacion in operaciones:
+        mostrar_operacion(operacion)
+        print()
