@@ -1,6 +1,8 @@
 from servicios import (
     registrar_compra,
-    registrar_venta
+    registrar_venta,
+    editar_compra_servicio,
+    editar_venta_servicio
 )
 from visualizacion import (
     mostrar_resumen_posicion,
@@ -18,12 +20,17 @@ from utilidades import (
     leer_float,
     leer_int,
     pausar,
-    normalizar_activo
+    normalizar_activo,
+    formatear_dinero,
+    formatear_cantidad
 )
 from posiciones import (
     obtener_posicion_abierta_por_activo,
     obtener_posiciones_abiertas_por_activo,
     obtener_posicion_por_id
+)
+from operaciones import (
+    obtener_operacion_por_id
 )
 
 def menu_registrar_compra(operaciones,posiciones):
@@ -62,13 +69,12 @@ def menu_registrar_compra(operaciones,posiciones):
                 
                 if posicion is not None:
                     break
-                
                 print("La posición seleccionada no existe.")
     
-    monto_inversion = leer_float("Ingrese el monto de inversión: ")
+    monto_invertido = leer_float("Ingrese el monto de inversión: ")
     precio_compra = leer_float("Ingrese el precio de compra: ")
     
-    exito = registrar_compra(operaciones,posiciones,id_posicion,activo,monto_inversion,precio_compra)    
+    exito = registrar_compra(operaciones,posiciones,id_posicion,activo,monto_invertido,precio_compra)    
     
     if exito:
         print(f"Compra registrada correctamente.")
@@ -86,7 +92,7 @@ def menu_registrar_venta(operaciones,posiciones):
     
     if exito:
         print(f"Venta registrada correctamente.")
-
+    
     pausar()
 
 def menu_mostrar_posicion(operaciones,posiciones):
@@ -129,14 +135,65 @@ def menu_mostrar_operaciones(operaciones):
         
     pausar()
 
-def menu_principal(operaciones,posiciones):
+def seleccionar_operacion(operaciones):
+    
+    mostrar_operaciones(operaciones)
     
     while True:
         
+        operacion_id = leer_int("Ingrese el ID de la operacion: ")
+        operacion = obtener_operacion_por_id(operaciones,operacion_id)
+        
+        if operacion is not None:
+            mostrar_operacion(operacion)
+            return operacion
+        print("La operación seleccionada no existe. Intente nuevamente.")
+        
+def menu_editar_operaciones(operaciones,posiciones):
+    
+    operacion = seleccionar_operacion(operaciones)
+    
+    if operacion["tipo"] == "compra":
+        
+        print("\n========= Editar Compra =========")
+        print(f"Monto actual: {formatear_dinero(operacion['monto_invertido'])}")
+        print(f"Precio actual: {formatear_dinero(operacion['precio_compra'])}")
+        print("Ingrese los nuevos valores.\n")
+        
+        monto_invertido = leer_float("Nuevo monto de inversión: ")
+        precio_compra = leer_float("Nuevo precio de compra: ")
+        
+        exito = editar_compra_servicio(operaciones,operacion,monto_invertido,precio_compra)
+        
+        if exito:
+            print("\nCompra editada correctamente.\n")
+            mostrar_operacion(operacion)
+    else:
+        
+        print("\n========= Editar Venta =========")
+        print(f"Cantidad: {formatear_cantidad(operacion['cantidad'],operacion['activo'])}")
+        print(f"Precio de venta: {formatear_dinero(operacion['precio_venta'])}")
+        print("Ingrese los nuevos valores.\n")
+        
+        cantidad = leer_float("Nueva cantidad: ")
+        precio_venta = leer_float("Nuevo precio de venta: ")
+        
+        exito = editar_venta_servicio(operaciones,posiciones,operacion,cantidad,precio_venta)
+        
+        if exito:
+            print("\nVenta editada correctamente.\n")
+            mostrar_operacion(operacion)
+        
+    pausar()        
+
+def menu_principal(operaciones,posiciones):
+    
+    while True:
+    
         print('''       
-    =====================================
-            CARTERA DE ACTIVOS
-    =====================================
+=====================================
+        CARTERA DE ACTIVOS
+=====================================
 
     1. Registrar compra
     2. Registrar venta
@@ -144,7 +201,8 @@ def menu_principal(operaciones,posiciones):
     4. Mostrar todas las posiciones
     5. Mostrar resumen por activo
     6. Mostrar operaciones
-    7. Salir
+    7. Editar operaciones
+    8. Salir
 ''')
         opcion = input("Seleccione la opción: ")
         
@@ -154,6 +212,7 @@ def menu_principal(operaciones,posiciones):
         elif opcion == "4": menu_mostrar_posiciones(operaciones,posiciones)
         elif opcion == "5": menu_mostrar_resumen_activo(operaciones)
         elif opcion == "6": menu_mostrar_operaciones(operaciones)
-        elif opcion == "7": break
+        elif opcion == "7": menu_editar_operaciones(operaciones,posiciones)
+        elif opcion == "8": break
         else:
             print("Opción inválida. Por favor, seleccione una opción válida.")

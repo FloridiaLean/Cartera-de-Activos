@@ -1,6 +1,9 @@
 from posiciones import (
     obtener_posicion_por_id
 )
+from calculos import (
+    generar_resumen_posicion
+)
 
 def validar_activo(activo):
     if activo == "":
@@ -51,4 +54,18 @@ def validar_venta(analisis,cantidad):
     
     if cantidad > cantidad_actual:
         return False
+    return True
+
+def validar_edicion_venta(operaciones, posiciones, operacion, nueva_cantidad):
+    
+    posicion_id = operacion["posicion_id"]
+    
+    resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
+    
+    cantidad_disponible = (resumen["cantidad_actual"] + operacion["cantidad"])
+    
+    if nueva_cantidad > cantidad_disponible:
+        print("No puede vender más de la cantidad disponible.")
+        return False
+    
     return True

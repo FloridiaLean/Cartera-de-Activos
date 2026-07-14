@@ -62,7 +62,7 @@ def obtener_operaciones_por_activo(operaciones,activo):
     
     return operaciones_del_activo
 
-def obtener_operaciones_por_posicion(operaciones, posicion_id):
+def obtener_operaciones_por_posicion(operaciones,posicion_id):
     
     operaciones_de_posicion = []
     
@@ -79,3 +79,22 @@ def obtener_activos(operaciones):
         if operacion['activo'] not in activos:
             activos.append(operacion['activo'])
     return activos
+
+def obtener_operacion_por_id(operaciones,operacion_id):
+    
+    for operacion in operaciones:
+        if operacion_id == operacion['id']:
+            return operacion
+    return None
+
+def editar_compra(operacion,monto_invertido,precio_compra):
+    
+    operacion["monto_invertido"] = monto_invertido  
+    operacion["precio_compra"] = precio_compra 
+    operacion["cantidad"] = monto_invertido / precio_compra
+
+def editar_venta(operacion, cantidad, precio_venta):
+    
+    operacion["cantidad"] = cantidad
+    operacion["precio_venta"] = precio_venta
+    operacion["monto_recibido"] = cantidad * precio_venta

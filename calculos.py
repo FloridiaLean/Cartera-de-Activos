@@ -1,7 +1,7 @@
 from operaciones import (
     obtener_operaciones_por_activo,
     obtener_operaciones_por_posicion,
-    obtener_activos,
+    obtener_activos
 )
 from posiciones import (
     obtener_posicion_por_id
@@ -52,7 +52,6 @@ def analizar_posicion(operaciones,posicion_id):
 def analizar_activo(operaciones,activo):
     
     operaciones_activo = obtener_operaciones_por_activo(operaciones,activo)
-    
     return analizar_operaciones(operaciones_activo)
 
 def generar_resumen_activo(operaciones,activo):
