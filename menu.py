@@ -2,7 +2,8 @@ from servicios import (
     registrar_compra,
     registrar_venta,
     editar_compra_servicio,
-    editar_venta_servicio
+    editar_venta_servicio,
+    eliminar_operacion_servicio
 )
 from visualizacion import (
     mostrar_resumen_posicion,
@@ -137,6 +138,10 @@ def menu_mostrar_operaciones(operaciones):
 
 def seleccionar_operacion(operaciones):
     
+    if not operaciones:
+        print("No hay operaciones registradas.")
+        return None
+    
     mostrar_operaciones(operaciones)
     
     while True:
@@ -152,6 +157,10 @@ def seleccionar_operacion(operaciones):
 def menu_editar_operaciones(operaciones,posiciones):
     
     operacion = seleccionar_operacion(operaciones)
+    
+    if operacion is None:
+        pausar()
+        return
     
     if operacion["tipo"] == "compra":
         
@@ -186,6 +195,36 @@ def menu_editar_operaciones(operaciones,posiciones):
         
     pausar()        
 
+def menu_eliminar_operacion(operaciones,posiciones):
+    
+    operacion = seleccionar_operacion(operaciones)
+    
+    if operacion is None:
+        pausar()
+        return
+    
+    while True:
+        
+        print("\n=================================")
+        print("¿Desea eliminar esta operación?")
+        print("=================================\n")
+        print("1. Si")
+        print("2. Cancelar")
+        
+        opcion = input("Seleccione la opción: ")  
+        
+        if opcion == "1": 
+            exito = eliminar_operacion_servicio(operaciones,posiciones,operacion)
+            if exito:
+                print("\nOperación eliminada correctamente.\n")
+                pausar()
+                return
+        elif opcion == "2":
+            print("\nOperación cancelada.\n")
+            pausar()
+            return
+        else: print("Opción Inválida.")
+
 def menu_principal(operaciones,posiciones):
     
     while True:
@@ -201,8 +240,9 @@ def menu_principal(operaciones,posiciones):
     4. Mostrar todas las posiciones
     5. Mostrar resumen por activo
     6. Mostrar operaciones
-    7. Editar operaciones
-    8. Salir
+    7. Editar operacion
+    8. Eliminar operacion
+    9. Salir
 ''')
         opcion = input("Seleccione la opción: ")
         
@@ -213,6 +253,7 @@ def menu_principal(operaciones,posiciones):
         elif opcion == "5": menu_mostrar_resumen_activo(operaciones)
         elif opcion == "6": menu_mostrar_operaciones(operaciones)
         elif opcion == "7": menu_editar_operaciones(operaciones,posiciones)
-        elif opcion == "8": break
+        elif opcion == "8": menu_eliminar_operacion(operaciones,posiciones)
+        elif opcion == "9": break
         else:
             print("Opción inválida. Por favor, seleccione una opción válida.")

@@ -2,15 +2,21 @@ from operaciones import (
     agregar_venta,
     agregar_compra,
     editar_compra,
-    editar_venta
+    editar_venta,
+    eliminar_operacion,
+    obtener_operaciones_por_posicion
 )
 from calculos import (
     analizar_activo,
-    analizar_posicion
+    analizar_posicion,
+    generar_resumen_posicion
 )
 from posiciones import (
     crear_posicion,
-    cerrar_posicion
+    cerrar_posicion,
+    reabrir_posicion,
+    obtener_posicion_por_id,
+    eliminar_posicion
 )
 from utilidades import (
     normalizar_activo
@@ -22,7 +28,8 @@ from validaciones import (
     validar_cantidad,
     validar_posicion,
     validar_venta,
-    validar_edicion_venta
+    validar_edicion_venta,
+    validar_eliminacion_compra
 )
 from persistencia import (
     guardar_operaciones,
@@ -86,10 +93,7 @@ def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_ve
     
     agregar_venta(operaciones,id_posicion,activo,cantidad,precio_venta)
     
-    analisis_actualizado = analizar_posicion(operaciones,id_posicion)
-    
-    if analisis_actualizado['cantidad_actual'] <= 1e-8:
-        cerrar_posicion(posiciones,id_posicion)
+    actualizar_estado_posicion(operaciones,posiciones,posicion_id)
     
     guardar_operaciones(operaciones)
     guardar_posiciones(posiciones)
@@ -112,6 +116,8 @@ def editar_compra_servicio(operaciones,operacion,monto_invertido,precio_compra):
 
 def editar_venta_servicio(operaciones,posiciones,operacion,cantidad,precio_venta):
     
+    posicion_id = operacion["posicion_id"]
+    
     if not validar_cantidad(cantidad):
         return False
     
@@ -122,7 +128,41 @@ def editar_venta_servicio(operaciones,posiciones,operacion,cantidad,precio_venta
         return False
     
     editar_venta(operacion,cantidad,precio_venta)
-    
+    actualizar_estado_posicion(operaciones,posiciones,posicion_id)
     guardar_operaciones(operaciones)
     
     return True
+
+def eliminar_operacion_servicio(operaciones,posiciones,operacion):
+    
+    posicion_id = operacion["posicion_id"]
+    
+    if operacion["tipo"] == "compra":
+        
+        if not validar_eliminacion_compra(operaciones, operacion):
+            return False
+    
+    eliminar_operacion(operaciones,operacion)
+    
+    operaciones_posicion = obtener_operaciones_por_posicion(operaciones,posicion_id)
+    
+    if not operaciones_posicion:
+        posicion = obtener_posicion_por_id(posiciones, posicion_id)
+        eliminar_posicion(posiciones,posicion)
+    else:
+        actualizar_estado_posicion(operaciones,posiciones,posicion_id)
+    
+    guardar_operaciones(operaciones)
+    guardar_posiciones(posiciones)
+    
+    return True
+
+def actualizar_estado_posicion(operaciones,posiciones,posicion_id):
+    
+    resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
+    posicion = obtener_posicion_por_id(posiciones, posicion_id)
+    
+    if resumen["cantidad_actual"] <= 1e-8:
+        cerrar_posicion(posicion)
+    else:
+        reabrir_posicion(posicion)

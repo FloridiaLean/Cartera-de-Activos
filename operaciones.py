@@ -98,3 +98,7 @@ def editar_venta(operacion, cantidad, precio_venta):
     operacion["cantidad"] = cantidad
     operacion["precio_venta"] = precio_venta
     operacion["monto_recibido"] = cantidad * precio_venta
+
+def eliminar_operacion(operaciones,operacion):
+    
+    operaciones.remove(operacion)
