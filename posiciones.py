@@ -65,3 +65,13 @@ def cerrar_posicion(posicion):
 def eliminar_posicion(posiciones,posicion):
     
     posiciones.remove(posicion)
+
+def obtener_posiciones_abiertas(posiciones):
+
+    posiciones_abiertas = []
+
+    for posicion in posiciones:
+        if posicion["estado"] == "ABIERTA":
+            posiciones_abiertas.append(posicion)
+
+    return posiciones_abiertas

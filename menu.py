@@ -28,7 +28,8 @@ from utilidades import (
 from posiciones import (
     obtener_posicion_abierta_por_activo,
     obtener_posiciones_abiertas_por_activo,
-    obtener_posicion_por_id
+    obtener_posicion_por_id,
+    obtener_posiciones_abiertas
 )
 from operaciones import (
     obtener_operacion_por_id
@@ -84,8 +85,40 @@ def menu_registrar_compra(operaciones,posiciones):
 
 def menu_registrar_venta(operaciones,posiciones):
     
-    posicion_id = leer_int("Ingrese el ID de la posicion: ")
-    activo = input("Ingrese el activo que desea vender: ")
+    posiciones_abiertas = obtener_posiciones_abiertas(posiciones)
+    
+    if not posiciones_abiertas:
+        print("No existen posiciones abiertas para registrar una venta.")
+        pausar()
+        return 
+    
+    print("==================================")
+    print("Posiciones abiertas")
+    print("==================================")
+    
+    for posicion in posiciones_abiertas:
+        print(f"ID Posicion #: {posicion['id']} | {posicion['activo']} | {posicion['estado']} ")
+    
+    while True:
+    
+        posicion_id = leer_int("\nIngrese el ID de la posicion: ")
+        
+        posicion = obtener_posicion_por_id(posiciones_abiertas,posicion_id)
+        
+        if posicion is not None:
+            break
+        
+        print("La posición seleccionada no es válida. Intente nuevamente.")
+    
+    activo = posicion["activo"]
+    
+    print("\n==================================")
+    print("Posición seleccionada")
+    print("==================================")
+    
+    resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
+    mostrar_resumen_posicion(resumen)
+    
     cantidad = leer_float("Ingrese la cantidad a vender: ")
     precio_venta = leer_float("Ingrese el precio al que vendio: ")
     

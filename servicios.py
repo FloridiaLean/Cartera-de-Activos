@@ -29,7 +29,7 @@ from validaciones import (
     validar_posicion,
     validar_venta,
     validar_edicion_venta,
-    validar_eliminacion_compra
+    tiene_ventas_asociadas
 )
 from persistencia import (
     guardar_operaciones,
@@ -108,6 +108,9 @@ def editar_compra_servicio(operaciones,operacion,monto_invertido,precio_compra):
     if not validar_precio(precio_compra):
         return False
     
+    if not tiene_ventas_asociadas(operaciones, operacion):
+            return False
+    
     editar_compra(operacion,monto_invertido,precio_compra)
     
     guardar_operaciones(operaciones)
@@ -139,7 +142,7 @@ def eliminar_operacion_servicio(operaciones,posiciones,operacion):
     
     if operacion["tipo"] == "compra":
         
-        if not validar_eliminacion_compra(operaciones, operacion):
+        if not tiene_ventas_asociadas(operaciones, operacion):
             return False
     
     eliminar_operacion(operaciones,operacion)
