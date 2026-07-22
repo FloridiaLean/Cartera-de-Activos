@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "id": 1,
+        "activo": "BTC",
+        "estado": "CERRADA",
+        "fecha_apertura": "22/07/2026 13:58",
+        "fecha_cierre": "22/07/2026 14:17"
+    }
+]

@@ -10,7 +10,9 @@ from visualizacion import (
     mostrar_resumen_posiciones,
     mostrar_operaciones,
     mostrar_operacion,
-    mostrar_resumen_activo
+    mostrar_resumen_activo,
+    mostrar_lista_posiciones,
+    mostrar_lista_activos
 )
 from calculos import (
     generar_resumen_posicion,
@@ -32,7 +34,8 @@ from posiciones import (
     obtener_posiciones_abiertas
 )
 from operaciones import (
-    obtener_operacion_por_id
+    obtener_operacion_por_id,
+    obtener_activos
 )
 
 def menu_registrar_compra(operaciones,posiciones):
@@ -92,19 +95,14 @@ def menu_registrar_venta(operaciones,posiciones):
         pausar()
         return 
     
-    print("==================================")
-    print("Posiciones abiertas")
-    print("==================================")
-    
-    for posicion in posiciones_abiertas:
-        print(f"ID Posicion #: {posicion['id']} | {posicion['activo']} | {posicion['estado']} ")
-    
+    mostrar_lista_posiciones(posiciones_abiertas)
+
     while True:
     
         posicion_id = leer_int("\nIngrese el ID de la posicion: ")
         
         posicion = obtener_posicion_por_id(posiciones_abiertas,posicion_id)
-        
+            
         if posicion is not None:
             break
         
@@ -112,9 +110,9 @@ def menu_registrar_venta(operaciones,posiciones):
     
     activo = posicion["activo"]
     
-    print("\n==================================")
+    print("\n======================")
     print("Posición seleccionada")
-    print("==================================")
+    print("========================\n")
     
     resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
     mostrar_resumen_posicion(resumen)
@@ -131,14 +129,26 @@ def menu_registrar_venta(operaciones,posiciones):
 
 def menu_mostrar_posicion(operaciones,posiciones):
     
-    posicion_id = leer_int("Ingrese el ID de la posicion: ")
+    if not posiciones:
+        print("No existen posiciones Registradas.")
+        pausar()
+        return 
+        
+    mostrar_lista_posiciones(posiciones)
+        
+    while True:
+        
+        posicion_id = leer_int("\nIngrese el ID de la posicion: ")
+            
+        posicion = obtener_posicion_por_id(posiciones,posicion_id)
+            
+        if posicion is not None:
+            break
+            
+        print("La posición seleccionada no es válida. Intente nuevamente.")
     
     resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
-    
-    if resumen is None:
-        print("La posicion no existe")
-    else:
-        mostrar_resumen_posicion(resumen)
+    mostrar_resumen_posicion(resumen)
     
     pausar()
 
@@ -151,15 +161,26 @@ def menu_mostrar_posiciones(operaciones,posiciones):
 
 def menu_mostrar_resumen_activo(operaciones):
     
-    activo = input("Ingrese el nombre del activo: ")
-    activo = normalizar_activo(activo)
+    if not operaciones:
+        print("No existen operaciones registradas.")
+        pausar()
+        return
+    
+    activos = obtener_activos(operaciones)
+    mostrar_lista_activos(activos)
+    
+    while True:
+        
+        activo = input("\nIngrese el nombre del activo: ")
+        activo = normalizar_activo(activo)
+        
+        if activo in activos:
+            break
+        
+        print("El activo seleccionado no es válido. Intente nuevamente.")
     
     resumen = generar_resumen_activo(operaciones,activo)
-    
-    if resumen is None:
-        print(f"No existen operaciones para el activo {activo}.")
-    else:
-        mostrar_resumen_activo(resumen)
+    mostrar_resumen_activo(resumen)
     
     pausar()
 
@@ -263,9 +284,9 @@ def menu_principal(operaciones,posiciones):
     while True:
     
         print('''       
-=====================================
+=======================================
         CARTERA DE ACTIVOS
-=====================================
+=======================================
 
     1. Registrar compra
     2. Registrar venta

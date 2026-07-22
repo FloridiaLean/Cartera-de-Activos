@@ -1,1 +1,22 @@
-[]
+[
+    {
+        "id": 1,
+        "fecha": "22/07/2026 13:58",
+        "posicion_id": 1,
+        "tipo": "compra",
+        "activo": "BTC",
+        "monto_invertido": 150.0,
+        "precio_compra": 64000.0,
+        "cantidad": 0.00234375
+    },
+    {
+        "id": 2,
+        "fecha": "22/07/2026 14:17",
+        "posicion_id": 1,
+        "tipo": "venta",
+        "activo": "BTC",
+        "cantidad": 0.00234375,
+        "precio_venta": 65000.0,
+        "monto_recibido": 152.34375
+    }
+]

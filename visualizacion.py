@@ -5,31 +5,31 @@ from utilidades import (
 
 def mostrar_resumen_posicion(resumen):
     print("========= Resumen de Posicion =========")
-    print("=================================================")
+    print("=======================================")
     print(f"Posición #: {resumen['posicion']}")
     print(f"Activo: {resumen['activo']}")
     print(f"Estado: {resumen['estado']}")
-    print("=================================================")
+    print("=======================================")
     print(f"Fecha de apertura: {resumen['fecha_apertura']}")
     if resumen['fecha_cierre'] is None:
         print("Fecha de cierre: -")
     else:
         print(f"Fecha de cierre: {resumen['fecha_cierre']}")
-    print("=================================================")
+    print("=======================================")
     print(f"Capital histórico: {formatear_dinero(resumen['capital_historico'])}")
     print(f"Capital recuperado: {formatear_dinero(resumen['capital_recuperado'])}")
-    print("=================================================")
+    print("=======================================")
     print(f"Cantidad total: {formatear_cantidad(resumen['cantidad_total'], resumen['activo'])}")
     print(f"Cantidad actual: {formatear_cantidad(resumen['cantidad_actual'], resumen['activo'])}")
-    print("=================================================")
+    print("=======================================")
     print(f"Precio promedio: {formatear_dinero(resumen['precio_promedio'])}")
     print(f"Ganancia realizada: {formatear_dinero(resumen['ganancia_realizada'])}")
-    print("=================================================")
+    print("=======================================")
 
 def mostrar_resumen_posiciones(resumenes):
     
     if len(resumenes) == 0:
-        print("No hay posiciones registradas.")
+        print("No existen posiciones registradas.")
         return
     
     for resumen in resumenes:
@@ -38,18 +38,18 @@ def mostrar_resumen_posiciones(resumenes):
 
 def mostrar_resumen_activo(resumen):
     print("========= Resumen de Activo =========")
-    print("=================================================")
+    print("=====================================")
     print(f"Activo: {resumen['activo']}")
-    print("=================================================")
-    print("=================================================")
+    print("=====================================")
+    print("=====================================")
     print(f"Capital histórico: {formatear_dinero(resumen['capital_historico'])}")
     print(f"Capital recuperado: {formatear_dinero(resumen['capital_recuperado'])}")
-    print("=================================================")
+    print("=====================================")
     print(f"Cantidad actual: {formatear_cantidad(resumen['cantidad_actual'], resumen['activo'])}")
-    print("=================================================")
+    print("=====================================")
     print(f"Precio promedio: {formatear_dinero(resumen['precio_promedio'])}")
     print(f"Ganancia realizada: {formatear_dinero(resumen['ganancia_realizada'])}")
-    print("=================================================")
+    print("=====================================")
 
 def mostrar_operacion(operacion):
     print("========= Operación =========")
@@ -69,8 +69,7 @@ def mostrar_operacion(operacion):
         print(f"Cantidad : {formatear_cantidad(operacion['cantidad'], operacion['activo'])}")
         print(f"Precio venta: {formatear_dinero(operacion['precio_venta'])}")
         print(f"Monto recibido: {formatear_dinero(operacion['monto_recibido'])}")
-        
-    print("=============================")
+    print("============================")
 
 def mostrar_operaciones(operaciones):
 
@@ -81,3 +80,21 @@ def mostrar_operaciones(operaciones):
     for operacion in operaciones:
         mostrar_operacion(operacion)
         print()
+
+def mostrar_lista_posiciones(posiciones):
+    
+    print("============================")
+    print("Posiciones registradas")
+    print("============================")
+    
+    for posicion in posiciones:
+        print(f"ID Posicion #: {posicion['id']} | {posicion['activo']} | {posicion['estado']} ")
+
+def mostrar_lista_activos(activos):
+
+    print("============================")
+    print("Activos registrados")
+    print("============================")
+
+    for activo in activos:
+        print(f"- {activo}")
