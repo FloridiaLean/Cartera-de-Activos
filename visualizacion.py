@@ -4,9 +4,10 @@ from utilidades import (
 )
 
 def mostrar_resumen_posicion(resumen):
-    print("========= Resumen de Posicion =========")
+    print("\n=======================================")
+    print("          Resumen de Posición          ")
     print("=======================================")
-    print(f"Posición #: {resumen['posicion']}")
+    print(f"Posición ID: {resumen['posicion']}")
     print(f"Activo: {resumen['activo']}")
     print(f"Estado: {resumen['estado']}")
     print("=======================================")
@@ -34,26 +35,21 @@ def mostrar_resumen_posiciones(resumenes):
     
     for resumen in resumenes:
         mostrar_resumen_posicion(resumen)
-        print()
 
 def mostrar_resumen_activo(resumen):
-    print("========= Resumen de Activo =========")
+    print("\n========= Resumen de Activo =========")
     print("=====================================")
     print(f"Activo: {resumen['activo']}")
     print("=====================================")
-    print("=====================================")
-    print(f"Capital histórico: {formatear_dinero(resumen['capital_historico'])}")
+    print(f"Capital histórico invertido: {formatear_dinero(resumen['capital_historico'])}")
     print(f"Capital recuperado: {formatear_dinero(resumen['capital_recuperado'])}")
-    print("=====================================")
     print(f"Cantidad actual: {formatear_cantidad(resumen['cantidad_actual'], resumen['activo'])}")
-    print("=====================================")
-    print(f"Precio promedio: {formatear_dinero(resumen['precio_promedio'])}")
     print(f"Ganancia realizada: {formatear_dinero(resumen['ganancia_realizada'])}")
     print("=====================================")
 
 def mostrar_operacion(operacion):
-    print("========= Operación =========")
-    print(f"ID: {operacion['id']}")
+    print("\n========= Operación =========")
+    print(f"Operación ID: {operacion['id']}")
     print(f"Posición: {operacion['posicion_id']}")
     print(f"Tipo: {operacion['tipo'].upper()}")
     print(f"Activo: {operacion['activo']}")
@@ -62,12 +58,12 @@ def mostrar_operacion(operacion):
 
     if operacion['tipo'] == 'compra':
         print(f"Monto invertido: {formatear_dinero(operacion['monto_invertido'])}")
-        print(f"Precio compra: {formatear_dinero(operacion['precio_compra'])}")
+        print(f"Precio de compra: {formatear_dinero(operacion['precio_compra'])}")
         print(f"Cantidad: {formatear_cantidad(operacion['cantidad'], operacion['activo'])}")
         
     else:
-        print(f"Cantidad : {formatear_cantidad(operacion['cantidad'], operacion['activo'])}")
-        print(f"Precio venta: {formatear_dinero(operacion['precio_venta'])}")
+        print(f"Cantidad: {formatear_cantidad(operacion['cantidad'], operacion['activo'])}")
+        print(f"Precio de venta: {formatear_dinero(operacion['precio_venta'])}")
         print(f"Monto recibido: {formatear_dinero(operacion['monto_recibido'])}")
     print("============================")
 
@@ -79,12 +75,11 @@ def mostrar_operaciones(operaciones):
     
     for operacion in operaciones:
         mostrar_operacion(operacion)
-        print()
 
 def mostrar_lista_posiciones(posiciones):
     
     print("============================")
-    print("Posiciones registradas")
+    print("   Posiciones registradas   ")
     print("============================")
     
     for posicion in posiciones:
@@ -92,9 +87,26 @@ def mostrar_lista_posiciones(posiciones):
 
 def mostrar_lista_activos(activos):
 
-    print("============================")
-    print("Activos registrados")
-    print("============================")
+    print("=============================")
+    print("     Activos registrados     ")
+    print("=============================")
 
     for activo in activos:
         print(f"- {activo}")
+
+def mostrar_posicion_seleccionada(resumen):
+    
+    print("\n=======================================")
+    print("         Posición Seleccionada         ")
+    print("=======================================")
+    print(f"Posición ID: {resumen['posicion']}")
+    print(f"Activo: {resumen['activo']}")
+    print("=======================================")
+    print(f"Capital histórico: {formatear_dinero(resumen['capital_historico'])}")
+    print(f"Capital recuperado: {formatear_dinero(resumen['capital_recuperado'])}")
+    print("=======================================")
+    print(f"Cantidad actual: {formatear_cantidad(resumen['cantidad_actual'], resumen['activo'])}")
+    print("=======================================")
+    print(f"Precio promedio: {formatear_dinero(resumen['precio_promedio'])}")
+    print(f"Ganancia realizada: {formatear_dinero(resumen['ganancia_realizada'])}")
+    print("=======================================")

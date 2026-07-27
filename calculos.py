@@ -32,6 +32,7 @@ def analizar_operaciones(operaciones):
         precio_promedio = capital_historico / cantidad_total   
     
     ganancia_realizada = 0
+    
     for venta in ventas:
             ganancia_realizada += (venta['precio_venta'] - precio_promedio) * venta['cantidad']
     
@@ -41,7 +42,7 @@ def analizar_operaciones(operaciones):
     "cantidad_actual": float(cantidad_actual),
     "capital_recuperado": float(capital_recuperado),
     "precio_promedio": float(precio_promedio),
-    'ganancia_realizada': float(ganancia_realizada),
+    'ganancia_realizada': float(ganancia_realizada)
 }
 
 def analizar_posicion(operaciones,posicion_id):

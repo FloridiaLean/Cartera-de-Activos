@@ -53,12 +53,13 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
         nueva_posicion = crear_posicion(posiciones,activo)
         id_posicion = nueva_posicion['id']
     else:
-        posicion = validar_posicion(posiciones, posicion_id, activo)
+        posicion = validar_posicion(posiciones,posicion_id,activo)
         
         if posicion is None:
             return False
+        
         id_posicion = posicion['id']
-            
+        
     agregar_compra(operaciones,id_posicion,activo,monto_invertido,precio_compra)
     
     guardar_operaciones(operaciones)
@@ -79,7 +80,7 @@ def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_ve
     if not validar_precio(precio_venta):
         return False
     
-    posicion = validar_posicion(posiciones, posicion_id, activo)
+    posicion = validar_posicion(posiciones,posicion_id,activo)
     
     if posicion is None:
         return False
@@ -88,7 +89,7 @@ def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_ve
     analisis = analizar_posicion(operaciones,id_posicion)
     
     if not validar_venta(analisis,cantidad):
-        print("No tiene la cantidad suficiente para realizar esta venta")
+        print("No tienes la cantidad suficiente para realizar esta venta")
         return False
     
     agregar_venta(operaciones,id_posicion,activo,cantidad,precio_venta)
@@ -150,7 +151,7 @@ def eliminar_operacion_servicio(operaciones,posiciones,operacion):
     operaciones_posicion = obtener_operaciones_por_posicion(operaciones,posicion_id)
     
     if not operaciones_posicion:
-        posicion = obtener_posicion_por_id(posiciones, posicion_id)
+        posicion = obtener_posicion_por_id(posiciones,posicion_id)
         eliminar_posicion(posiciones,posicion)
     else:
         actualizar_estado_posicion(operaciones,posiciones,posicion_id)

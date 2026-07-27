@@ -12,7 +12,8 @@ from visualizacion import (
     mostrar_operacion,
     mostrar_resumen_activo,
     mostrar_lista_posiciones,
-    mostrar_lista_activos
+    mostrar_lista_activos,
+    mostrar_posicion_seleccionada
 )
 from calculos import (
     generar_resumen_posicion,
@@ -47,20 +48,20 @@ def menu_registrar_compra(operaciones,posiciones):
     exito = False
     id_posicion = None
     
-    if  len(posiciones_abiertas) == 0:
+    if len(posiciones_abiertas) == 0:
         id_posicion = None
     else:
         print("\n=================================================")
         print("Se encontraron las siguientes posiciones abiertas:")
-        print("=================================================\n")
+        print("=================================================")
         
         for posicion in posiciones_abiertas:
             posicion_id = posicion["id"]
             resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
             mostrar_resumen_posicion(resumen)
             
-        print("\n0. Para crear una nueva posición.") 
-        print("Ingrese la Posición # para agregar a una existente.\n") 
+        print("\nIngrese 0 para crear una nueva posición.") 
+        print("Ingrese Posición ID para agregar a una existente.\n") 
         
         while True:
             
@@ -76,8 +77,8 @@ def menu_registrar_compra(operaciones,posiciones):
                     break
                 print("La posición seleccionada no existe.")
     
-    monto_invertido = leer_float("Ingrese el monto de inversión: ")
-    precio_compra = leer_float("Ingrese el precio de compra: ")
+    monto_invertido = leer_float("Ingrese el monto de la inversión: ")
+    precio_compra = leer_float("Ingrese el precio de compra del activo: ")
     
     exito = registrar_compra(operaciones,posiciones,id_posicion,activo,monto_invertido,precio_compra)    
     
@@ -96,10 +97,10 @@ def menu_registrar_venta(operaciones,posiciones):
         return 
     
     mostrar_lista_posiciones(posiciones_abiertas)
-
+    
     while True:
     
-        posicion_id = leer_int("\nIngrese el ID de la posicion: ")
+        posicion_id = leer_int("\nIngrese el ID de la posición: ")
         
         posicion = obtener_posicion_por_id(posiciones_abiertas,posicion_id)
             
@@ -110,12 +111,8 @@ def menu_registrar_venta(operaciones,posiciones):
     
     activo = posicion["activo"]
     
-    print("\n======================")
-    print("Posición seleccionada")
-    print("========================\n")
-    
     resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
-    mostrar_resumen_posicion(resumen)
+    mostrar_posicion_seleccionada(resumen)
     
     cantidad = leer_float("Ingrese la cantidad a vender: ")
     precio_venta = leer_float("Ingrese el precio al que vendio: ")
@@ -138,7 +135,7 @@ def menu_mostrar_posicion(operaciones,posiciones):
         
     while True:
         
-        posicion_id = leer_int("\nIngrese el ID de la posicion: ")
+        posicion_id = leer_int("\nIngrese el ID de la posición: ")
             
         posicion = obtener_posicion_por_id(posiciones,posicion_id)
             
@@ -200,12 +197,13 @@ def seleccionar_operacion(operaciones):
     
     while True:
         
-        operacion_id = leer_int("Ingrese el ID de la operacion: ")
+        operacion_id = leer_int("Ingrese el ID de la operación: ")
         operacion = obtener_operacion_por_id(operaciones,operacion_id)
         
         if operacion is not None:
             mostrar_operacion(operacion)
             return operacion
+        
         print("La operación seleccionada no existe. Intente nuevamente.")
         
 def menu_editar_operaciones(operaciones,posiciones):
@@ -265,7 +263,7 @@ def menu_eliminar_operacion(operaciones,posiciones):
         print("1. Si")
         print("2. Cancelar")
         
-        opcion = input("Seleccione la opción: ")  
+        opcion = input("Seleccione una opción: \n")  
         
         if opcion == "1": 
             exito = eliminar_operacion_servicio(operaciones,posiciones,operacion)
@@ -288,14 +286,14 @@ def menu_principal(operaciones,posiciones):
         CARTERA DE ACTIVOS
 =======================================
 
-    1. Registrar compra
-    2. Registrar venta
-    3. Mostrar posición
+    1. Registrar una compra
+    2. Registrar una venta
+    3. Mostrar resumen de posición
     4. Mostrar todas las posiciones
-    5. Mostrar resumen por activo
-    6. Mostrar operaciones
-    7. Editar operacion
-    8. Eliminar operacion
+    5. Mostrar resumen del activo
+    6. Mostrar todas las operaciones
+    7. Editar una operacion
+    8. Eliminar una operacion
     9. Salir
 ''')
         opcion = input("Seleccione la opción: ")

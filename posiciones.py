@@ -34,6 +34,7 @@ def obtener_posicion_por_id(posiciones,posicion_id):
     for posicion in posiciones:
         if posicion_id == posicion['id']:
             return posicion
+        
     return None
 
 def obtener_posicion_abierta_por_activo(posiciones,activo):
@@ -41,6 +42,7 @@ def obtener_posicion_abierta_por_activo(posiciones,activo):
     for posicion in posiciones:
         if posicion['activo'] == activo and posicion['estado'] == 'ABIERTA':
             return posicion
+        
     return None
 
 def obtener_posiciones_abiertas_por_activo(posiciones,activo):
@@ -50,6 +52,7 @@ def obtener_posiciones_abiertas_por_activo(posiciones,activo):
     for posicion in posiciones:
         if posicion['activo'] == activo and posicion['estado'] == 'ABIERTA':
             posiciones_abiertas.append(posicion)
+            
     return posiciones_abiertas
 
 def reabrir_posicion(posicion):

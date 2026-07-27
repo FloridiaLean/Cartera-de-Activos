@@ -69,26 +69,28 @@ Entre las funcionalidades implementadas se encuentran:
 ### Flujo general de la aplicación
 
 ```
-main.py
-    │
-    ▼
-menu.py  ◄───────────────────────────────────────────┐
-    │                                                │
-    ▼                                                │
-servicios.py                                         │
-    │                                                │
-    ├──────────────┐──────────────┐                  │
-    ▼              ▼              ▼                  │
-validaciones.py   operaciones.py  persistencia.py    │
-    │              │                                 │
-    ▼              ▼                                 │
-utilidades.py    posiciones.py                       │
-    │                                                │
-    ▼                                                │
-calculos.py                                          │
-    │                                                │ 
-    ▼                                                │
-visualizacion.py  ───────────────────────────────────┘
+                 Usuario
+                    |
+                    ↓
+                main.py
+                    |
+                    ↓
+                menu.py
+                    |
+                    ↓
+              servicios.py
+          /        |        \
+         ↓         ↓         ↓
+validaciones   operaciones  persistencia
+                      |
+                      ↓
+                archivos JSON
+          (operaciones.json / posiciones.json)
+                    ↓
+              calculos.py
+                    |
+                    ↓
+           visualizacion.py
 ```
 
 ### Responsabilidad de los módulos
@@ -191,9 +193,9 @@ Durante el desarrollo de este proyecto se aplican conceptos como:
 
 ## 🧩 Próximos pasos
 
-* [ ] Editar operaciones.
-* [ ] Eliminar operaciones.
-* [ ] Cierre automático de posiciones.
+* [ ] Rentabilidad.
+* [ ] Eliminar posiciones.
+* [ ] Estadísticas globales.
 * [ ] Migración de JSON a SQLite.
 * [ ] Desarrollar una interfaz web con Flask.   
 * [ ] Crear un dashboard para visualizar la cartera.

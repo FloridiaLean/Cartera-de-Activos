@@ -4,7 +4,7 @@ def obtener_fecha_actual():
     
     fecha = datetime.now()
     fecha_formateada = fecha.strftime("%d/%m/%Y %H:%M")
-
+    
     return fecha_formateada
 
 def normalizar_activo(activo):
