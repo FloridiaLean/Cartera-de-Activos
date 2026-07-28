@@ -25,19 +25,30 @@ def formatear_cantidad(cantidad,activo):
     
     return cantidad_formateada
 
-def leer_float(mensaje):
+def leer_float(mensaje,permitir_cancelar=False):
     
     while True:
         try:
-            return float(input(mensaje))
+            numero = float(input(mensaje))
+            
+            if permitir_cancelar and numero == 0:
+                return None 
+            
+            return numero
+        
         except ValueError:
             print("Debe ingresar un número válido.")
 
-def leer_int(mensaje):
+def leer_int(mensaje,permitir_cancelar=False):
     
     while True:
         try:
-            return int(input(mensaje))
+            numero = int(input(mensaje))
+            
+            if permitir_cancelar and numero == 0:
+                return None
+            return numero
+        
         except ValueError:
             print("Debe ingresar un número entero.")
 

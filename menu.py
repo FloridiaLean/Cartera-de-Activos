@@ -77,13 +77,20 @@ def menu_registrar_compra(operaciones,posiciones):
                     break
                 print("La posición seleccionada no existe.")
     
-    monto_invertido = leer_float("Ingrese el monto de la inversión: ")
-    precio_compra = leer_float("Ingrese el precio de compra del activo: ")
+    monto_invertido = leer_float("Ingrese el monto de la inversión (0 para volver): ",permitir_cancelar=True)
+    
+    if monto_invertido is None:
+        return
+    
+    precio_compra = leer_float("Ingrese el precio de compra del activo (0 para volver): ",permitir_cancelar=True)
+    
+    if precio_compra is None:
+        return
     
     exito = registrar_compra(operaciones,posiciones,id_posicion,activo,monto_invertido,precio_compra)    
     
     if exito:
-        print(f"Compra registrada correctamente.")
+        print("Compra registrada correctamente.")
     
     pausar()
 
@@ -91,60 +98,42 @@ def menu_registrar_venta(operaciones,posiciones):
     
     posiciones_abiertas = obtener_posiciones_abiertas(posiciones)
     
-    if not posiciones_abiertas:
-        print("No existen posiciones abiertas para registrar una venta.")
-        pausar()
-        return 
+    posicion = seleccionar_posicion(posiciones_abiertas)
     
-    mostrar_lista_posiciones(posiciones_abiertas)
+    if posicion is None:
+        return
     
-    while True:
-    
-        posicion_id = leer_int("\nIngrese el ID de la posición: ")
-        
-        posicion = obtener_posicion_por_id(posiciones_abiertas,posicion_id)
-            
-        if posicion is not None:
-            break
-        
-        print("La posición seleccionada no es válida. Intente nuevamente.")
-    
+    posicion_id = posicion["id"]
     activo = posicion["activo"]
     
     resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
     mostrar_posicion_seleccionada(resumen)
     
-    cantidad = leer_float("Ingrese la cantidad a vender: ")
-    precio_venta = leer_float("Ingrese el precio al que vendio: ")
+    cantidad = leer_float("Ingrese la cantidad a vender (0 para volver): ",permitir_cancelar=True)
+    
+    if cantidad is None:
+        return
+    
+    precio_venta = leer_float("Ingrese el precio al que vendio (0 para volver): ",permitir_cancelar=True)
+    
+    if precio_venta is None:
+        return
     
     exito = registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_venta)
     
     if exito:
-        print(f"Venta registrada correctamente.")
+        print("Venta registrada correctamente.")
     
     pausar()
 
 def menu_mostrar_posicion(operaciones,posiciones):
     
-    if not posiciones:
-        print("No existen posiciones Registradas.")
-        pausar()
-        return 
-        
-    mostrar_lista_posiciones(posiciones)
-        
-    while True:
-        
-        posicion_id = leer_int("\nIngrese el ID de la posición: ")
-            
-        posicion = obtener_posicion_por_id(posiciones,posicion_id)
-            
-        if posicion is not None:
-            break
-            
-        print("La posición seleccionada no es válida. Intente nuevamente.")
+    posicion = seleccionar_posicion(posiciones)
+
+    if posicion is None:
+        return
     
-    resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
+    resumen = generar_resumen_posicion(operaciones,posiciones,posicion['id'])
     mostrar_resumen_posicion(resumen)
     
     pausar()
@@ -197,7 +186,11 @@ def seleccionar_operacion(operaciones):
     
     while True:
         
-        operacion_id = leer_int("Ingrese el ID de la operación: ")
+        operacion_id = leer_int("Ingrese el ID de la operación (0 para volver): ",permitir_cancelar=True)
+        
+        if operacion_id is None:
+            return None
+        
         operacion = obtener_operacion_por_id(operaciones,operacion_id)
         
         if operacion is not None:
@@ -205,7 +198,29 @@ def seleccionar_operacion(operaciones):
             return operacion
         
         print("La operación seleccionada no existe. Intente nuevamente.")
+
+def seleccionar_posicion(posiciones):
+    
+    if not posiciones:
+        print("No hay posiciones registradas.")
+        return None
+    
+    mostrar_lista_posiciones(posiciones)
+    
+    while True:
         
+        posicion_id = leer_int("\nIngrese el ID de la posición (0 para volver): ",permitir_cancelar=True)
+            
+        if posicion_id is None:
+            return None
+            
+        posicion = obtener_posicion_por_id(posiciones,posicion_id)
+                
+        if posicion is not None:
+            return posicion
+            
+        print("La posición seleccionada no es válida. Intente nuevamente.")
+
 def menu_editar_operaciones(operaciones,posiciones):
     
     operacion = seleccionar_operacion(operaciones)
@@ -221,8 +236,15 @@ def menu_editar_operaciones(operaciones,posiciones):
         print(f"Precio actual: {formatear_dinero(operacion['precio_compra'])}")
         print("Ingrese los nuevos valores.\n")
         
-        monto_invertido = leer_float("Nuevo monto de inversión: ")
-        precio_compra = leer_float("Nuevo precio de compra: ")
+        monto_invertido = leer_float("Ingrese el monto de la inversión (0 para volver): ",permitir_cancelar=True)
+        
+        if monto_invertido is None:
+            return
+        
+        precio_compra = leer_float("Ingrese el precio de compra del activo (0 para volver): ",permitir_cancelar=True)
+        
+        if precio_compra is None:
+            return
         
         exito = editar_compra_servicio(operaciones,operacion,monto_invertido,precio_compra)
         
@@ -236,8 +258,15 @@ def menu_editar_operaciones(operaciones,posiciones):
         print(f"Precio de venta: {formatear_dinero(operacion['precio_venta'])}")
         print("Ingrese los nuevos valores.\n")
         
-        cantidad = leer_float("Nueva cantidad: ")
-        precio_venta = leer_float("Nuevo precio de venta: ")
+        cantidad = leer_float("Ingrese la cantidad a vender (0 para volver): ",permitir_cancelar=True)
+            
+        if cantidad is None:
+            return
+            
+        precio_venta = leer_float("Ingrese el precio al que vendio (0 para volver): ",permitir_cancelar=True)
+            
+        if precio_venta is None:
+            return
         
         exito = editar_venta_servicio(operaciones,posiciones,operacion,cantidad,precio_venta)
         
