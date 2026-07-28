@@ -12,9 +12,9 @@ def guardar_posiciones(posiciones):
         json.dump(posiciones, archivo, indent=4)
     
 def cargar_operaciones():
-    try :
+    try:
         with open(ARCHIVO_OPERACIONES, "r") as archivo:
-            operaciones =json.load(archivo)
+            operaciones = json.load(archivo)
             return operaciones
     except FileNotFoundError:
         return []
@@ -22,7 +22,7 @@ def cargar_operaciones():
 def cargar_posiciones():
     try:
         with open(ARCHIVO_POSICIONES, "r") as archivo:
-            posiciones =json.load(archivo)
+            posiciones = json.load(archivo)
         return posiciones
     except FileNotFoundError:
         return []

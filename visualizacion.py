@@ -29,7 +29,7 @@ def mostrar_resumen_posicion(resumen):
 
 def mostrar_resumen_posiciones(resumenes):
     
-    if len(resumenes) == 0:
+    if not resumenes:
         print("No existen posiciones registradas.")
         return
     
@@ -69,7 +69,7 @@ def mostrar_operacion(operacion):
 
 def mostrar_operaciones(operaciones):
 
-    if len(operaciones) == 0:
+    if not operaciones:
         print("No hay operaciones registradas.")
         return
     

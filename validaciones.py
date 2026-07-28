@@ -56,7 +56,7 @@ def validar_venta(analisis,cantidad):
         return False
     return True
 
-def validar_edicion_venta(operaciones, posiciones, operacion, nueva_cantidad):
+def validar_edicion_venta(operaciones,posiciones,operacion,nueva_cantidad):
     
     posicion_id = operacion["posicion_id"]
     
@@ -70,7 +70,7 @@ def validar_edicion_venta(operaciones, posiciones, operacion, nueva_cantidad):
     
     return True
 
-def tiene_ventas_asociadas(operaciones, operacion):
+def tiene_ventas_asociadas(operaciones,operacion):
     
     for operacion_actual in operaciones:   
         if operacion_actual["tipo"] == "venta" and operacion_actual["posicion_id"] == operacion["posicion_id"]:

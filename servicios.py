@@ -84,6 +84,7 @@ def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_ve
     
     if posicion is None:
         return False
+    
     id_posicion = posicion['id']
     
     analisis = analizar_posicion(operaciones,id_posicion)

@@ -98,13 +98,13 @@ validaciones   operaciones  persistencia
 El proyecto está dividido por responsabilidades:
 
 - menu.py → interacción con el usuario.
-- servicios.py → lógica de negocio.
-- operaciones.py → registro de operaciones.
+- servicios.py → reglas de negocio.
+- validaciones.py → validaciones.
+- operaciones.py → gestión de operaciones.
 - posiciones.py → gestión de posiciones.
 - calculos.py → cálculos financieros.
-- visualizacion.py → impresión de información.
-- persistencia.py → lectura y escritura en JSON.
-- validaciones.py → validaciones de datos.
+- visualizacion.py → salida por consola.
+- persistencia.py → Almacenamiento.
 - utilidades.py → funciones auxiliares.
 
 Esta separación facilita el mantenimiento del proyecto y prepara la lógica para futuras integraciones con Flask y una base de datos.
