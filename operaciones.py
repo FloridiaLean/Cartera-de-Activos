@@ -107,3 +107,10 @@ def editar_venta(operacion, cantidad, precio_venta):
 def eliminar_operacion(operaciones,operacion):
     
     operaciones.remove(operacion)
+
+def eliminar_operaciones_por_posicion(operaciones,posicion_id):
+    
+    operaciones_posicion = obtener_operaciones_por_posicion(operaciones,posicion_id)
+    
+    for operacion in operaciones_posicion:
+        eliminar_operacion(operaciones,operacion)

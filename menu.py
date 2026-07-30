@@ -3,7 +3,8 @@ from servicios import (
     registrar_venta,
     editar_compra_servicio,
     editar_venta_servicio,
-    eliminar_operacion_servicio
+    eliminar_operacion_servicio,
+    eliminar_posicion_servicio
 )
 from visualizacion import (
     mostrar_resumen_posicion,
@@ -26,7 +27,8 @@ from utilidades import (
     pausar,
     normalizar_activo,
     formatear_dinero,
-    formatear_cantidad
+    formatear_cantidad,
+    leer_texto
 )
 from posiciones import (
     obtener_posicion_abierta_por_activo,
@@ -41,7 +43,12 @@ from operaciones import (
 
 def menu_registrar_compra(operaciones,posiciones):
     
-    activo = normalizar_activo(input("Ingrese el activo que desea comprar: "))
+    activo = leer_texto("Ingrese el nombre del activo (0 para volver): ",permitir_cancelar=True)
+    
+    if activo is None:
+        return
+    
+    activo = normalizar_activo(activo)
     
     posiciones_abiertas = obtener_posiciones_abiertas_por_activo(posiciones,activo)
     
@@ -129,7 +136,7 @@ def menu_registrar_venta(operaciones,posiciones):
 def menu_mostrar_posicion(operaciones,posiciones):
     
     posicion = seleccionar_posicion(posiciones)
-
+    
     if posicion is None:
         return
     
@@ -157,7 +164,11 @@ def menu_mostrar_resumen_activo(operaciones):
     
     while True:
         
-        activo = input("\nIngrese el nombre del activo: ")
+        activo = leer_texto("Ingrese el nombre del activo (0 para volver): ",permitir_cancelar=True)
+            
+        if activo is None:
+            return
+            
         activo = normalizar_activo(activo)
         
         if activo in activos:
@@ -289,22 +300,65 @@ def menu_eliminar_operacion(operaciones,posiciones):
         print("\n=================================")
         print("¿Desea eliminar esta operación?")
         print("=================================\n")
-        print("1. Si")
+        print("1. Sí")
         print("2. Cancelar")
         
-        opcion = input("Seleccione una opción: \n")  
+        opcion = leer_texto("Seleccione una opción: ")  
         
         if opcion == "1": 
+            
             exito = eliminar_operacion_servicio(operaciones,posiciones,operacion)
+            
             if exito:
                 print("\nOperación eliminada correctamente.\n")
                 pausar()
                 return
+            
+        elif opcion == "2":
+            
+            print("\nOperación cancelada.\n")
+            pausar()
+            return
+        else:
+            print("Opción Inválida.")
+
+def menu_eliminar_posicion(operaciones,posiciones):
+    
+    posicion = seleccionar_posicion(posiciones)
+    
+    if posicion is None:
+        pausar()
+        return
+    
+    resumen = generar_resumen_posicion(operaciones,posiciones,posicion["id"])
+    
+    mostrar_resumen_posicion(resumen)
+    
+    while True:
+    
+        print("\n=================================")
+        print("¿Desea eliminar esta posición?")
+        print("=================================")
+        print("1. Sí")
+        print("2. Cancelar")
+        
+        opcion = leer_texto("Seleccione una opción: ")
+        
+        if opcion == "1":
+        
+            exito = eliminar_posicion_servicio(operaciones,posiciones,posicion)
+            
+            if exito:
+                print("\nPosición eliminada correctamente.\n")
+                pausar()
+                return
+
         elif opcion == "2":
             print("\nOperación cancelada.\n")
             pausar()
             return
-        else: print("Opción Inválida.")
+        else:
+            print("Opción inválida.")
 
 def menu_principal(operaciones,posiciones):
     
@@ -315,17 +369,18 @@ def menu_principal(operaciones,posiciones):
         CARTERA DE ACTIVOS
 =======================================
 
-    1. Registrar una compra
-    2. Registrar una venta
-    3. Mostrar resumen de posición
-    4. Mostrar todas las posiciones
-    5. Mostrar resumen del activo
-    6. Mostrar todas las operaciones
-    7. Editar una operacion
-    8. Eliminar una operacion
-    9. Salir
+1. Registrar una compra
+2. Registrar una venta
+3. Mostrar resumen de posición
+4. Mostrar todas las posiciones
+5. Mostrar resumen del activo
+6. Mostrar todas las operaciones
+7. Editar una operacion
+8. Eliminar una operacion
+9. Eliminar una posición
+10. Salir
 ''')
-        opcion = input("Seleccione la opción: ")
+        opcion = leer_texto("Seleccione una opción: ")
         
         if opcion == "1": menu_registrar_compra(operaciones,posiciones)
         elif opcion == "2": menu_registrar_venta(operaciones,posiciones)
@@ -335,6 +390,7 @@ def menu_principal(operaciones,posiciones):
         elif opcion == "6": menu_mostrar_operaciones(operaciones)
         elif opcion == "7": menu_editar_operaciones(operaciones,posiciones)
         elif opcion == "8": menu_eliminar_operacion(operaciones,posiciones)
-        elif opcion == "9": break
+        elif opcion == "9": menu_eliminar_posicion(operaciones,posiciones)
+        elif opcion == "10": break
         else:
             print("Opción inválida. Por favor, seleccione una opción válida.")

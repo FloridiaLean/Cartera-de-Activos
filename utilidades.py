@@ -52,5 +52,20 @@ def leer_int(mensaje,permitir_cancelar=False):
         except ValueError:
             print("Debe ingresar un número entero.")
 
+def leer_texto(mensaje,permitir_cancelar=False):
+
+    while True:
+
+        texto = input(mensaje).strip()
+
+        if permitir_cancelar and texto == "0":
+            return None
+
+        if texto == "":
+            print("Debe ingresar un texto válido.")
+            continue
+
+        return texto
+
 def pausar():
     input("\nPresione ENTER para continuar...")

@@ -4,7 +4,8 @@ from operaciones import (
     editar_compra,
     editar_venta,
     eliminar_operacion,
-    obtener_operaciones_por_posicion
+    obtener_operaciones_por_posicion,
+    eliminar_operaciones_por_posicion
 )
 from calculos import (
     analizar_activo,
@@ -171,3 +172,17 @@ def actualizar_estado_posicion(operaciones,posiciones,posicion_id):
         cerrar_posicion(posicion)
     else:
         reabrir_posicion(posicion)
+
+def eliminar_posicion_servicio(operaciones,posiciones,posicion):
+    
+    posicion_id = posicion["id"]
+    
+    eliminar_operaciones_por_posicion(operaciones,posicion_id)
+    
+    eliminar_posicion(posiciones,posicion)
+    
+    guardar_operaciones(operaciones)
+    guardar_posiciones(posiciones)
+    
+    return True
+    
