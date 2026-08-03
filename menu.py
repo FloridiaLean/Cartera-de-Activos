@@ -40,6 +40,9 @@ from operaciones import (
     obtener_operacion_por_id,
     obtener_activos
 )
+from validaciones import (
+    tiene_ventas_asociadas
+)
 
 def menu_registrar_compra(operaciones,posiciones):
     
@@ -242,6 +245,10 @@ def menu_editar_operaciones(operaciones,posiciones):
     
     if operacion["tipo"] == "compra":
         
+        if tiene_ventas_asociadas(operaciones,operacion):
+            pausar()
+            return
+        
         print("\n========= Editar Compra =========")
         print(f"Monto actual: {formatear_dinero(operacion['monto_invertido'])}")
         print(f"Precio actual: {formatear_dinero(operacion['precio_compra'])}")
@@ -311,8 +318,9 @@ def menu_eliminar_operacion(operaciones,posiciones):
             
             if exito:
                 print("\nOperación eliminada correctamente.\n")
+            else:
                 pausar()
-                return
+            return
             
         elif opcion == "2":
             

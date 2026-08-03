@@ -75,6 +75,6 @@ def tiene_ventas_asociadas(operaciones,operacion):
     for operacion_actual in operaciones:   
         if operacion_actual["tipo"] == "venta" and operacion_actual["posicion_id"] == operacion["posicion_id"]:
             print("No se puede realizar esta acción porque existen ventas asociadas.")
-            return False
+            return True
     
-    return True
+    return False

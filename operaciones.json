@@ -118,5 +118,15 @@
         "cantidad": 0.01152761,
         "precio_venta": 81828.7,
         "monto_recibido": 943.289340407
+    },
+    {
+        "id": 13,
+        "fecha": "03/08/2026 14:58",
+        "posicion_id": 2,
+        "tipo": "compra",
+        "activo": "BTC",
+        "monto_invertido": 150.0,
+        "precio_compra": 64000.0,
+        "cantidad": 0.00234375
     }
 ]
