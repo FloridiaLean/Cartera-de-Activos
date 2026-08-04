@@ -25,6 +25,13 @@
 
     </form>
 
+{% with mensajes = get_flashed_messages() %}
+    {% if mensajes %}
+        {% for mensaje in mensajes %}
+            <p>{{ mensaje }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 </body>
 
 </html>
