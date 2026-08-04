@@ -1,19 +1,10 @@
-from flask import (
-    Flask,
-    render_template
-)
-from routes.compras import (
-    compras_bp
-)
+from flask import Flask
+from routes import registrar_blueprints
 
 app = Flask(__name__)
 app.secret_key = "cartera_activos"
 
-app.register_blueprint(compras_bp)
-
-@app.route("/")
-def inicio():
-    return render_template("index.html")
+registrar_blueprints(app)
 
 if __name__ == "__main__":
     app.run(debug=True)
