@@ -5,5 +5,12 @@
         "estado": "CERRADA",
         "fecha_apertura": "24/07/2026 20:50",
         "fecha_cierre": "24/07/2026 20:54"
+    },
+    {
+        "id": 2,
+        "activo": "ETH",
+        "estado": "ABIERTA",
+        "fecha_apertura": "05/08/2026 08:43",
+        "fecha_cierre": null
     }
 ]

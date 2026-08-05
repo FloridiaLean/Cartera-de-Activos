@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Venta</title>
+</head>
+
+<body>
+
+    <h1>Registrar Venta</h1>
+
+    {% if posiciones_abiertas %}
+        <form method="POST">
+
+            <label>Posición</label>
+    
+            <select name="posicion_id">
+    
+                {% for posicion in posiciones_abiertas %}
+        
+                    <option value="{{ posicion['id'] }}">{{ posicion['activo'] }} | Posición #{{ posicion['id'] }}</option>
+        
+                {% endfor %}
+
+            </select>
+
+            <label>Cantidad</label>
+
+            <input type="number" name="cantidad" step="any" required>
+
+            <label>Precio de venta</label>
+
+            <input type="number" name="precio_venta" step="any" required>
+
+            <button type="submit">Registrar Venta</button>
+
+        </form>
+
+    {% else %}
+
+        <p>No existen posiciones abiertas para registrar una venta.</p>
+
+        <a href="{{ url_for('compras.compras') }}">Registrar una compra</a>
+        
+    {% endif %}
+
+</body>
+
+</html>

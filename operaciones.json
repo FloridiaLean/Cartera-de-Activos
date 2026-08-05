@@ -118,5 +118,15 @@
         "cantidad": 0.01152761,
         "precio_venta": 81828.7,
         "monto_recibido": 943.289340407
+    },
+    {
+        "id": 13,
+        "fecha": "05/08/2026 08:43",
+        "posicion_id": 2,
+        "tipo": "compra",
+        "activo": "ETH",
+        "monto_invertido": 150.0,
+        "precio_compra": 2400.0,
+        "cantidad": 0.0625
     }
 ]
