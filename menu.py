@@ -114,7 +114,6 @@ def menu_registrar_venta(operaciones,posiciones):
         return
     
     posicion_id = posicion["id"]
-    activo = posicion["activo"]
     
     resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
     mostrar_posicion_seleccionada(resumen)
@@ -129,7 +128,7 @@ def menu_registrar_venta(operaciones,posiciones):
     if precio_venta is None:
         return
     
-    exito = registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_venta)
+    exito = registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio_venta)
     
     if exito:
         print("Venta registrada correctamente.")

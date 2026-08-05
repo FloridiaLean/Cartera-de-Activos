@@ -30,7 +30,7 @@ def validar_cantidad(cantidad):
         return False
     return True
 
-def validar_posicion(posiciones,posicion_id,activo):
+def validar_posicion(posiciones,posicion_id):
     
     posicion = obtener_posicion_por_id(posiciones,posicion_id)
         
@@ -40,10 +40,6 @@ def validar_posicion(posiciones,posicion_id,activo):
         
     if posicion['estado'] != 'ABIERTA':
         print("La posición no se encuentra abierta.")
-        return None
-        
-    if posicion['activo'] != activo:
-        print(f"El activo {activo} no coincide con el activo de la posición ({posicion['activo']}).")
         return None
     
     return posicion

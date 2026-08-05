@@ -8,43 +8,40 @@
 
 <body>
 
-    <h1>Registrar Venta</h1>
+<h1>Registrar Venta</h1>
 
-    {% if posiciones_abiertas %}
-        <form method="POST">
+{% if posiciones_abiertas %}
 
-            <label>Posición</label>
+    <form method="POST">
+        <label>Posición</label>
+
+        <select name="posicion_id">
+
+            {% for posicion in posiciones_abiertas %}
     
-            <select name="posicion_id">
+                <option value="{{ posicion['id'] }}">{{ posicion['activo'] }} | Posición #{{ posicion['id'] }}</option>
     
-                {% for posicion in posiciones_abiertas %}
-        
-                    <option value="{{ posicion['id'] }}">{{ posicion['activo'] }} | Posición #{{ posicion['id'] }}</option>
-        
-                {% endfor %}
+            {% endfor %}
+        </select>
+        <label>Cantidad</label>
+        <input type="number" name="cantidad" step="any" required>
+        <label>Precio de venta</label>
+        <input type="number" name="precio_venta" step="any" required>
+        <button type="submit">Registrar Venta</button>
+    </form>
+{% else %}
+    <p>No existen posiciones abiertas para registrar una venta.</p>
+    <a href="{{ url_for('compras.compras') }}">Registrar una compra</a>
+    
+{% endif %}
 
-            </select>
-
-            <label>Cantidad</label>
-
-            <input type="number" name="cantidad" step="any" required>
-
-            <label>Precio de venta</label>
-
-            <input type="number" name="precio_venta" step="any" required>
-
-            <button type="submit">Registrar Venta</button>
-
-        </form>
-
-    {% else %}
-
-        <p>No existen posiciones abiertas para registrar una venta.</p>
-
-        <a href="{{ url_for('compras.compras') }}">Registrar una compra</a>
-        
+{% with mensajes = get_flashed_messages() %}
+    {% if mensajes %}
+        {% for mensaje in mensajes %}
+            <p>{{ mensaje }}</p>
+        {% endfor %}
     {% endif %}
-
+{% endwith %}
 </body>
 
 </html>

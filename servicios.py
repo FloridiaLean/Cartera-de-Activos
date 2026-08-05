@@ -68,22 +68,19 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
     
     return True
     
-def registrar_venta(operaciones,posiciones,posicion_id,activo,cantidad,precio_venta):
+def registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio_venta):
     
-    activo = normalizar_activo(activo)
-    
-    if not validar_activo(activo):
+    posicion = validar_posicion(posiciones,posicion_id)
+
+    if posicion is None:
         return False
+
+    activo = posicion["activo"]
     
     if not validar_cantidad(cantidad):
         return False
     
     if not validar_precio(precio_venta):
-        return False
-    
-    posicion = validar_posicion(posiciones,posicion_id,activo)
-    
-    if posicion is None:
         return False
     
     id_posicion = posicion['id']

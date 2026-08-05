@@ -128,5 +128,35 @@
         "monto_invertido": 150.0,
         "precio_compra": 2400.0,
         "cantidad": 0.0625
+    },
+    {
+        "id": 14,
+        "fecha": "05/08/2026 15:33",
+        "posicion_id": 2,
+        "tipo": "compra",
+        "activo": "ETH",
+        "monto_invertido": 1500.0,
+        "precio_compra": 2400.0,
+        "cantidad": 0.625
+    },
+    {
+        "id": 15,
+        "fecha": "05/08/2026 15:33",
+        "posicion_id": 3,
+        "tipo": "compra",
+        "activo": "BTC",
+        "monto_invertido": 150.0,
+        "precio_compra": 64000.0,
+        "cantidad": 0.00234375
+    },
+    {
+        "id": 16,
+        "fecha": "05/08/2026 15:44",
+        "posicion_id": 3,
+        "tipo": "venta",
+        "activo": "BTC",
+        "cantidad": 0.00234375,
+        "precio_venta": 65000.0,
+        "monto_recibido": 152.34375
     }
 ]
