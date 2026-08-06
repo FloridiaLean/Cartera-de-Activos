@@ -20,7 +20,7 @@ from datos import (
 
 compras_bp = Blueprint("compras",__name__)
 
-@compras_bp.route("/compras",methods=["GET", "POST"])
+@compras_bp.route("/compras",methods=["GET","POST"])
 def compras():
 
     if request.method == "POST":

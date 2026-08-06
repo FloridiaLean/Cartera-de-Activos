@@ -8,29 +8,50 @@
 
 <body>
 
-    <h1>{{ titulo }}</h1>
+<h1>Mi Cartera</h1>
 
-    <h2>Posiciones registradas</h2>
+<p>Bienvenido al sistema de gestión de inversiones.</p>
 
-    {% for posicion in posiciones %}
+<hr>
 
-    <p>ID Posicion #:  {{ posicion["id"] }} | {{ posicion["activo"] }} | Estado: {{ posicion["estado"] }}</p>
+<h2>Menú principal</h2>
+
+<ul>
+    <li><a href="/compras">Registrar compra</a></li>
+    <li><a href="/ventas">Registrar venta</a></li>
+</ul>
+
+<hr>
+
+<h2>Posiciones Abiertas</h2>
+
+<table>
+
+    <tr>
+        <th>Posicion</th>
+        <th>Activo</th>
+        <th>Capital Invertido</th>
+        <th>Cantidad Actual</th>
+        <th>Precio Promedio</th>
+        <th>Ganancia Realizada</th>
+        <th>Estado</th>
+    </tr>
+
+    {% for resumen in resumenes %}
+
+    <tr>
+        <td>{{ resumen['posicion'] }}</td>
+        <td>{{ resumen['activo'] }}</td>
+        <td>{{ resumen['capital_historico'] }}</td>
+        <td>{{ resumen['cantidad_actual'] }}</td>
+        <td>{{ resumen['precio_promedio'] }}</td>
+        <td>{{ resumen['ganancia_realizada'] }}</td>
+        <td>{{ resumen['estado'] }}</td>
+    </tr>
 
     {% endfor %}
 
-    <p>Bienvenido al sistema de gestión de inversiones.</p>
-
-    <hr>
-
-    <h2>Menú principal</h2>
-
-    <ul>
-        <li><a href="/compras">Registrar compra</a></li>
-        <li><a href="/ventas">Registrar venta</a></li>
-        <li><a href="#">Ver posiciones</a></li>
-        <li><a href="#">Ver operaciones</a></li>
-        <li><a href="#">Resumen por activos</a></li>
-    </ul>
+</table>    
 
 </body>
 
