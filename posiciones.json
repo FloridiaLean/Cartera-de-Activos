@@ -10,14 +10,7 @@
         "id": 2,
         "activo": "ETH",
         "estado": "ABIERTA",
-        "fecha_apertura": "05/08/2026 15:33",
+        "fecha_apertura": "06/08/2026 09:22",
         "fecha_cierre": null
-    },
-    {
-        "id": 3,
-        "activo": "BTC",
-        "estado": "CERRADA",
-        "fecha_apertura": "05/08/2026 15:33",
-        "fecha_cierre": "05/08/2026 15:44"
     }
 ]

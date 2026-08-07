@@ -31,6 +31,8 @@ def analizar_operaciones(operaciones):
     else:
         precio_promedio = capital_historico / cantidad_total   
     
+    
+    capital_invertido_actual = cantidad_actual * precio_promedio
     ganancia_realizada = 0
     
     for venta in ventas:
@@ -38,6 +40,7 @@ def analizar_operaciones(operaciones):
     
     return {
     "capital_historico": float(capital_historico),
+    "capital_invertido_actual": float(capital_invertido_actual),
     "cantidad_total": float(cantidad_total),
     "cantidad_actual": float(cantidad_actual),
     "capital_recuperado": float(capital_recuperado),
@@ -101,6 +104,7 @@ def generar_resumen_posicion(operaciones,posiciones,posicion_id):
         'fecha_apertura': posicion['fecha_apertura'],
         'fecha_cierre': posicion['fecha_cierre'],
         'capital_historico': analisis['capital_historico'],
+        'capital_invertido_actual': analisis['capital_invertido_actual'],
         'cantidad_actual': analisis['cantidad_actual'],
         'cantidad_total': analisis['cantidad_total'],
         'precio_promedio': analisis['precio_promedio'],
@@ -118,3 +122,48 @@ def generar_resumen_todas_posiciones(operaciones,posiciones):
         resumenes.append(resumen)
     
     return resumenes
+
+def calcular_capital_invertido(resumenes):
+    
+    capital_invertido = 0 
+    
+    for resumen in resumenes:
+        capital_invertido += resumen['capital_invertido_actual']
+    
+    return capital_invertido
+
+def calcular_ganancia_realizada(resumenes):
+    
+    ganancia_realizada = 0 
+    
+    for resumen in resumenes:
+        ganancia_realizada += resumen['ganancia_realizada']
+    
+    return ganancia_realizada
+
+def calcular_cantidad_posiciones(resumenes):
+
+    return len(resumenes)
+
+def calcular_liquidez(configuracion,dashboard):
+    
+    capital_inicial = configuracion["capital_inicial"]
+    capital_invertido = dashboard["capital_invertido"]
+    ganancia_realizada = dashboard["ganancia_realizada"]
+    
+    liquidez = (capital_inicial - capital_invertido + ganancia_realizada)
+    
+    return liquidez
+
+def generar_resumen_dashboard(resumenes_abiertas,resumenes_todas,configuracion):
+
+    dashboard = {
+        
+        "capital_invertido": calcular_capital_invertido(resumenes_abiertas),
+        "ganancia_realizada": calcular_ganancia_realizada(resumenes_todas),
+        "cantidad_posiciones": calcular_cantidad_posiciones(resumenes_todas),
+        "cantidad_posiciones_abiertas": calcular_cantidad_posiciones(resumenes_abiertas)
+    }
+    dashboard["liquidez"] = calcular_liquidez(configuracion, dashboard)
+    
+    return dashboard

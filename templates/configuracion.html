@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Configuración</title>
+</head>
+
+<body>
+
+<a href="{{ url_for('inicio.inicio') }}">← Volver al inicio</a>
+
+<h1>Configuración</h1>
+
+<form method="POST">
+
+
+    <label>Capital inicial</label>
+
+    <input type="number" name="capital_inicial" step="any" min="0" value="{{ configuracion['capital_inicial'] }}" required>
+
+    <button type="submit">Guardar configuración</button>
+
+</form>
+
+</body>
+
+</html>

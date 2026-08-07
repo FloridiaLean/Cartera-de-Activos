@@ -10,20 +10,28 @@
 
 <h1>Mi Cartera</h1>
 
-<p>Bienvenido al sistema de gestión de inversiones.</p>
-
 <hr>
 
 <h2>Menú principal</h2>
 
 <ul>
-    <li><a href="/compras">Registrar compra</a></li>
-    <li><a href="/ventas">Registrar venta</a></li>
+    <li><a href="{{ url_for('configuracion.mostrar_configuracion') }}">Configuración</a></li>
+    <li><a href="{{ url_for('compras.compras') }}">Registrar compra</a></li>
+    <li><a href="{{ url_for('ventas.ventas') }}">Registrar venta</a></li>
 </ul>
 
 <hr>
 
-<h2>Posiciones Abiertas</h2>
+<h2>DashBoard</h2>
+
+<p>Capital invertido: <strong>{{ dashboard["capital_invertido"] }}</strong> USD</p>
+<p>Ganancia realizada: <strong>{{ dashboard["ganancia_realizada"] }}</strong> USD</p>
+<p>Cantidad de posiciones: <strong>{{ dashboard["cantidad_posiciones"] }}</strong></p>
+<p>Liquidez: <strong>{{ dashboard["liquidez"] }}</strong> USD</p>
+
+<hr>
+
+<h2>Posiciones Abiertas (<strong>{{ dashboard["cantidad_posiciones_abiertas"] }}</strong>)</h2>
 
 <table>
 
