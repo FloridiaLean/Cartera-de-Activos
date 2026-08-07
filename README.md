@@ -18,23 +18,26 @@ El foco del proyecto no es únicamente el resultado final, sino también el apre
 
 Construir una plataforma web que permita:
 
-* Registrar compras y ventas de activos.
-* Gestionar una cartera de inversiones en tiempo real.
-* Visualizar rendimiento y métricas clave.
-* Consultar rendimiento histórico.
-* Persistir información en una base de datos.
-* Ofrecer una interfaz web intuitiva.
+## 🎯 Objetivo
+
+Desarrollar una plataforma web para la gestión y análisis de una cartera de inversiones personales.
+
+La aplicación busca ofrecer una visión completa de la cartera mediante indicadores, resúmenes por activo, seguimiento de posiciones y operaciones históricas, permitiendo registrar compras y ventas de activos financieros desde una interfaz web intuitiva.
+
+El proyecto tiene como objetivo principal aplicar buenas prácticas de desarrollo de software mientras evoluciona desde una aplicación de consola hacia una aplicación web completa.
 
 ---
 
 ## ⭐ Características principales
 
 - Arquitectura modular.
+- Aplicación web desarrollada con Flask.
 - Persistencia automática en JSON.
 - Gestión de múltiples posiciones por activo.
+- Dashboard con métricas generales.
+- Configuración del capital inicial.
 - Cálculos financieros automáticos.
-- Menú interactivo en consola.
-- Preparado para migrar a Flask y SQLite.
+- Preparado para migrar a SQLite.
 
 ---
 
@@ -49,15 +52,14 @@ Entre las funcionalidades implementadas se encuentran:
 - Registro de compras.
 - Registro de ventas.
 - Creación automática de posiciones.
-- Posibilidad de agregar compras a posiciones existentes.
-- Posibilidad de crear múltiples posiciones para un mismo activo.
-- Cálculo automático de cantidad comprada.
+- Gestión de posiciones abiertas y cerradas.
+- Dashboard con indicadores generales.
+- Configuración del capital inicial.
+- Cálculo de liquidez.
+- Cálculo de capital invertido.
 - Cálculo de precio promedio.
-- Capital histórico.
-- Capital recuperado.
-- Ganancia realizada.
-- Estado de la posición (Abierta / Cerrada).
-- Resumen individual por posición.
+- Cálculo de Ganancia realizada.
+- Resumen por posición.
 - Resumen consolidado por activo.
 - Visualización de todas las operaciones.
 - Persistencia automática en JSON.
@@ -114,17 +116,19 @@ Esta separación facilita el mantenimiento del proyecto y prepara la lógica par
 ## 🛠️ Tecnologías utilizadas 
 
 - Python
+- Flask
+- HTML
+- Jinja2
 - JSON
 - Git
 - GitHub
 
 ## 🚀 Tecnologías planificadas
 
-- Flask
-- HTML
 - CSS
 - JavaScript
 - SQLite
+- APIs financieras
 
 ---
 
@@ -193,14 +197,34 @@ Durante el desarrollo de este proyecto se aplican conceptos como:
 
 ## 🧩 Próximos pasos
 
-* [ ] Rentabilidad.
-* [ ] Eliminar posiciones.
-* [ ] Estadísticas globales.
-* [ ] Migración de JSON a SQLite.
-* [ ] Desarrollar una interfaz web con Flask.   
-* [ ] Crear un dashboard para visualizar la cartera.
-* [ ] Agregar cálculo de ganancias no realizadas.
-* [ ] Integrar precios de mercado mediante APIs.
+### Dashboard
+
+- [ ] Tarjetas históricas por activo.
+- [ ] Resumen por activo.
+- [ ] Valor actual de la cartera.
+- [ ] Rentabilidad por activo.
+- [ ] Ganancias no realizadas.
+
+### Gestión
+
+- [ ] Editar operaciones.
+- [ ] Eliminar operaciones.
+- [ ] Historial de posiciones cerradas.
+- [ ] Historial completo de operaciones.
+
+### Persistencia
+
+- [ ] Migración de JSON a SQLite.
+
+### Integraciones
+
+- [ ] Obtener precios mediante APIs.
+- [ ] Actualización automática del valor de mercado.
+
+### Interfaz
+
+- [ ] Mejorar el diseño responsive.
+- [ ] Incorporar gráficos y visualizaciones.
 
 ---
 
