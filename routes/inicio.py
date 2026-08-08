@@ -18,7 +18,7 @@ from calculos import (
 )
 from utilidades import (
     formatear_dinero,
-    formatear_cantidad,
+    formatear_cantidad, 
     formatear_porcentaje,   
 )
 
@@ -30,21 +30,27 @@ def inicio():
     posiciones_abiertas = obtener_posiciones_abiertas(posiciones)
     
     resumenes_abiertas = generar_resumen_todas_posiciones(operaciones,posiciones_abiertas)
+    for resumen in resumenes_abiertas:
+    
+        resumen["capital_formateado"] = formatear_dinero(resumen["capital_invertido_actual"])
+        resumen["cantidad_formateada"] = formatear_cantidad(resumen["cantidad_actual"],resumen["activo"])
+        resumen["ppc_formateado"] = formatear_dinero(resumen["precio_promedio"])
+        
     resumenes_todas = generar_resumen_todas_posiciones(operaciones,posiciones)
     resumenes_activos = generar_resumen_activos_abiertos(resumenes_abiertas)
-    dashboard = generar_resumen_dashboard(resumenes_abiertas,resumenes_todas,configuracion)
     
+    for resumen in resumenes_activos:
+    
+            resumen["cantidad_formateada"] = formatear_cantidad(resumen["cantidad_actual"],resumen["activo"])
+            resumen["precio_promedio_formateado"] = formatear_dinero(resumen["precio_promedio"])
+            resumen["capital_invertido_formateado"] = formatear_dinero(resumen["capital_invertido_actual"])
+            
+    dashboard = generar_resumen_dashboard(resumenes_abiertas,resumenes_todas,configuracion)
     tarjetas = generar_tarjetas_activos(operaciones,posiciones)
     
     for tarjeta in tarjetas:
         
         tarjeta["ganancia_realizada"] = formatear_dinero(tarjeta["ganancia_realizada"])
         tarjeta["rentabilidad"] = formatear_porcentaje(tarjeta["rentabilidad"])
-    
-    for resumen in resumenes_activos:
-
-        resumen["cantidad_formateada"] = formatear_cantidad(resumen["cantidad_actual"],resumen["activo"])
-        resumen["precio_promedio_formateado"] = formatear_dinero(resumen["precio_promedio"])
-        resumen["capital_invertido_formateado"] = formatear_dinero(resumen["capital_invertido_actual"])
     
     return render_template("index.html",resumenes=resumenes_abiertas,dashboard=dashboard,tarjetas=tarjetas,resumenes_activos=resumenes_activos)

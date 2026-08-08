@@ -74,9 +74,9 @@
         <th>Activo</th>
         <th>Capital Invertido</th>
         <th>Cantidad Actual</th>
-        <th>Precio Promedio</th>
-        <th>Ganancia Realizada</th>
+        <th>PPC</th>
         <th>Estado</th>
+        <th>Acciones</th>
     </tr>
 
     {% for resumen in resumenes %}
@@ -84,11 +84,11 @@
     <tr>
         <td>{{ resumen['posicion'] }}</td>
         <td>{{ resumen['activo'] }}</td>
-        <td>{{ resumen['capital_historico'] }}</td>
-        <td>{{ resumen['cantidad_actual'] }}</td>
-        <td>{{ resumen['precio_promedio'] }}</td>
-        <td>{{ resumen['ganancia_realizada'] }}</td>
-        <td>{{ resumen['estado'] }}</td>
+        <td>{{ resumen['capital_formateado'] }}</td>
+        <td>{{ resumen['cantidad_formateada'] }}</td>
+        <td>{{ resumen['ppc_formateado'] }}</td>
+        <td>{{ resumen['estado'] }}</td> 
+        <td><a href="#">Ver</a></td>   
     </tr>
 
     {% endfor %}
