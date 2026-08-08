@@ -4,7 +4,8 @@ from operaciones import (
     obtener_activos
 )
 from posiciones import (
-    obtener_posicion_por_id
+    obtener_posicion_por_id,
+    obtener_posiciones_cerradas_por_activo
 )
 
 def analizar_operaciones(operaciones):
@@ -132,6 +133,16 @@ def calcular_capital_invertido(resumenes):
     
     return capital_invertido
 
+def calcular_capital_historico(resumenes):
+
+    capital = 0
+
+    for resumen in resumenes:
+
+        capital += resumen["capital_historico"]
+
+    return capital
+
 def calcular_ganancia_realizada(resumenes):
     
     ganancia_realizada = 0 
@@ -155,6 +166,14 @@ def calcular_liquidez(configuracion,dashboard):
     
     return liquidez
 
+def calcular_rentabilidad(ganancia_realizada,capital_historico):
+    
+    if capital_historico == 0:
+        rentabilidad = 0
+    else:
+        rentabilidad = (ganancia_realizada / capital_historico) * 100
+    return rentabilidad
+
 def generar_resumen_dashboard(resumenes_abiertas,resumenes_todas,configuracion):
 
     dashboard = {
@@ -167,3 +186,37 @@ def generar_resumen_dashboard(resumenes_abiertas,resumenes_todas,configuracion):
     dashboard["liquidez"] = calcular_liquidez(configuracion, dashboard)
     
     return dashboard
+
+def generar_tarjeta_activo(activo,operaciones,posiciones):
+    
+    posiciones_cerradas = obtener_posiciones_cerradas_por_activo(posiciones,activo)
+    
+    if len(posiciones_cerradas) == 0:
+        return None
+    
+    resumenes = generar_resumen_todas_posiciones(operaciones,posiciones_cerradas)
+    
+    ganancia_realizada = calcular_ganancia_realizada(resumenes)
+    capital_historico = calcular_capital_historico(resumenes)
+    rentabilidad = calcular_rentabilidad(ganancia_realizada,capital_historico)
+        
+    return {
+    "activo": activo,
+    "ganancia_realizada": ganancia_realizada,
+    "rentabilidad": rentabilidad
+}
+
+def generar_tarjetas_activos(operaciones,posiciones):
+
+    tarjetas = []
+
+    activos = obtener_activos(operaciones)
+
+    for activo in activos:
+
+        tarjeta = generar_tarjeta_activo(activo,operaciones,posiciones)
+
+        if tarjeta is not None:
+            tarjetas.append(tarjeta)
+
+    return tarjetas

@@ -25,12 +25,17 @@
     
             {% endfor %}
         </select>
+
         <label>Cantidad</label>
         <input type="number" name="cantidad" step="any" required>
+
         <label>Precio de venta</label>
         <input type="number" name="precio_venta" step="any" required>
+
         <button type="submit">Registrar Venta</button>
+
     </form>
+
 {% else %}
     <p>No existen posiciones abiertas para registrar una venta.</p>
     <a href="{{ url_for('compras.compras') }}">Registrar una compra</a>
@@ -44,6 +49,7 @@
         {% endfor %}
     {% endif %}
 {% endwith %}
+
 </body>
 
 </html>

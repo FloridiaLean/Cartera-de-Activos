@@ -25,6 +25,20 @@ def formatear_cantidad(cantidad,activo):
     
     return cantidad_formateada
 
+def formatear_porcentaje(porcentaje):
+
+    porcentaje_formateado = f"{porcentaje:.2f}%"
+
+    return porcentaje_formateado
+
+
+def formatear_fecha(fecha):
+
+    if fecha is None:
+        return "-"
+
+    return fecha
+
 def leer_float(mensaje,permitir_cancelar=False):
     
     while True:

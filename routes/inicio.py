@@ -7,13 +7,18 @@ from datos import (
     operaciones,
     configuracion
 )
-
 from posiciones import (
     obtener_posiciones_abiertas
 )
 from calculos import (
     generar_resumen_todas_posiciones,
-    generar_resumen_dashboard
+    generar_resumen_dashboard,
+    generar_tarjetas_activos
+)
+from utilidades import (
+    formatear_dinero,
+    formatear_cantidad,
+    formatear_porcentaje,   
 )
 
 inicio_bp = Blueprint("inicio",__name__)
@@ -28,4 +33,11 @@ def inicio():
     
     dashboard = generar_resumen_dashboard(resumenes_abiertas,resumenes_todas,configuracion)
     
-    return render_template("index.html",resumenes=resumenes_abiertas,dashboard=dashboard)
+    tarjetas = generar_tarjetas_activos(operaciones, posiciones)
+    
+    for tarjeta in tarjetas:
+        
+        tarjeta["ganancia_realizada"] = formatear_dinero(tarjeta["ganancia_realizada"])
+        tarjeta["rentabilidad"] = formatear_porcentaje(tarjeta["rentabilidad"])
+        
+    return render_template("index.html",resumenes=resumenes_abiertas,dashboard=dashboard,tarjetas=tarjetas)

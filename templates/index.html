@@ -9,16 +9,26 @@
 <body>
 
 <h1>Mi Cartera</h1>
-
-<hr>
-
 <h2>Menú principal</h2>
-
 <ul>
     <li><a href="{{ url_for('configuracion.mostrar_configuracion') }}">Configuración</a></li>
     <li><a href="{{ url_for('compras.compras') }}">Registrar compra</a></li>
     <li><a href="{{ url_for('ventas.ventas') }}">Registrar venta</a></li>
 </ul>
+
+<hr>
+
+<h2>Histórico por activo</h2>
+
+{% for tarjeta in tarjetas %}
+
+<div>
+    <h3>{{ tarjeta["activo"] }}</h3>
+    <p>Ganancia realizada: {{ tarjeta["ganancia_realizada"] }}</p>
+    <p>Rentabilidad: {{ tarjeta["rentabilidad"] }}</p>
+</div>
+
+{% endfor %}
 
 <hr>
 

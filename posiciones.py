@@ -1,5 +1,7 @@
-from utilidades import obtener_fecha_actual
-
+from utilidades import (
+    normalizar_activo, 
+    obtener_fecha_actual
+)
 def generar_id_posicion(posiciones):
     
     id_mayor = 0 
@@ -78,3 +80,15 @@ def obtener_posiciones_abiertas(posiciones):
             posiciones_abiertas.append(posicion)
 
     return posiciones_abiertas
+
+def obtener_posiciones_cerradas_por_activo(posiciones,activo):
+    
+    activo = normalizar_activo(activo)
+    
+    posiciones_cerradas = []
+
+    for posicion in posiciones:
+        if posicion["estado"] == "CERRADA" and posicion["activo"] == activo:
+            posiciones_cerradas.append(posicion)
+
+    return posiciones_cerradas
