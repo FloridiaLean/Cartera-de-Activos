@@ -31,7 +31,6 @@ def formatear_porcentaje(porcentaje):
 
     return porcentaje_formateado
 
-
 def formatear_fecha(fecha):
 
     if fecha is None:

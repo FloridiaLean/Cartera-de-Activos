@@ -61,7 +61,7 @@ def analizar_activo(operaciones,activo):
 
 def generar_resumen_activo(operaciones,activo):
     
-    operaciones_activo = obtener_operaciones_por_activo(operaciones, activo)
+    operaciones_activo = obtener_operaciones_por_activo(operaciones,activo)
     if len(operaciones_activo) == 0:
         return None
     
@@ -183,6 +183,7 @@ def generar_resumen_dashboard(resumenes_abiertas,resumenes_todas,configuracion):
         "cantidad_posiciones": calcular_cantidad_posiciones(resumenes_todas),
         "cantidad_posiciones_abiertas": calcular_cantidad_posiciones(resumenes_abiertas)
     }
+    
     dashboard["liquidez"] = calcular_liquidez(configuracion, dashboard)
     
     return dashboard
@@ -220,3 +221,43 @@ def generar_tarjetas_activos(operaciones,posiciones):
             tarjetas.append(tarjeta)
 
     return tarjetas
+
+def generar_resumen_activos_abiertos(resumenes_abiertas):
+
+    activos = []
+    resumenes = []
+
+    for resumen in resumenes_abiertas:
+
+        activo = resumen["activo"]
+
+        if activo not in activos:
+            activos.append(activo)
+
+    for activo in activos:
+
+        cantidad_actual = 0
+        capital_invertido = 0
+
+        for resumen in resumenes_abiertas:
+
+            if resumen["activo"] == activo:
+
+                cantidad_actual += resumen["cantidad_actual"]
+                capital_invertido += resumen["capital_invertido_actual"]
+
+        if cantidad_actual == 0:
+            precio_promedio = 0
+        else:
+            precio_promedio = capital_invertido / cantidad_actual
+
+        resumen = {
+            "activo": activo,
+            "cantidad_actual": cantidad_actual,
+            "capital_invertido_actual": capital_invertido,
+            "precio_promedio": precio_promedio
+        }
+
+        resumenes.append(resumen)
+
+    return resumenes

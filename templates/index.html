@@ -41,6 +41,30 @@
 
 <hr>
 
+<h2>Resumen por activo</h2>
+
+<table>
+    <tr>
+        <th>Activo</th>
+        <th>Cantidad</th>
+        <th>PPC</th>
+        <th>Capital invertido</th>
+    </tr>
+
+    {% for resumen in resumenes_activos %}
+
+    <tr>
+        <td>{{ resumen["activo"] }}</td>
+        <td>{{ resumen["cantidad_formateada"] }}</td>
+        <td>{{ resumen["precio_promedio_formateado"] }}</td>
+        <td>{{ resumen["capital_invertido_formateado"] }}</td>
+    </tr>
+
+    {% endfor %}
+</table>
+
+<hr>
+
 <h2>Posiciones Abiertas (<strong>{{ dashboard["cantidad_posiciones_abiertas"] }}</strong>)</h2>
 
 <table>
