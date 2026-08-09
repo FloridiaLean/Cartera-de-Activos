@@ -54,7 +54,7 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
         nueva_posicion = crear_posicion(posiciones,activo)
         id_posicion = nueva_posicion['id']
     else:
-        posicion = validar_posicion(posiciones,posicion_id,activo)
+        posicion = validar_posicion(posiciones,posicion_id)
         
         if posicion is None:
             return False

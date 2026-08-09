@@ -88,7 +88,7 @@
         <td>{{ resumen['cantidad_formateada'] }}</td>
         <td>{{ resumen['ppc_formateado'] }}</td>
         <td>{{ resumen['estado'] }}</td> 
-        <td><a href="#">Ver</a></td>   
+        <td><a href="{{ url_for('posiciones.detalle_posicion',posicion_id=resumen['posicion']) }}">Ver Detalle</a></td>   
     </tr>
 
     {% endfor %}

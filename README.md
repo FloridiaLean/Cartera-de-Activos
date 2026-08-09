@@ -16,10 +16,6 @@ El foco del proyecto no es únicamente el resultado final, sino también el apre
 
 ## 🎯 Objetivo
 
-Construir una plataforma web que permita:
-
-## 🎯 Objetivo
-
 Desarrollar una plataforma web para la gestión y análisis de una cartera de inversiones personales.
 
 La aplicación busca ofrecer una visión completa de la cartera mediante indicadores, resúmenes por activo, seguimiento de posiciones y operaciones históricas, permitiendo registrar compras y ventas de activos financieros desde una interfaz web intuitiva.

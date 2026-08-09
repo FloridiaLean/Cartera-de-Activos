@@ -6,17 +6,17 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 
 ## Sprint 1 - Dashboard principal
 
-- [ ] Crear tarjetas históricas por activo.
-- [ ] Mostrar ganancia realizada por activo.
-- [ ] Mostrar rentabilidad histórica por activo.
+- ✅ Crear tarjetas históricas por activo.
+- ✅ Mostrar ganancia realizada por activo.
+- ✅ Mostrar rentabilidad histórica por activo.
 
 ---
 
 ## Sprint 2 - Resumen por activo
 
-- [ ] Mostrar cantidad actual.
-- [ ] Mostrar PPC.
-- [ ] Mostrar capital invertido.
+- ✅ Mostrar cantidad actual.
+- ✅ Mostrar PPC.
+- ✅ Mostrar capital invertido.
 - [ ] Mostrar valor actual.
 - [ ] Mostrar rentabilidad.
 - [ ] Mostrar ganancia no realizada.
@@ -25,9 +25,9 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 
 ## Sprint 3 - Posiciones abiertas
 
-- [ ] Mejorar formato de números.
+- ✅ Mejorar formato de números.
 - [ ] Agregar acciones sobre las posiciones.
-- [ ] Mostrar detalle de una posición.
+- ✅ Mostrar detalle de una posición.
 
 ---
 
@@ -35,8 +35,8 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 
 - [ ] Mostrar resumen de la posición luego de registrar una compra.
 - [ ] Mostrar resumen de la posición luego de registrar una venta.
-- [ ] Mejorar la interacción del usuario después de cada operación.
-- [ ] Mostrar métricas completas.
+- ✅ Mejorar la interacción del usuario después de cada operación.
+- ✅ Mostrar métricas completas.
 
 ---
 

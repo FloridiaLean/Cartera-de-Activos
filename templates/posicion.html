@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Posicion</title>
+</head>
+
+<body>
+
+<a href="{{ url_for('inicio.inicio') }}">← Volver al dashboard</a>
+
+<h1>Detalle de posición</h1>
+
+<h2>{{ resumen["activo"] }}</h2>
+
+<p>Posición: {{ resumen["posicion"] }}</p>
+<p>Estado: {{ resumen["estado"] }}</p>
+<p>Fecha de apertura: {{ resumen["fecha_apertura"] }}</p>
+
+<hr>
+<p>Capital histórico: {{ resumen["capital_historico_formateado"] }}</p>
+<p>Capital invertido actual: {{ resumen["capital_invertido_actual_formateado"] }}</p>
+<p>Cantidad actual: {{ resumen["cantidad_formateada"] }}</p>
+<p>Precio promedio: {{ resumen["ppc_formateado"] }}</p>
+<p>Capital recuperado: {{ resumen["capital_recuperado_formateado"] }}</p>
+<p>Ganancia realizada: {{ resumen["ganancia_realizada_formateada"] }}</p>
+
+<hr>
+
+<h2>Operaciones</h2>
+
+<table>
+
+    <tr>
+        <th>Fecha</th>
+        <th>Tipo</th>
+        <th>Cantidad</th>
+        <th>Precio Unitario</th>
+        <th>Monto</th>
+    </tr>
+
+    {% for operacion in operaciones %}
+
+    <tr>
+        <td>{{ operacion["fecha_formateada"] }}</td>
+        <td>{{ operacion["tipo"] }}</td>
+        <td>{{ operacion["cantidad_formateada"] }}</td>
+        <td>{{ operacion["precio_formateado"] }}</td>
+        <td>{{ operacion["monto_formateado"] }}</td>
+    </tr>
+
+    {% endfor %}    
+
+</table>
+
+<br>
+
+</body>
+</html>
