@@ -12,36 +12,6 @@
 
 <h1>Registrar Venta</h1>
 
-{% if posiciones_abiertas %}
-
-    <form method="POST">
-        <label>Posición</label>
-
-        <select name="posicion_id">
-
-            {% for posicion in posiciones_abiertas %}
-    
-                <option value="{{ posicion['id'] }}">{{ posicion['activo'] }} | Posición #{{ posicion['id'] }}</option>
-    
-            {% endfor %}
-        </select>
-
-        <label>Cantidad</label>
-        <input type="number" name="cantidad" step="any" required>
-
-        <label>Precio de venta</label>
-        <input type="number" name="precio_venta" step="any" required>
-
-        <button type="submit">Registrar Venta</button>
-
-    </form>
-
-{% else %}
-    <p>No existen posiciones abiertas para registrar una venta.</p>
-    <a href="{{ url_for('compras.compras') }}">Registrar una compra</a>
-    
-{% endif %}
-
 {% with mensajes = get_flashed_messages() %}
     {% if mensajes %}
         {% for mensaje in mensajes %}
@@ -49,6 +19,70 @@
         {% endfor %}
     {% endif %}
 {% endwith %}
+
+{% if posiciones %}
+
+    <h2>Posiciones abiertas</h2>
+
+    {% for posicion in posiciones %}
+        <div>
+            <h3>Posición #{{ posicion["posicion"] }}</h3>
+            <p>Activo: {{ posicion["activo"] }}</p>
+            <p>Capital invertido: {{ posicion["capital_invertido_formateado"] }}    </p>
+            <p>Cantidad actual: {{ posicion["cantidad_formateada"] }}</p>
+            <p>Precio promedio: {{ posicion["ppc_formateado"] }}</p>
+            <p>Ganancia realizada: {{ posicion["ganancia_realizada_formateada"] }}</p>
+
+            <form action="{{ url_for('ventas.ventas') }}" method="POST">
+                <input type="hidden" name="posicion_id" value="{{ posicion['posicion'] }}">
+                <button type="submit">Seleccionar posición</button>
+            </form>
+        </div>
+        <hr>
+    {% endfor %}
+{% elif not resumen %}
+    <p>No existen posiciones abiertas para realizar una venta.</p>
+{% endif %}
+
+{% if resumen %}
+
+    <hr>
+    <h2>Posición seleccionada #{{ resumen["posicion"] }}</h2>
+
+    <p>Activo: {{ resumen["activo"] }}</p>
+    <p>Estado: {{ resumen["estado"] }}</p>
+    <p>Fecha de apertura: {{ resumen["fecha_apertura"] }}</p>
+    <p>Capital histórico: {{ resumen["capital_historico_formateado"] }}</p>
+    <p>Capital invertido actual: {{ resumen["capital_invertido_formateado"] }}</p>
+    <p>Cantidad actual: {{ resumen["cantidad_formateada"] }}</p>
+    <p>Precio promedio: {{ resumen["ppc_formateado"] }}</p>
+    <p>Capital recuperado: {{ resumen["capital_recuperado_formateado"] }}</p>
+    <p>Ganancia realizada: {{ resumen["ganancia_realizada_formateada"] }}</p>
+
+    <hr>
+    <h3>Realizar venta</h3>
+
+    <form action="{{ url_for('ventas.ventas') }}" method="POST">
+        <input type="hidden" name="posicion_id" value="{{ resumen['posicion'] }}">
+        <label for="cantidad">Cantidad a vender</label>
+        <br>
+        <input type="number" id="cantidad" name="cantidad" step="any" max="{{ resumen['cantidad_actual'] }}" required>
+        <button type="button" data-cantidad="{{ resumen['cantidad_actual'] }}" onclick="venderTodo(this.dataset.cantidad)">Max</button>
+        <br><br>
+        <label for="precio">Precio de venta</label>
+        <br>
+        <input type="number" id="precio" name="precio" step="any" required>
+        <br><br>
+        <button type="submit">Registrar venta</button>
+    </form>
+{% endif %}
+
+<script>
+
+function venderTodo(cantidad) {
+    document.getElementById("cantidad").value = cantidad;
+}
+</script>
 
 </body>
 

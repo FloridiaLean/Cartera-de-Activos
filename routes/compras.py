@@ -20,11 +20,13 @@ from datos import (
 from posiciones import (
     obtener_posiciones_abiertas_por_activo
 )
-from utilidades import (
-    normalizar_activo
-)
 from calculos import (
     generar_resumen_posicion
+)
+from utilidades import (
+    normalizar_activo,
+    formatear_dinero,
+    formatear_cantidad
 )
 
 compras_bp = Blueprint("compras",__name__)
@@ -66,6 +68,15 @@ def compras():
         for posicion in posiciones_abiertas:
             
             resumen = generar_resumen_posicion(operaciones,posiciones,posicion["id"])
+            
+            resumen["capital_historico_formateado"] = formatear_dinero(
+            resumen["capital_historico"])
+            resumen["capital_invertido_formateado"] = formatear_dinero(
+            resumen["capital_invertido_actual"])
+            resumen["cantidad_formateada"] = formatear_cantidad(resumen["cantidad_actual"],resumen["activo"])
+            resumen["ppc_formateado"] = formatear_dinero(resumen["precio_promedio"])
+            resumen["ganancia_realizada_formateada"] = formatear_dinero(resumen["ganancia_realizada"])
+            
             resumenes.append(resumen)
 
         return render_template("compras.html",activo=activo,posiciones=resumenes,posicion_id=posicion_id,mostrar_formulario_compra=True
