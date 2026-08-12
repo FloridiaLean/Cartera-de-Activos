@@ -66,7 +66,7 @@
         <input type="hidden" name="posicion_id" value="{{ resumen['posicion'] }}">
         <label for="cantidad">Cantidad a vender</label>
         <br>
-        <input type="number" id="cantidad" name="cantidad" step="any" max="{{ resumen['cantidad_actual'] }}" required>
+        <input type="number" id="cantidad" name="cantidad" step="any" required>
         <button type="button" data-cantidad="{{ resumen['cantidad_actual'] }}" onclick="venderTodo(this.dataset.cantidad)">Max</button>
         <br><br>
         <label for="precio">Precio de venta</label>

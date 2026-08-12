@@ -168,5 +168,63 @@
         "cantidad": 0.004236945793525859,
         "precio_venta": 102147.4,
         "monto_recibido": 432.79299674960333
+    },
+    {
+        "id": 20,
+        "fecha": "11/08/2026 20:44",
+        "posicion_id": 4,
+        "tipo": "compra",
+        "activo": "BTC",
+        "monto_invertido": 100.0,
+        "precio_compra": 63632.0,
+        "cantidad": 0.0015715363339200402,
+        "cantidad_formateada": "0.00157154 BTC",
+        "fecha_formateada": "11/08/2026 20:44",
+        "precio_formateado": "$63,632.00",
+        "monto_formateado": "$100.00"
+    },
+    {
+        "id": 21,
+        "fecha": "11/08/2026 20:49",
+        "posicion_id": 4,
+        "tipo": "venta",
+        "activo": "BTC",
+        "cantidad": 0.00057154,
+        "precio_venta": 65000.0,
+        "monto_recibido": 37.1501,
+        "cantidad_formateada": "0.00057154 BTC",
+        "fecha_formateada": "11/08/2026 20:49",
+        "precio_formateado": "$65,000.00",
+        "monto_formateado": "$37.15"
+    },
+    {
+        "id": 22,
+        "fecha": "11/08/2026 20:50",
+        "posicion_id": 4,
+        "tipo": "venta",
+        "activo": "BTC",
+        "cantidad": 0.00099999633392004,
+        "precio_venta": 65000.0,
+        "monto_recibido": 64.9997617048026
+    },
+    {
+        "id": 23,
+        "fecha": "11/08/2026 23:58",
+        "posicion_id": 5,
+        "tipo": "compra",
+        "activo": "BTC",
+        "monto_invertido": 150.0,
+        "precio_compra": 63700.0,
+        "cantidad": 0.002354788069073783
+    },
+    {
+        "id": 24,
+        "fecha": "12/08/2026 09:52",
+        "posicion_id": 5,
+        "tipo": "venta",
+        "activo": "BTC",
+        "cantidad": 0.002,
+        "precio_venta": 67000.0,
+        "monto_recibido": 134.0
     }
 ]

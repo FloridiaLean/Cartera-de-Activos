@@ -40,16 +40,19 @@ from persistencia import (
 def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,precio_compra):
     
     activo = normalizar_activo(activo)
-        
-    if not validar_activo(activo):
-        return False
     
-    if not validar_monto(monto_invertido):
-        return False
+    valido, mensaje = validar_activo(activo)
+    if not valido:
+        return False, mensaje
+    
+    valido, mensaje = validar_monto(monto_invertido)
+    if not valido:
+        return False, mensaje
+    
+    valido, mensaje = validar_precio(precio_compra)
+    if not valido:
+        return False, mensaje
 
-    if not validar_precio(precio_compra):
-        return False
-    
     if posicion_id is None:
         nueva_posicion = crear_posicion(posiciones,activo)
         id_posicion = nueva_posicion['id']
@@ -57,7 +60,7 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
         posicion = validar_posicion(posiciones,posicion_id)
         
         if posicion is None:
-            return False
+            return False, "La posición seleccionada no existe."
         
         id_posicion = posicion['id']
         
@@ -66,31 +69,33 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
     guardar_operaciones(operaciones)
     guardar_posiciones(posiciones)
     
-    return True
+    return True, None
     
 def registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio_venta):
     
     posicion = validar_posicion(posiciones,posicion_id)
-
+    
     if posicion is None:
-        return False
-
+        return False, "La posición seleccionada no existe."
+    
     activo = posicion["activo"]
     
-    if not validar_cantidad(cantidad):
-        return False
+    valido, mensaje = validar_cantidad(cantidad)
+    if not valido:
+        return False, mensaje
     
-    if not validar_precio(precio_venta):
-        return False
+    valido, mensaje = validar_precio(precio_venta)
+    if not valido:
+        return False, mensaje
     
     id_posicion = posicion['id']
     
     analisis = analizar_posicion(operaciones,id_posicion)
     
-    if not validar_venta(analisis,cantidad):
-        print("No tienes la cantidad suficiente para realizar esta venta")
-        return False
-    
+    valido, mensaje = validar_venta(analisis,cantidad)
+    if not valido:
+        return False, mensaje
+
     agregar_venta(operaciones,id_posicion,activo,cantidad,precio_venta)
     
     actualizar_estado_posicion(operaciones,posiciones,posicion_id)
@@ -98,7 +103,7 @@ def registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio_venta):
     guardar_operaciones(operaciones)
     guardar_posiciones(posiciones)
     
-    return True
+    return True, None
 
 def editar_compra_servicio(operaciones,operacion,monto_invertido,precio_compra):
     

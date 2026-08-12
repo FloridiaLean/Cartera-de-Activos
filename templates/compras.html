@@ -92,6 +92,40 @@
     {% if posicion_id is none %}
         <h2>Nueva posición de {{ activo }}</h2>
     {% else %}
+        {% for posicion in posiciones %}
+
+            {% if posicion["posicion"] == posicion_id %}
+
+                <h2>Posición seleccionada #{{ posicion["posicion"] }}</h2>
+
+                <p>Activo: {{ posicion["activo"] }}</p>
+
+                <p>
+                    Capital histórico:
+                    {{ posicion["capital_historico_formateado"] }}
+                </p>
+
+                <p>
+                    Capital invertido actual:
+                    {{ posicion["capital_invertido_formateado"] }}
+                </p>
+
+                <p>
+                    Cantidad actual:
+                    {{ posicion["cantidad_formateada"] }}
+                </p>
+
+                <p>
+                    Precio promedio:
+                    {{ posicion["ppc_formateado"] }}
+                </p>
+
+                <p>
+                    Ganancia realizada:
+                    {{ posicion["ganancia_realizada_formateada"] }}
+                </p>
+            {% endif %}
+        {% endfor %}
         <h2>Agregar compra a posición #{{ posicion_id }}</h2>
     {% endif %}
 

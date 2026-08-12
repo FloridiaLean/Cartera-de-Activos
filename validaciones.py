@@ -7,28 +7,24 @@ from calculos import (
 
 def validar_activo(activo):
     if activo == "":
-        print("El nombre del activo no es válido")
-        return False
-    return True
+        return False,"El nombre del activo no es válido"
+    return True,None
 
 def validar_monto(monto):
     if monto <= 0:
-        print("El monto invertido debe ser mayor a 0")
-        return False
-    return True
+        return False,"El monto invertido debe ser mayor a 0"
+    return True,None
 
 def validar_precio(precio):
     
     if precio <= 0:
-        print("El precio debe ser mayor a 0")
-        return False
-    return True
+        return False,"El precio unitario debe ser mayor a 0"
+    return True,None
 
 def validar_cantidad(cantidad):
     if cantidad <= 0:
-        print("La cantidad ingresada tiene que ser mayor a 0")
-        return False
-    return True
+        return False,"La cantidad ingresada tiene que ser mayor a 0"
+    return True,None
 
 def validar_posicion(posiciones,posicion_id):
     
@@ -49,8 +45,8 @@ def validar_venta(analisis,cantidad):
     cantidad_actual = analisis['cantidad_actual']
     
     if cantidad > cantidad_actual:
-        return False
-    return True
+        return False, "No tienes la cantidad suficiente para realizar esta venta."
+    return True, None
 
 def validar_edicion_venta(operaciones,posiciones,operacion,nueva_cantidad):
     

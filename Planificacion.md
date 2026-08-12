@@ -42,13 +42,14 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 
 ## Sprint 5 - Validación y consistencia de datos
 
-- [ ] Validar que las operaciones mantengan una posición consistente.
-- [ ] Validar cantidades después de compras y ventas.
-- [ ] Validar que no se pueda operar sobre una posición cerrada.
-- [ ] Validar estados de las posiciones.
-- [ ] Revisar casos límite de ventas parciales y totales.
-- [ ] Evitar que una operación inválida modifique los datos.
-- [ ] Revisar y centralizar validaciones repetidas.
+- ✅  Validar que las operaciones mantengan una posición consistente.
+- ✅  Validar cantidades después de compras y ventas.
+- ✅  Validar que no se pueda operar sobre una posición cerrada.
+- ✅  Validar estados de las posiciones.
+- ✅  Revisar casos límite de ventas parciales y totales.
+- ✅  Evitar que una operación inválida modifique los datos.
+- ✅ Mostrar errores de validación al usuario en la interfaz.
+- ✅ Revisar y centralizar validaciones repetidas.
 
 ---
 

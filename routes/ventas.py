@@ -42,13 +42,13 @@ def ventas():
             cantidad = float(cantidad)
             precio = float(precio)
 
-            exito = registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio)
+            exito, mensaje = registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio)
             
             if exito:
                 flash("✅ Venta registrada correctamente.")
-
                 return redirect(url_for("ventas.ventas"))
-        
+            flash(f"❌ {mensaje}")
+            
         resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
         
         resumen["capital_historico_formateado"] = formatear_dinero(resumen["capital_historico"])

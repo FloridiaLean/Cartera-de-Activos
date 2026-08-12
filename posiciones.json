@@ -19,5 +19,19 @@
         "estado": "CERRADA",
         "fecha_apertura": "11/08/2026 10:59",
         "fecha_cierre": "11/08/2026 14:24"
+    },
+    {
+        "id": 4,
+        "activo": "BTC",
+        "estado": "CERRADA",
+        "fecha_apertura": "11/08/2026 20:44",
+        "fecha_cierre": "11/08/2026 20:50"
+    },
+    {
+        "id": 5,
+        "activo": "BTC",
+        "estado": "ABIERTA",
+        "fecha_apertura": "11/08/2026 23:58",
+        "fecha_cierre": null
     }
 ]
