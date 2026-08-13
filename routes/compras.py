@@ -9,31 +9,44 @@ from flask import (
 from servicios import (
     registrar_compra
 )
-from persistencia import (
-    guardar_operaciones, 
-    guardar_posiciones
-)
 from datos import (
     operaciones, 
     posiciones
 )
 from posiciones import (
-    obtener_posiciones_abiertas_por_activo
+    obtener_posiciones_abiertas_por_activo,
+    obtener_posicion_por_id
 )
 from calculos import (
     generar_resumen_posicion
 )
 from utilidades import (
     normalizar_activo,
-    formatear_dinero,
-    formatear_cantidad
+    formatear_resumen_posicion
 )
 
 compras_bp = Blueprint("compras",__name__)
 
 @compras_bp.route("/compras",methods=["GET","POST"])
-def compras():
 
+def compras():
+    
+    posicion_id = request.args.get("posicion_id")
+    
+    if posicion_id is not None:
+        posicion_id = int(posicion_id)
+        
+        posicion = obtener_posicion_por_id(posiciones,posicion_id)
+        
+        if posicion is None:
+            return "Posición no encontrada", 404
+        
+        resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
+        
+        resumen = formatear_resumen_posicion(resumen)
+        
+        return render_template("compras.html",activo=posicion["activo"],posiciones=None,posicion_id=posicion_id,resumen=resumen,mostrar_formulario_compra=True)
+        
     if request.method == "POST":
         
         activo = normalizar_activo(request.form["activo"]) 
@@ -59,8 +72,17 @@ def compras():
                 if exito:
                     flash("✅ Compra registrada correctamente.")
                     return redirect(url_for("compras.compras"))
+                
                 flash(f"❌ {mensaje}")
-            
+                
+                if posicion_id is not None:
+                    
+                    resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
+                    
+                    resumen = formatear_resumen_posicion(resumen)
+                    
+                    return render_template("compras.html",activo=activo,posiciones=None,posicion_id=posicion_id,resumen=resumen,mostrar_formulario_compra=True)
+                    
         posiciones_abiertas = obtener_posiciones_abiertas_por_activo(posiciones,activo)
         
         resumenes = []
@@ -69,13 +91,7 @@ def compras():
             
             resumen = generar_resumen_posicion(operaciones,posiciones,posicion["id"])
             
-            resumen["capital_historico_formateado"] = formatear_dinero(
-            resumen["capital_historico"])
-            resumen["capital_invertido_formateado"] = formatear_dinero(
-            resumen["capital_invertido_actual"])
-            resumen["cantidad_formateada"] = formatear_cantidad(resumen["cantidad_actual"],resumen["activo"])
-            resumen["ppc_formateado"] = formatear_dinero(resumen["precio_promedio"])
-            resumen["ganancia_realizada_formateada"] = formatear_dinero(resumen["ganancia_realizada"])
+            resumen = formatear_resumen_posicion(resumen)
             
             resumenes.append(resumen)
         

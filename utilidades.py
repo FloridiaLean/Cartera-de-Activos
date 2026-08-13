@@ -38,6 +38,55 @@ def formatear_fecha(fecha):
 
     return fecha
 
+def formatear_resumen_posicion(resumen):
+    
+    resumen["capital_historico_formateado"] = formatear_dinero(resumen["capital_historico"])
+    resumen["capital_invertido_formateado"] = formatear_dinero(resumen["capital_invertido_actual"])
+    resumen["cantidad_formateada"] = formatear_cantidad(resumen["cantidad_actual"],resumen["activo"])
+    resumen["ppc_formateado"] = formatear_dinero(resumen["precio_promedio"])
+    resumen["ganancia_realizada_formateada"] = formatear_dinero(resumen["ganancia_realizada"])
+    resumen["capital_recuperado_formateado"] = formatear_dinero(resumen["capital_recuperado"])
+    
+    return resumen
+
+def formatear_operacion(operacion):
+    
+    operacion["cantidad_formateada"] = formatear_cantidad(operacion["cantidad"],operacion["activo"])
+    operacion["fecha_formateada"] = formatear_fecha(operacion["fecha"])
+    
+    if operacion["tipo"] == "compra":
+        operacion["precio_formateado"] = formatear_dinero(operacion["precio_compra"])
+        operacion["monto_formateado"] = formatear_dinero(operacion["monto_invertido"])
+    
+    else: 
+        operacion["precio_formateado"] = formatear_dinero(operacion["precio_venta"])
+        operacion["monto_formateado"] = formatear_dinero(operacion["monto_recibido"])
+    
+    return operacion
+
+def formatear_resumen_activo(resumen):
+    
+    resumen["cantidad_formateada"] = formatear_cantidad(resumen["cantidad_actual"],resumen["activo"])
+    resumen["precio_promedio_formateado"] = formatear_dinero(resumen["precio_promedio"])
+    resumen["capital_invertido_formateado"] = formatear_dinero(resumen["capital_invertido_actual"])
+    
+    return resumen
+
+def formatear_tarjeta_activo(tarjeta):
+    
+    tarjeta["ganancia_realizada"] = formatear_dinero(tarjeta["ganancia_realizada"])
+    tarjeta["rentabilidad"] = formatear_porcentaje(tarjeta["rentabilidad"])
+    
+    return tarjeta
+
+def formatear_dashboard(dashboard):
+
+    dashboard["capital_invertido_formateado"] = formatear_dinero(dashboard["capital_invertido"])
+    dashboard["ganancia_realizada_formateada"] = formatear_dinero(dashboard["ganancia_realizada"])
+    dashboard["liquidez_formateada"] = formatear_dinero(dashboard["liquidez"])
+    
+    return dashboard
+
 def leer_float(mensaje,permitir_cancelar=False):
     
     while True:

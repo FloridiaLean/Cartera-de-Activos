@@ -7,14 +7,15 @@
 </head>
 
 <body>
-    
+
 <a href="{{ url_for('inicio.inicio') }}">← Volver al inicio</a>
 
 <h1>Registrar Compra</h1>
 
 {% if not mostrar_formulario_compra %}
     <form action="{{ url_for('compras.compras') }}" method="POST">
-        <label for="activo">Activo</label><br>
+        <label for="activo">Activo</label>
+        <br>
         <input type="text" id="activo" name="activo" required>
         <br><br>
         <button type="submit">Continuar</button>
@@ -43,7 +44,7 @@
     <hr>
     
         <h3>Posiciones abiertas encontradas:</h3>
-
+    
     {% for posicion in posiciones %}
         <div>
             <h3>Posición #{{ posicion["posicion"] }}</h3> 
@@ -53,12 +54,12 @@
             <p>Cantidad actual: {{ posicion["cantidad_formateada"] }}</p>
             <p>Precio promedio: {{ posicion["ppc_formateado"] }}</p>
             <p>Ganancia realizada: {{ posicion["ganancia_realizada_formateada"] }}</p>
-
+            
             <button type="button" data-posicion="{{ posicion['posicion'] }}" onclick="mostrarFormulario(this.dataset.posicion)">Agregar compra a esta posición</button>
-            <div id="formulario-{{ posicion['posicion'] }}" style="display: none;">
-
+            <div id="formulario-{{ posicion['posicion'] }}" style="display:none;">
+                
                 <hr>
-                <h4>Agregar compra a posición #{{ posicion["posicion"] }}</h4>  
+                <h4>Agregar compra a posición #{{ posicion["posicion"] }}</h4>
                 
                 <form action="{{ url_for('compras.compras') }}" method="POST">
                     <input type="hidden" name="activo" value="{{ posicion['activo'] }}">
@@ -92,40 +93,15 @@
     {% if posicion_id is none %}
         <h2>Nueva posición de {{ activo }}</h2>
     {% else %}
-        {% for posicion in posiciones %}
+        <h2>Posición seleccionada #{{ resumen["posicion"] }}</h2>
+        
+        <p>Activo: {{ resumen["activo"] }}</p>
+        <p>Capital histórico: {{ resumen["capital_historico_formateado"] }}</p>
+        <p>Capital invertido actual: {{ resumen["capital_invertido_formateado"] }}</p>
+        <p>Cantidad actual: {{ resumen["cantidad_formateada"] }}</p>
+        <p>Precio promedio: {{ resumen["ppc_formateado"] }}</p>
+        <p>Ganancia realizada: {{ resumen["ganancia_realizada_formateada"] }}</p>
 
-            {% if posicion["posicion"] == posicion_id %}
-
-                <h2>Posición seleccionada #{{ posicion["posicion"] }}</h2>
-
-                <p>Activo: {{ posicion["activo"] }}</p>
-
-                <p>
-                    Capital histórico:
-                    {{ posicion["capital_historico_formateado"] }}
-                </p>
-
-                <p>
-                    Capital invertido actual:
-                    {{ posicion["capital_invertido_formateado"] }}
-                </p>
-
-                <p>
-                    Cantidad actual:
-                    {{ posicion["cantidad_formateada"] }}
-                </p>
-
-                <p>
-                    Precio promedio:
-                    {{ posicion["ppc_formateado"] }}
-                </p>
-
-                <p>
-                    Ganancia realizada:
-                    {{ posicion["ganancia_realizada_formateada"] }}
-                </p>
-            {% endif %}
-        {% endfor %}
         <h2>Agregar compra a posición #{{ posicion_id }}</h2>
     {% endif %}
 

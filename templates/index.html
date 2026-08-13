@@ -10,6 +10,7 @@
 
 <h1>Mi Cartera</h1>
 <h2>Menú principal</h2>
+
 <ul>
     <li><a href="{{ url_for('configuracion.mostrar_configuracion') }}">Configuración</a></li>
     <li><a href="{{ url_for('compras.compras') }}">Registrar compra</a></li>
@@ -24,8 +25,8 @@
 
 <div>
     <h3>{{ tarjeta["activo"] }}</h3>
-    <p>Ganancia realizada: {{ tarjeta["ganancia_realizada"] }}</p>
-    <p>Rentabilidad: {{ tarjeta["rentabilidad"] }}</p>
+    <p>Ganancia realizada: <strong>{{ tarjeta["ganancia_realizada"] }}</strong> USD</p>
+    <p>Rentabilidad: <strong>{{ tarjeta["rentabilidad"] }}</strong></p>
 </div>
 
 {% endfor %}
@@ -34,10 +35,10 @@
 
 <h2>DashBoard</h2>
 
-<p>Capital invertido: <strong>{{ dashboard["capital_invertido"] }}</strong> USD</p>
-<p>Ganancia realizada: <strong>{{ dashboard["ganancia_realizada"] }}</strong> USD</p>
+<p>Capital invertido: <strong>{{ dashboard["capital_invertido_formateado"] }}</strong> USD</p>
+<p>Ganancia realizada: <strong>{{ dashboard["ganancia_realizada_formateada"] }}</strong> USD</p>
 <p>Cantidad de posiciones: <strong>{{ dashboard["cantidad_posiciones"] }}</strong></p>
-<p>Liquidez: <strong>{{ dashboard["liquidez"] }}</strong> USD</p>
+<p>Liquidez: <strong>{{ dashboard["liquidez_formateada"] }}</strong> USD</p>
 
 <hr>
 
@@ -50,16 +51,14 @@
         <th>PPC</th>
         <th>Capital invertido</th>
     </tr>
-
+    
     {% for resumen in resumenes_activos %}
-
     <tr>
         <td>{{ resumen["activo"] }}</td>
         <td>{{ resumen["cantidad_formateada"] }}</td>
         <td>{{ resumen["precio_promedio_formateado"] }}</td>
         <td>{{ resumen["capital_invertido_formateado"] }}</td>
     </tr>
-
     {% endfor %}
 </table>
 
@@ -68,7 +67,6 @@
 <h2>Posiciones Abiertas (<strong>{{ dashboard["cantidad_posiciones_abiertas"] }}</strong>)</h2>
 
 <table>
-
     <tr>
         <th>Posicion</th>
         <th>Activo</th>
@@ -78,9 +76,8 @@
         <th>Estado</th>
         <th>Acciones</th>
     </tr>
-
+    
     {% for resumen in resumenes %}
-
     <tr>
         <td>{{ resumen['posicion'] }}</td>
         <td>{{ resumen['activo'] }}</td>
@@ -90,9 +87,7 @@
         <td>{{ resumen['estado'] }}</td> 
         <td><a href="{{ url_for('posiciones.detalle_posicion',posicion_id=resumen['posicion']) }}">Ver Detalle</a></td>   
     </tr>
-
     {% endfor %}
-
 </table>    
 
 </body>

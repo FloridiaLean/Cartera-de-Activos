@@ -13,7 +13,7 @@ from persistencia import (
     guardar_configuracion
 )
 
-configuracion_bp = Blueprint("configuracion", __name__)
+configuracion_bp = Blueprint("configuracion",__name__)
 
 @configuracion_bp.route("/configuracion",methods=["GET","POST"])
 
@@ -22,7 +22,7 @@ def mostrar_configuracion():
     if request.method == "POST":
         
         capital_inicial = float(request.form["capital_inicial"])
-
+        
         configuracion["capital_inicial"] = capital_inicial 
         
         guardar_configuracion(configuracion)

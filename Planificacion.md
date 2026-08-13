@@ -55,11 +55,11 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 
 ## Sprint 6 - Navegación y acciones sobre posiciones
 
-- [ ] Agregar acciones sobre las posiciones abiertas.
-- [ ] Acceder al detalle desde las posiciones.
-- [ ] Eliminar posiciones.
-- [ ] Validar eliminación únicamente cuando corresponda.
-- [ ] Actualizar automáticamente el Dashboard.
+- ✅ Agregar acciones sobre las posiciones abiertas.
+- ✅ Acceder al detalle desde las posiciones.
+- ✅ Eliminar posiciones.
+- ✅ Validar eliminación únicamente cuando corresponda.
+- ✅ Actualizar automáticamente el Dashboard.
 - [ ] Permitir consultar posiciones finalizadas.
 
 ---

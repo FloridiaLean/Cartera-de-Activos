@@ -113,7 +113,7 @@ def editar_compra_servicio(operaciones,operacion,monto_invertido,precio_compra):
     if not validar_precio(precio_compra):
         return False
     
-    if tiene_ventas_asociadas(operaciones, operacion):
+    if tiene_ventas_asociadas(operaciones,operacion):
             return False
     
     editar_compra(operacion,monto_invertido,precio_compra)
@@ -147,7 +147,7 @@ def eliminar_operacion_servicio(operaciones,posiciones,operacion):
     
     if operacion["tipo"] == "compra":
         
-        if tiene_ventas_asociadas(operaciones, operacion):
+        if tiene_ventas_asociadas(operaciones,operacion):
             return False
     
     eliminar_operacion(operaciones,operacion)
@@ -187,4 +187,3 @@ def eliminar_posicion_servicio(operaciones,posiciones,posicion):
     guardar_posiciones(posiciones)
     
     return True
-    

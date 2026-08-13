@@ -22,16 +22,9 @@
     },
     {
         "id": 4,
-        "activo": "BTC",
+        "activo": "SOL",
         "estado": "CERRADA",
-        "fecha_apertura": "11/08/2026 20:44",
-        "fecha_cierre": "11/08/2026 20:50"
-    },
-    {
-        "id": 5,
-        "activo": "BTC",
-        "estado": "ABIERTA",
-        "fecha_apertura": "11/08/2026 23:58",
-        "fecha_cierre": null
+        "fecha_apertura": "13/08/2026 14:31",
+        "fecha_cierre": "13/08/2026 14:35"
     }
 ]
