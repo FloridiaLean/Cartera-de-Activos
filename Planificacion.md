@@ -76,9 +76,9 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 
 ## Sprint 8 - Historial
 
-- [ ] Pantalla de posiciones cerradas.
-- [ ] Ver detalle de una posición cerrada.
-- [ ] Diferenciar visualmente posiciones abiertas y cerradas.
+- ✅ Pantalla de posiciones cerradas.
+- ✅ Ver detalle de una posición cerrada.
+- ✅ Diferenciar visualmente posiciones abiertas y cerradas.
 
 ---
 

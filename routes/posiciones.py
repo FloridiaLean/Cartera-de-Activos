@@ -11,7 +11,8 @@ from datos import (
     operaciones
 )
 from posiciones import (
-    obtener_posicion_por_id
+    obtener_posicion_por_id,
+    obtener_posiciones_cerradas
 )
 from operaciones import (
     obtener_operaciones_por_posicion
@@ -89,3 +90,21 @@ def eliminar_operacion(operacion_id):
         return redirect(url_for("inicio.inicio"))
     
     return redirect(url_for("posiciones.detalle_posicion",posicion_id=posicion_id))
+
+@posiciones_bp.route("/historial")
+
+def historial_posiciones():
+    
+    posiciones_cerradas = obtener_posiciones_cerradas(posiciones)
+    
+    resumenes = []
+    
+    for posicion in posiciones_cerradas:
+    
+        resumen = generar_resumen_posicion(operaciones,posiciones,posicion["id"])
+        
+        resumen = formatear_resumen_posicion(resumen)
+        
+        resumenes.append(resumen)
+        
+    return render_template("posiciones_cerradas.html",posiciones=resumenes)

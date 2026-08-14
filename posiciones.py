@@ -81,6 +81,16 @@ def obtener_posiciones_abiertas(posiciones):
 
     return posiciones_abiertas
 
+def obtener_posiciones_cerradas(posiciones):
+    
+    posiciones_cerradas = []
+    
+    for posicion in posiciones:
+        if posicion["estado"] == "CERRADA":
+            posiciones_cerradas.append(posicion)
+            
+    return posiciones_cerradas
+
 def obtener_posiciones_cerradas_por_activo(posiciones,activo):
     
     activo = normalizar_activo(activo)
