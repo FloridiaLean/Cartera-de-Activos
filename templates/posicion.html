@@ -12,6 +12,14 @@
 
 <h1>Detalle de posición</h1>
 
+{% with mensajes = get_flashed_messages() %}
+    {% if mensajes %}
+        {% for mensaje in mensajes %}
+            <p>{{ mensaje }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
 <h2>{{ resumen["activo"] }}</h2>
 
 <p>Posición: {{ resumen["posicion"] }}</p>
@@ -49,6 +57,7 @@
         <th>Cantidad</th>
         <th>Precio Unitario</th>
         <th>Monto</th>
+        <th>Acciones</th>
     </tr>
     {% for operacion in operaciones %}
     <tr>
@@ -56,7 +65,12 @@
         <td>{{ operacion["tipo"] }}</td>
         <td>{{ operacion["cantidad_formateada"] }}</td>
         <td>{{ operacion["precio_formateado"] }}</td>
-        <td>{{ operacion["monto_formateado"] }}</td>    
+        <td>{{ operacion["monto_formateado"] }}</td>  
+        <td>
+            <form action="{{ url_for('posiciones.eliminar_operacion',operacion_id=operacion['id']) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que querés eliminar esta operación?');">
+            <button type="submit">Eliminar</button>
+            </form>
+        </td>  
     </tr>
     {% endfor %}    
 </table>

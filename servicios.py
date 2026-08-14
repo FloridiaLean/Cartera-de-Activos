@@ -148,7 +148,7 @@ def eliminar_operacion_servicio(operaciones,posiciones,operacion):
     if operacion["tipo"] == "compra":
         
         if tiene_ventas_asociadas(operaciones,operacion):
-            return False
+            return False, "No se puede eliminar una compra que tiene ventas asociadas."
     
     eliminar_operacion(operaciones,operacion)
     
@@ -163,7 +163,7 @@ def eliminar_operacion_servicio(operaciones,posiciones,operacion):
     guardar_operaciones(operaciones)
     guardar_posiciones(posiciones)
     
-    return True
+    return True, "Operación eliminada correctamente."
 
 def actualizar_estado_posicion(operaciones,posiciones,posicion_id):
     

@@ -3,7 +3,8 @@ from flask import (
     render_template,
     request,
     redirect,
-    url_for
+    url_for,
+    flash
 )
 from datos import (
     posiciones,
@@ -23,7 +24,8 @@ from utilidades import (
     formatear_operacion
 )
 from servicios import (
-    eliminar_posicion_servicio
+    eliminar_posicion_servicio,
+    eliminar_operacion_servicio
 )
 
 posiciones_bp = Blueprint("posiciones",__name__)
@@ -60,3 +62,30 @@ def eliminar_posicion(posicion_id):
     eliminar_posicion_servicio(operaciones,posiciones,posicion)
     
     return redirect(url_for("inicio.inicio"))
+
+@posiciones_bp.route("/posiciones/operaciones/<int:operacion_id>/eliminar",methods=["POST"])
+
+def eliminar_operacion(operacion_id):
+
+    operacion = next((operacion for operacion in operaciones if operacion["id"] == operacion_id),None)
+    
+    if operacion is None:
+        flash("❌ Operación no encontrada.")
+        return redirect(url_for("inicio.inicio"))
+    
+    posicion_id = operacion["posicion_id"]
+    
+    exito, mensaje = eliminar_operacion_servicio(operaciones,posiciones,operacion)
+    
+    if exito:
+        flash(f"✅ {mensaje}")
+    else:
+        flash(f"❌ {mensaje}")
+        return redirect(url_for("posiciones.detalle_posicion",posicion_id=posicion_id))
+    
+    posicion = obtener_posicion_por_id(posiciones,posicion_id)
+    
+    if posicion is None:
+        return redirect(url_for("inicio.inicio"))
+    
+    return redirect(url_for("posiciones.detalle_posicion",posicion_id=posicion_id))

@@ -11,6 +11,14 @@
 <h1>Mi Cartera</h1>
 <h2>Menú principal</h2>
 
+{% with mensajes = get_flashed_messages() %}
+    {% if mensajes %}
+        {% for mensaje in mensajes %}
+            <p>{{ mensaje }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
 <ul>
     <li><a href="{{ url_for('configuracion.mostrar_configuracion') }}">Configuración</a></li>
     <li><a href="{{ url_for('compras.compras') }}">Registrar compra</a></li>

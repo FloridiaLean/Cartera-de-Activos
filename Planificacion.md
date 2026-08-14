@@ -26,7 +26,7 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 ## Sprint 3 - Posiciones abiertas
 
 - ✅ Mejorar formato de números.
-- [ ] Agregar acciones sobre las posiciones.
+- ✅ Agregar acciones sobre las posiciones.
 - ✅ Mostrar detalle de una posición.
 
 ---
@@ -67,9 +67,9 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 ## Sprint 7 - Gestión de Operaciones
 
 - [ ] Editar operaciones.
-- [ ] Eliminar operaciones.
+- ✅ Eliminar operaciones.
 - [ ] Recalcular resumen de la posición después de editar.
-- [ ] Recalcular resumen de la posición después de eliminar.
+- ✅ Recalcular resumen de la posición después de eliminar.
 - [ ] Mantener consistencia de la posición después de una modificación.
 
 ---
@@ -78,7 +78,7 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 
 - [ ] Pantalla de posiciones cerradas.
 - [ ] Ver detalle de una posición cerrada.
-- [ ]  Diferenciar visualmente posiciones abiertas y cerradas.
+- [ ] Diferenciar visualmente posiciones abiertas y cerradas.
 
 ---
 
