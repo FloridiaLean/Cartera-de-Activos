@@ -57,10 +57,9 @@ def validar_edicion_venta(operaciones,posiciones,operacion,nueva_cantidad):
     cantidad_disponible = (resumen["cantidad_actual"] + operacion["cantidad"])
     
     if nueva_cantidad > cantidad_disponible:
-        print("No puede vender más de la cantidad disponible.")
-        return False
+        return False, "No puede vender más de la cantidad disponible."
     
-    return True
+    return True, None
 
 def tiene_ventas_asociadas(operaciones,operacion):
     

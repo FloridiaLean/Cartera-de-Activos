@@ -18,7 +18,8 @@ from operaciones import (
     obtener_operaciones_por_posicion
 )
 from calculos import (
-    generar_resumen_posicion
+    generar_resumen_posicion,
+    generar_resumen_todas_posiciones
 )
 from utilidades import (
     formatear_resumen_posicion,
@@ -30,6 +31,17 @@ from servicios import (
 )
 
 posiciones_bp = Blueprint("posiciones",__name__)
+
+@posiciones_bp.route("/posiciones")
+
+def todas_las_posiciones():
+
+    resumenes = generar_resumen_todas_posiciones(operaciones, posiciones)
+    
+    for resumen in resumenes:
+        formatear_resumen_posicion(resumen)
+    
+    return render_template("posiciones.html",posiciones=resumenes)
 
 @posiciones_bp.route("/posiciones/<int:posicion_id>")
 

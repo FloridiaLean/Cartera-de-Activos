@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Todas las posiciones</title>
+</head>
+
+<body>
+
+<a href="{{ url_for('inicio.inicio') }}">← Volver al dashboard</a>
+
+<h1>Todas las posiciones</h1>
+
+<hr>
+
+<h2>🟢 Posiciones abiertas</h2>
+
+{% set abiertas = posiciones | selectattr("estado","equalto","ABIERTA") | list %}
+{% if abiertas %}
+
+<table>
+    <tr>
+        <th>Posición</th>
+        <th>Activo</th>
+        <th>Capital invertido</th>
+        <th>Cantidad actual</th>
+        <th>PPC</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    
+    {% for posicion in abiertas %}
+    
+    <tr>
+        <td>{{ posicion["posicion"] }}</td>
+        <td>{{ posicion["activo"] }}</td>
+        <td>{{ posicion["capital_invertido_formateado"] }}</td>
+        <td>{{ posicion["cantidad_formateada"] }}</td>
+        <td>{{ posicion["ppc_formateado"] }}</td>
+        <td>🟢 ABIERTA</td>
+        <td><a href="{{ url_for('posiciones.detalle_posicion',posicion_id=posicion['posicion']) }}">Ver detalle</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% else %}
+<p>No existen posiciones abiertas.</p>
+{% endif %}
+
+<hr>
+
+<h2>🔴 Posiciones cerradas</h2>
+
+{% set cerradas = posiciones | selectattr("estado","equalto","CERRADA") | list %}
+{% if cerradas %}
+
+<table>
+    <tr>
+        <th>Posición</th>
+        <th>Activo</th>
+        <th>Capital histórico</th>
+        <th>Capital recuperado</th>
+        <th>Ganancia realizada</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    
+    {% for posicion in cerradas %}
+    
+    <tr>
+        <td>{{ posicion["posicion"] }}</td>
+        <td>{{ posicion["activo"] }}</td>
+        <td>{{ posicion["capital_historico_formateado"] }}</td>
+        <td>{{ posicion["capital_recuperado_formateado"] }}</td>
+        <td>{{ posicion["ganancia_realizada_formateada"] }}</td>
+        <td>🔴 CERRADA</td>
+        <td><a href="{{ url_for('posiciones.detalle_posicion',posicion_id=posicion['posicion']) }}">Ver detalle</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% else %}
+<p>No existen posiciones cerradas.</p>
+{% endif %}
+
+</body>
+
+</html>

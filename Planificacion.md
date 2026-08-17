@@ -60,17 +60,17 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 - ✅ Eliminar posiciones.
 - ✅ Validar eliminación únicamente cuando corresponda.
 - ✅ Actualizar automáticamente el Dashboard.
-- [ ] Permitir consultar posiciones finalizadas.
+- ✅ Permitir consultar posiciones finalizadas.
 
 ---
 
 ## Sprint 7 - Gestión de Operaciones
 
-- [ ] Editar operaciones.
+- ✅ Editar operaciones.
 - ✅ Eliminar operaciones.
-- [ ] Recalcular resumen de la posición después de editar.
+- ✅Recalcular resumen de la posición después de editar.
 - ✅ Recalcular resumen de la posición después de eliminar.
-- [ ] Mantener consistencia de la posición después de una modificación.
+- ✅ Mantener consistencia de la posición después de una modificación.
 
 ---
 

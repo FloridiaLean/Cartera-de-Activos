@@ -89,10 +89,10 @@
     <tr>
         <td>{{ resumen['posicion'] }}</td>
         <td>{{ resumen['activo'] }}</td>
-        <td>{{ resumen['capital_formateado'] }}</td>
+        <td>{{ resumen['capital_invertido_formateado'] }}</td>
         <td>{{ resumen['cantidad_formateada'] }}</td>
         <td>{{ resumen['ppc_formateado'] }}</td>
-        <td>{{ resumen['estado'] }}</td> 
+        <td>🟢 ABIERTA</td> 
         <td><a href="{{ url_for('posiciones.detalle_posicion',posicion_id=resumen['posicion']) }}">Ver Detalle</a></td>   
     </tr>
     {% endfor %}
@@ -102,6 +102,7 @@
 
 <h2>Historial</h2>
 
+<a href="{{ url_for('posiciones.todas_las_posiciones') }}">Ver todas las posiciones</a>
 <a href="{{ url_for('posiciones.historial_posiciones') }}">Ver posiciones cerradas</a>
 
 </body>

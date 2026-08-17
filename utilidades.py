@@ -46,6 +46,7 @@ def formatear_resumen_posicion(resumen):
     resumen["ppc_formateado"] = formatear_dinero(resumen["precio_promedio"])
     resumen["ganancia_realizada_formateada"] = formatear_dinero(resumen["ganancia_realizada"])
     resumen["capital_recuperado_formateado"] = formatear_dinero(resumen["capital_recuperado"])
+    resumen["rentabilidad_formateada"] = formatear_porcentaje(resumen["rentabilidad"])
     
     return resumen
 

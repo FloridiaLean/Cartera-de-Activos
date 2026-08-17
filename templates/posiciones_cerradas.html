@@ -12,12 +12,14 @@
 
 <h1>Historial de posiciones</h1>
 
+<p>🔴 Posiciones cerradas</p>
+
 {% if posiciones %}
     {% for posicion in posiciones %}
         <hr>
         
         <h2>{{ posicion["activo"] }} — Posición #{{ posicion["posicion"] }}</h2>
-        <p>Estado: {{ posicion["estado"] }}</p>
+        <p>Estado: 🔴 CERRADA</p>   
         <p>Fecha de apertura: {{ posicion["fecha_apertura"] }}</p>
         <p>Fecha de cierre: {{ posicion["fecha_cierre"] }}</p>
         <p>Capital histórico: {{ posicion["capital_historico_formateado"] }}</p>

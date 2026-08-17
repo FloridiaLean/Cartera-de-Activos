@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar operación</title>
+</head>
+
+<body>
+
+<a href="{{ url_for('inicio.inicio') }}">← Volver al dashboard</a>
+<a href="{{ url_for('posiciones.detalle_posicion', posicion_id=operacion['posicion_id']) }}">← Volver a la posición</a>
+
+<h1>Editar operación</h1>
+
+<hr>
+
+<h2>Información de la operación</h2>
+
+<p><strong>Operación:</strong> #{{ operacion["id"] }}</p>
+<p><strong>Posición:</strong> #{{ operacion["posicion_id"] }}</p>
+<p><strong>Activo:</strong> {{ operacion["activo"] }}</p>
+<p><strong>Tipo:</strong> {{ operacion["tipo"] }}</p>
+
+<hr>
+
+{% if operacion["tipo"] == "compra" %}
+
+    <h2>Editar compra</h2>
+    <h3>Valores actuales</h3>
+    
+    <p>Monto invertido: <strong>{{ operacion["monto_formateado"] }}</strong></p>
+    <p>Precio de compra: <strong>{{ operacion["precio_formateado"] }}</strong></p>
+    <p>Cantidad: <strong>{{ operacion["cantidad_formateada"] }}</strong></p>
+    
+    <hr>
+    
+    <h3>Nuevos valores</h3>
+    
+    <form method="POST">
+        <label for="monto_invertido">Monto invertido</label>
+        <br>
+        <input type="number" id="monto_invertido" name="monto_invertido" step="any" required>
+        <br><br>
+        <label for="precio_compra">Precio de compra</label>
+        <br>
+        <input type="number" id="precio_compra" name="precio_compra" step="any" required>
+        <br><br>
+        <button type="submit">Guardar cambios</button>
+    </form>
+
+{% elif operacion["tipo"] == "venta" %}
+
+    <h2>Editar venta</h2>
+    <h3>Valores actuales</h3>
+    
+    <p>Cantidad maxima disponible: <strong>{{ cantidad_disponible_formateada }}</strong></p>
+    <p>Cantidad vendida: <strong>{{ operacion["cantidad_formateada"] }}</strong></p>
+    <p>Precio de venta: <strong>{{ operacion["precio_formateado"] }}</strong></p>
+    <p>Monto recibido: <strong>{{ operacion["monto_formateado"] }}</strong></p>
+    
+    <hr>
+    
+    <h3>Nuevos valores</h3>
+    
+    <form method="POST">
+        <label for="cantidad">Cantidad a vender</label>
+        <br>
+        <input type="number" id="cantidad" name="cantidad" step="any" max="{{ cantidad_disponible }}"required>
+        <button type="button" data-cantidad="{{ cantidad_disponible }}" onclick="venderTodo(this.dataset.cantidad)">Vender todo lo disponible</button>
+        <br><br>
+        <label for="precio_venta">Precio de venta</label>
+        <br>
+        <input type="number" id="precio_venta" name="precio_venta" step="any" required>
+        <br><br>
+        <button type="submit">Guardar cambios</button>
+    </form>
+{% endif %}
+
+<script>
+function venderTodo(cantidad) {
+    document.getElementById("cantidad").value = cantidad;
+}
+</script>
+
+</body>
+
+</html>

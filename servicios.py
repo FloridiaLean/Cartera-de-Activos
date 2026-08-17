@@ -107,39 +107,49 @@ def registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio_venta):
 
 def editar_compra_servicio(operaciones,operacion,monto_invertido,precio_compra):
     
-    if not validar_monto(monto_invertido):
-        return False
-
-    if not validar_precio(precio_compra):
-        return False
+    valido, mensaje = validar_monto(monto_invertido)
+    
+    if not valido:
+        return False, mensaje
+    
+    valido, mensaje = validar_precio(precio_compra)
+    
+    if not valido:
+        return False, mensaje
     
     if tiene_ventas_asociadas(operaciones,operacion):
-            return False
+            return False, "La compra tiene ventas asociadas."
     
     editar_compra(operacion,monto_invertido,precio_compra)
     
     guardar_operaciones(operaciones)
     
-    return True
+    return True, "Compra editada correctamente."
 
 def editar_venta_servicio(operaciones,posiciones,operacion,cantidad,precio_venta):
     
     posicion_id = operacion["posicion_id"]
     
-    if not validar_cantidad(cantidad):
-        return False
+    valido, mensaje = validar_cantidad(cantidad)
     
-    if not validar_precio(precio_venta):
-        return False
+    if not valido:
+        return False, mensaje
     
-    if not validar_edicion_venta(operaciones,posiciones,operacion,cantidad):
-        return False
+    valido, mensaje = validar_precio(precio_venta)
+    
+    if not valido:
+        return False, mensaje
+    
+    valido, mensaje = validar_edicion_venta(operaciones,posiciones,operacion,cantidad)
+    
+    if not valido:
+        return False, mensaje
     
     editar_venta(operacion,cantidad,precio_venta)
     actualizar_estado_posicion(operaciones,posiciones,posicion_id)
     guardar_operaciones(operaciones)
     
-    return True
+    return True, None
 
 def eliminar_operacion_servicio(operaciones,posiciones,operacion):
     
