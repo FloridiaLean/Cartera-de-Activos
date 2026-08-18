@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de operaciones</title>
+</head>
+
+<body>
+
+<a href="{{ url_for('inicio.inicio') }}">← Volver al dashboard</a>
+
+<h1>Historial de operaciones</h1>
+
+<hr>
+
+<h2>Filtrar por activo</h2>
+
+<form method="GET" action="{{ url_for('operaciones.historial_operaciones') }}">
+    <label for="activo">Activo:</label>
+    <input type="text" id="activo" name="activo" value="{{ activo }}" placeholder="Ej: BTC">
+    <label for="tipo">Tipo:</label>
+    <select id="tipo" name="tipo">
+        <option value="" {% if not tipo %}selected{% endif %}>Todas</option>
+        <option value="compra" {% if tipo == "compra" %}selected{% endif %}>Compras</option>
+        <option value="venta" {% if tipo == "venta" %}selected{% endif %}>Ventas</option>
+    </select>
+    <button type="submit">Filtrar</button>
+    <a href="{{ url_for('operaciones.historial_operaciones') }}">Limpiar filtros</a>
+</form>
+
+<hr>
+
+{% if operaciones %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Posición</th>
+        <th>Activo</th>
+        <th>Tipo</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Monto</th>
+        <th>Acción</th>
+    </tr>
+
+    {% for operacion in operaciones %}
+    <tr>
+        <td>{{ operacion["id"] }}</td>
+        <td>{{ operacion["fecha_formateada"] }}</td>
+        <td>#{{ operacion["posicion_id"] }}</td>
+        <td>{{ operacion["activo"] }}</td>
+        <td>{{ operacion["tipo"] }}</td>
+        <td>{{ operacion["cantidad_formateada"] }}</td>
+        <td>{{ operacion["precio_formateado"] }}</td>
+        <td>{{ operacion["monto_formateado"] }}</td>
+        <td><a href="{{ url_for('posiciones.detalle_posicion',posicion_id=operacion['posicion_id']) }}">Ver posición</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% else %}
+<p>No existen operaciones registradas.</p>
+{% endif %}
+
+</body>
+</html>

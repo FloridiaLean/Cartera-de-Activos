@@ -27,6 +27,29 @@ from calculos import (
 
 operaciones_bp = Blueprint("operaciones",__name__)
 
+@operaciones_bp.route("/operaciones")
+
+def historial_operaciones():
+    
+    activo = request.args.get("activo","").strip().upper()
+    tipo = request.args.get("tipo","").strip().lower()
+    
+    operaciones_filtradas = operaciones
+    
+    if activo:
+        operaciones_filtradas = [operacion for operacion in operaciones if operacion["activo"] == activo]
+    
+    if tipo:
+        operaciones_filtradas = [operacion for operacion in operaciones_filtradas if operacion["tipo"] == tipo]
+    
+    operaciones_formateadas = []
+    
+    for operacion in operaciones_filtradas:
+        operacion_formateada = formatear_operacion(operacion)
+        operaciones_formateadas.append(operacion_formateada)
+
+    return render_template("operaciones.html",operaciones=operaciones_formateadas,activo=activo,tipo=tipo)
+
 @operaciones_bp.route("/operaciones/<int:operacion_id>/editar",methods=["GET","POST"])
 
 def editar_operacion(operacion_id):

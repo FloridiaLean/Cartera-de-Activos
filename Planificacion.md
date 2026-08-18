@@ -84,9 +84,10 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 
 ## Sprint 9 - Operaciones
 
-- [ ] Historial completo de operaciones.
-- [ ] Filtros por activo.
-- [ ] Filtros por fecha.
+- ✅ Historial completo de operaciones.
+- ✅ Filtros por activo.
+- ✅ Filtros por tipo de operación.
+- [ ] Filtros por fecha → pospuesto hasta la migración de persistencia/formato de fechas.
 
 ---
 

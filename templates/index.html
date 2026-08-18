@@ -100,10 +100,13 @@
 
 <hr>
 
-<h2>Historial</h2>
+<h2>Gestion</h2>
 
-<a href="{{ url_for('posiciones.todas_las_posiciones') }}">Ver todas las posiciones</a>
-<a href="{{ url_for('posiciones.historial_posiciones') }}">Ver posiciones cerradas</a>
+<ul>
+    <li><a href="{{ url_for('posiciones.todas_las_posiciones') }}">Ver todas las posiciones</a></li>
+    <li><a href="{{ url_for('posiciones.historial_posiciones') }}">Ver posiciones cerradas</a></li>
+    <li><a href="{{ url_for('operaciones.historial_operaciones') }}">Ver historial de operaciones</a></li>
+</ul>
 
 </body>
 
