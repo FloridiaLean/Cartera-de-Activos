@@ -2,7 +2,7 @@
 
 Desarrollar una aplicación web para la gestión y análisis de una cartera de inversiones personales.
 
-La aplicación se construirá por etapas, priorizando primero un backend sólido, luego un dashboard de análisis y finalmente herramientas avanzadas de gestión e integración con datos de mercado.
+La aplicación se construirá por etapas, priorizando primero un base sólida de lógica de negocio y persistencia, luego el análisis de la cartera y finalmente herramientas avanzadas de integración y visualización.
 
 ## Sprint 1 - Dashboard principal
 
@@ -18,7 +18,7 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 - ✅ Mostrar PPC.
 - ✅ Mostrar capital invertido.
 - [ ] Mostrar valor actual.
-- [ ] Mostrar rentabilidad.
+- [ ] Mostrar rentabilidad actual.
 - [ ] Mostrar ganancia no realizada.
 
 ---
@@ -93,7 +93,7 @@ La aplicación se construirá por etapas, priorizando primero un backend sólido
 
 ## Sprint 10 - Persistencia
 
-- [ ] Migrar de JSON a SQLite.
+- ✅ Migrar de JSON a SQLite.
 
 ---
 
