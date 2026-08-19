@@ -10,7 +10,7 @@ from datos import (
     configuracion
 )
 from persistencia import (
-    guardar_configuracion
+    guardar_configuracion_sql
 )
 
 configuracion_bp = Blueprint("configuracion",__name__)
@@ -25,7 +25,7 @@ def mostrar_configuracion():
         
         configuracion["capital_inicial"] = capital_inicial 
         
-        guardar_configuracion(configuracion)
+        guardar_configuracion_sql(configuracion)
         
         flash("Configuración guardada correctamente.")
         

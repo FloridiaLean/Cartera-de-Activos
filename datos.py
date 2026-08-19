@@ -1,9 +1,9 @@
 from persistencia import (
-    cargar_operaciones,
-    cargar_posiciones,
-    cargar_configuracion
+    cargar_operaciones_sql,
+    cargar_posiciones_sql,
+    cargar_configuracion_sql
 )
 
-operaciones = cargar_operaciones()
-posiciones = cargar_posiciones()
-configuracion = cargar_configuracion()
+operaciones = cargar_operaciones_sql()
+posiciones = cargar_posiciones_sql()
+configuracion = cargar_configuracion_sql()

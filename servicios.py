@@ -33,8 +33,12 @@ from validaciones import (
     tiene_ventas_asociadas
 )
 from persistencia import (
-    guardar_operaciones,
-    guardar_posiciones
+    guardar_operaciones_sql,
+    guardar_posiciones_sql,
+    eliminar_operacion_sql,
+    eliminar_operaciones_por_posicion_sql,
+    eliminar_posicion_sql,
+    sincronizar_operaciones_sql
 )
 
 def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,precio_compra):
@@ -66,8 +70,8 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
         
     agregar_compra(operaciones,id_posicion,activo,monto_invertido,precio_compra)
     
-    guardar_operaciones(operaciones)
-    guardar_posiciones(posiciones)
+    guardar_posiciones_sql(posiciones)
+    guardar_operaciones_sql(operaciones)
     
     return True, None
     
@@ -95,13 +99,19 @@ def registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio_venta):
     valido, mensaje = validar_venta(analisis,cantidad)
     if not valido:
         return False, mensaje
-
+    
     agregar_venta(operaciones,id_posicion,activo,cantidad,precio_venta)
     
     actualizar_estado_posicion(operaciones,posiciones,posicion_id)
     
-    guardar_operaciones(operaciones)
-    guardar_posiciones(posiciones)
+    print("OPERACIONES ANTES DE GUARDAR:")
+    print(operaciones)
+
+    print("POSICIONES ANTES DE GUARDAR:")
+    print(posiciones)
+
+    guardar_operaciones_sql(operaciones)
+    guardar_posiciones_sql(posiciones)
     
     return True, None
 
@@ -122,7 +132,7 @@ def editar_compra_servicio(operaciones,operacion,monto_invertido,precio_compra):
     
     editar_compra(operacion,monto_invertido,precio_compra)
     
-    guardar_operaciones(operaciones)
+    guardar_operaciones_sql(operaciones)
     
     return True, "Compra editada correctamente."
 
@@ -147,7 +157,9 @@ def editar_venta_servicio(operaciones,posiciones,operacion,cantidad,precio_venta
     
     editar_venta(operacion,cantidad,precio_venta)
     actualizar_estado_posicion(operaciones,posiciones,posicion_id)
-    guardar_operaciones(operaciones)
+    
+    guardar_operaciones_sql(operaciones)
+    guardar_posiciones_sql(posiciones)
     
     return True, None
 
@@ -166,12 +178,16 @@ def eliminar_operacion_servicio(operaciones,posiciones,operacion):
     
     if not operaciones_posicion:
         posicion = obtener_posicion_por_id(posiciones,posicion_id)
+        
         eliminar_posicion(posiciones,posicion)
+        eliminar_operaciones_por_posicion_sql(posicion_id)
+        eliminar_posicion_sql(posicion_id)
+        
     else:
         actualizar_estado_posicion(operaciones,posiciones,posicion_id)
     
-    guardar_operaciones(operaciones)
-    guardar_posiciones(posiciones)
+    sincronizar_operaciones_sql(operaciones)
+    guardar_posiciones_sql(posiciones)
     
     return True, "Operación eliminada correctamente."
 
@@ -193,7 +209,7 @@ def eliminar_posicion_servicio(operaciones,posiciones,posicion):
     
     eliminar_posicion(posiciones,posicion)
     
-    guardar_operaciones(operaciones)
-    guardar_posiciones(posiciones)
+    eliminar_operaciones_por_posicion_sql(posicion_id)
+    eliminar_posicion_sql(posicion_id)
     
     return True

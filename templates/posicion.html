@@ -107,7 +107,14 @@
                 <form action="{{ url_for('posiciones.eliminar_operacion',operacion_id=operacion['id']) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que querés eliminar esta operación?');">
                 <button type="submit">Eliminar</button>
                 </form>
-            </td>  
+            </td>
+        {% else %}
+            <td><a href="{{ url_for('operaciones.editar_operacion',operacion_id=operacion['id']) }}">Editar</a>
+                {% if operacion["tipo"] == "venta" %}
+                    <form action="{{ url_for('posiciones.eliminar_operacion',operacion_id=operacion['id']) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que querés eliminar esta operación?');">
+                    <button type="submit">Eliminar</button>
+                    </form>
+                {% endif %}
         {% endif %}
     </tr>
     {% endfor %}    
