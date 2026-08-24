@@ -10,9 +10,6 @@ from datos import (
     operaciones,
     posiciones
 )
-from posiciones import (
-    obtener_posicion_por_id
-)
 from utilidades import (
     formatear_operacion,
     formatear_cantidad
@@ -69,12 +66,12 @@ def editar_operacion(operacion_id):
             monto_invertido = float(request.form["monto_invertido"])
             precio_compra = float(request.form["precio_compra"])
             
-            exito, mensaje = editar_compra_servicio(operaciones,operacion,monto_invertido,precio_compra)
+            exito, mensaje = editar_compra_servicio(operaciones,posiciones,operacion,monto_invertido,precio_compra)
             
             if exito:
                 flash("✅ Compra editada correctamente.")
             else:
-                flash("❌ No se pudo editar la compra.")
+                flash("❌ {mensaje}")
         else: 
             
             cantidad = float(request.form["cantidad"])
@@ -85,7 +82,7 @@ def editar_operacion(operacion_id):
             if exito:
                 flash("✅ Venta editada correctamente.")
             else:
-                flash("❌ No se pudo editar la venta.")
+                flash("❌ {mensaje}")
             
         return redirect(
             url_for("posiciones.detalle_posicion",posicion_id=posicion_id))
@@ -103,5 +100,5 @@ def editar_operacion(operacion_id):
         cantidad_disponible_formateada = formatear_cantidad(cantidad_disponible,operacion["activo"])
         
         return render_template("editar_operacion.html",operacion=operacion,cantidad_disponible=cantidad_disponible, cantidad_disponible_formateada=cantidad_disponible_formateada)
-
+    
     return render_template("editar_operacion.html",operacion=operacion)

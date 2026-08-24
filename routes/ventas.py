@@ -47,13 +47,14 @@ def ventas():
         posicion_id = int(request.form["posicion_id"])
         cantidad = request.form.get("cantidad")
         precio = request.form.get("precio")
+        fecha = request.form.get("fecha")
         
         if cantidad is not None and precio is not None:
         
             cantidad = float(cantidad)
             precio = float(precio)
             
-            exito, mensaje = registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio)
+            exito, mensaje = registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio,fecha)
             
             if exito:
                 flash("✅ Venta registrada correctamente.")

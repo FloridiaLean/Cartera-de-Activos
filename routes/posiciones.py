@@ -1,7 +1,6 @@
 from flask import (
     Blueprint,
     render_template,
-    request,
     redirect,
     url_for,
     flash
@@ -36,7 +35,7 @@ posiciones_bp = Blueprint("posiciones",__name__)
 
 def todas_las_posiciones():
 
-    resumenes = generar_resumen_todas_posiciones(operaciones, posiciones)
+    resumenes = generar_resumen_todas_posiciones(operaciones,posiciones)
     
     for resumen in resumenes:
         formatear_resumen_posicion(resumen)

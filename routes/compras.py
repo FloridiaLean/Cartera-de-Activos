@@ -52,6 +52,7 @@ def compras():
         activo = normalizar_activo(request.form["activo"]) 
         monto = request.form.get("monto")
         precio = request.form.get("precio")
+        fecha = request.form.get("fecha")
         
         posicion_id = request.form.get("posicion_id")
         
@@ -67,7 +68,7 @@ def compras():
                 monto = float(monto)
                 precio = float(precio)
                 
-                exito, mensaje = registrar_compra(operaciones,posiciones,posicion_id,activo,monto,precio)
+                exito, mensaje = registrar_compra(operaciones,posiciones,posicion_id,activo,monto,precio,fecha)
                 
                 if exito:
                     flash("✅ Compra registrada correctamente.")

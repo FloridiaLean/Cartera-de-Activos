@@ -7,6 +7,18 @@ from posiciones import (
     obtener_posicion_por_id,
     obtener_posiciones_cerradas_por_activo
 )
+from datetime import date
+
+def calcular_duracion_posicion(posicion):
+    
+    fecha_apertura = date.fromisoformat(posicion["fecha_apertura"])
+    
+    if posicion["fecha_cierre"] is None:
+        fecha_fin = date.today()
+    else:
+        fecha_fin = date.fromisoformat(posicion["fecha_cierre"])
+    
+    return (fecha_fin - fecha_apertura).days
 
 def calcular_capital_invertido(resumenes):
     
@@ -36,7 +48,7 @@ def calcular_ganancia_realizada(resumenes):
     return ganancia_realizada
 
 def calcular_cantidad_posiciones(resumenes):
-
+    
     return len(resumenes)
 
 def calcular_liquidez(configuracion,dashboard):
@@ -149,12 +161,15 @@ def generar_resumen_posicion(operaciones,posiciones,posicion_id):
     
     analisis = analizar_posicion(operaciones,posicion_id)
     
+    duracion = calcular_duracion_posicion(posicion)
+    
     resumen = {
         'posicion': posicion_id,
         'activo': posicion['activo'],
         'estado': posicion['estado'],
         'fecha_apertura': posicion['fecha_apertura'],
         'fecha_cierre': posicion['fecha_cierre'],
+        'duracion': duracion,
         'capital_historico': analisis['capital_historico'],
         'capital_invertido_actual': analisis['capital_invertido_actual'],
         'cantidad_actual': analisis['cantidad_actual'],
@@ -162,7 +177,7 @@ def generar_resumen_posicion(operaciones,posiciones,posicion_id):
         'precio_promedio': analisis['precio_promedio'],
         'capital_recuperado': analisis['capital_recuperado'],
         'ganancia_realizada': analisis['ganancia_realizada'],
-        'rentabilidad': analisis['rentabilidad'],
+        'rentabilidad': analisis['rentabilidad']
     }
     return resumen
 
@@ -212,54 +227,54 @@ def generar_tarjeta_activo(activo,operaciones,posiciones):
 def generar_tarjetas_activos(operaciones,posiciones):
 
     tarjetas = []
-
+    
     activos = obtener_activos(operaciones)
-
+    
     for activo in activos:
-
+    
         tarjeta = generar_tarjeta_activo(activo,operaciones,posiciones)
-
+        
         if tarjeta is not None:
             tarjetas.append(tarjeta)
-
+    
     return tarjetas
 
 def generar_resumen_activos_abiertos(resumenes_abiertas):
 
     activos = []
     resumenes = []
-
+    
     for resumen in resumenes_abiertas:
-
+    
         activo = resumen["activo"]
-
+        
         if activo not in activos:
             activos.append(activo)
-
+    
     for activo in activos:
-
+    
         cantidad_actual = 0
         capital_invertido = 0
-
+        
         for resumen in resumenes_abiertas:
-
+        
             if resumen["activo"] == activo:
-
+            
                 cantidad_actual += resumen["cantidad_actual"]
                 capital_invertido += resumen["capital_invertido_actual"]
-
+        
         if cantidad_actual == 0:
             precio_promedio = 0
         else:
             precio_promedio = capital_invertido / cantidad_actual
-
+        
         resumen = {
             "activo": activo,
             "cantidad_actual": cantidad_actual,
             "capital_invertido_actual": capital_invertido,
             "precio_promedio": precio_promedio
         }
-
+        
         resumenes.append(resumen)
-
+    
     return resumenes

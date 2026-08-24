@@ -48,6 +48,7 @@
     {% for posicion in posiciones %}
         <div>
             <h3>Posición #{{ posicion["posicion"] }}</h3> 
+            <p>{{ posicion["duracion_formateada"] }}</p>
             <p>Activo: {{ posicion["activo"] }}</p>
             <p>Capital histórico: {{ posicion["capital_historico_formateado"] }}</p>
             <p>Capital actual: {{ posicion["capital_invertido_formateado"] }}</p>
@@ -69,6 +70,8 @@
                     <br><br>
                     <label for="precio-{{ posicion['posicion'] }}">Precio de compra</label>
                     <input type="number" id="precio-{{ posicion['posicion'] }}" name="precio" step="any" required>
+                    <br><br>
+                    <input type="date" id="fecha" name="fecha" required>
                     <br><br>
                     <button type="submit">Registrar compra</button>
                 </form>
@@ -94,7 +97,7 @@
         <h2>Nueva posición de {{ activo }}</h2>
     {% else %}
         <h2>Posición seleccionada #{{ resumen["posicion"] }}</h2>
-        
+        <p>{{ resumen["duracion_formateada"] }}</p>
         <p>Activo: {{ resumen["activo"] }}</p>
         <p>Capital histórico: {{ resumen["capital_historico_formateado"] }}</p>
         <p>Capital invertido actual: {{ resumen["capital_invertido_formateado"] }}</p>
@@ -115,6 +118,8 @@
         <label for="precio">Precio de compra</label>
         <br>
         <input type="number" id="precio" name="precio" step="any" required>
+        <br><br>
+        <input type="date" id="fecha" name="fecha" required>
         <br><br>
         <button type="submit">Registrar compra</button>
     </form>

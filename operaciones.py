@@ -1,5 +1,3 @@
-from utilidades import obtener_fecha_actual
-
 def generar_id(operaciones):
     
     id_mayor = 0 
@@ -12,12 +10,11 @@ def generar_id(operaciones):
     
     return id_mayor + 1
 
-def agregar_compra(operaciones,posicion_id,activo,monto_invertido,precio_compra):
+def agregar_compra(operaciones,posicion_id,activo,monto_invertido,precio_compra,fecha):
     
     cantidad = monto_invertido / precio_compra
     
     id_operacion = generar_id(operaciones)
-    fecha = obtener_fecha_actual()
     
     nueva_operacion = {
         'id': id_operacion,
@@ -32,12 +29,11 @@ def agregar_compra(operaciones,posicion_id,activo,monto_invertido,precio_compra)
     operaciones.append(nueva_operacion)
     return True
 
-def agregar_venta(operaciones,posicion_id,activo,cantidad,precio_venta):
+def agregar_venta(operaciones,posicion_id,activo,cantidad,precio_venta,fecha):
     
     monto_recibido = cantidad * precio_venta
     
     id_operacion = generar_id(operaciones)
-    fecha = obtener_fecha_actual()
     
     nueva_operacion = {
             'id': id_operacion,
@@ -98,7 +94,7 @@ def editar_compra(operacion,monto_invertido,precio_compra):
     operacion["precio_compra"] = precio_compra 
     operacion["cantidad"] = monto_invertido / precio_compra
 
-def editar_venta(operacion, cantidad, precio_venta):
+def editar_venta(operacion,cantidad,precio_venta):
     
     operacion["cantidad"] = cantidad
     operacion["precio_venta"] = precio_venta
@@ -114,3 +110,26 @@ def eliminar_operaciones_por_posicion(operaciones,posicion_id):
     
     for operacion in operaciones_posicion:
         eliminar_operacion(operaciones,operacion)
+
+def obtener_ultima_operacion_por_posicion(operaciones,posicion_id):
+    
+    operaciones_posicion = obtener_operaciones_por_posicion(operaciones,posicion_id)
+    
+    if not operaciones_posicion:
+        return None
+    
+    return max(operaciones_posicion,key=lambda operacion:operacion["fecha"])
+
+def obtener_fecha_apertura_posicion(operaciones,posicion_id):
+    
+    compras = []
+    
+    for operacion in operaciones:
+        
+        if (operacion["posicion_id"] == posicion_id and operacion["tipo"] == "compra"):
+            compras.append(operacion)
+        
+    if not compras:
+        return None
+    
+    return min(compra["fecha"] for compra in compras)

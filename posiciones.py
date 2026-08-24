@@ -1,7 +1,10 @@
 from utilidades import (
-    normalizar_activo, 
-    obtener_fecha_actual
+    normalizar_activo
 )
+from operaciones import (
+    obtener_operaciones_por_posicion
+)
+
 def generar_id_posicion(posiciones):
     
     id_mayor = 0 
@@ -14,10 +17,9 @@ def generar_id_posicion(posiciones):
     
     return id_mayor + 1
 
-def crear_posicion(posiciones,activo):
+def crear_posicion(posiciones,activo,fecha_apertura):
     
     posicion_id = generar_id_posicion(posiciones)
-    fecha_apertura = obtener_fecha_actual()
     
     nueva_posicion = {
     'id': posicion_id,
@@ -62,10 +64,10 @@ def reabrir_posicion(posicion):
     posicion["estado"] = "ABIERTA"
     posicion["fecha_cierre"] = None
 
-def cerrar_posicion(posicion):
+def cerrar_posicion(posicion,fecha_cierre):
     
     posicion['estado'] = 'CERRADA'
-    posicion['fecha_cierre'] = obtener_fecha_actual()
+    posicion['fecha_cierre'] = fecha_cierre
 
 def eliminar_posicion(posiciones,posicion):
     
@@ -96,9 +98,28 @@ def obtener_posiciones_cerradas_por_activo(posiciones,activo):
     activo = normalizar_activo(activo)
     
     posiciones_cerradas = []
-
+    
     for posicion in posiciones:
         if posicion["estado"] == "CERRADA" and posicion["activo"] == activo:
             posiciones_cerradas.append(posicion)
-
+    
     return posiciones_cerradas
+
+def actualizar_fechas_posicion(operaciones,posiciones,posicion_id):
+    
+    posicion = obtener_posicion_por_id(posiciones,posicion_id)
+    
+    if posicion is None:
+        return False
+    
+    operaciones_posicion = obtener_operaciones_por_posicion(operaciones,posicion_id)
+    
+    if not operaciones_posicion:
+        return False
+    
+    compras = [operacion for operacion in operaciones_posicion if operacion["tipo"] == "compra"]
+    
+    if compras:
+        posicion["fecha_apertura"] = min(operacion["fecha"] for operacion in compras)
+    
+    return True

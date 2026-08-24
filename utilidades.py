@@ -47,6 +47,10 @@ def formatear_resumen_posicion(resumen):
     resumen["ganancia_realizada_formateada"] = formatear_dinero(resumen["ganancia_realizada"])
     resumen["capital_recuperado_formateado"] = formatear_dinero(resumen["capital_recuperado"])
     resumen["rentabilidad_formateada"] = formatear_porcentaje(resumen["rentabilidad"])
+    if resumen["estado"] == "ABIERTA":
+        resumen["duracion_formateada"] = f"En curso hace: {resumen['duracion']} días"
+    else:
+        resumen["duracion_formateada"] = f"Duración: {resumen['duracion']} días"
     
     return resumen
 

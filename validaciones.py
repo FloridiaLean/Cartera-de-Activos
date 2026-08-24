@@ -63,9 +63,27 @@ def validar_edicion_venta(operaciones,posiciones,operacion,nueva_cantidad):
 
 def tiene_ventas_asociadas(operaciones,operacion):
     
-    for operacion_actual in operaciones:   
-        if operacion_actual["tipo"] == "venta" and operacion_actual["posicion_id"] == operacion["posicion_id"]:
-            print("No se puede realizar esta acción porque existen ventas asociadas.")
-            return True
+    posicion_id = operacion["posicion_id"]
     
+    for otra_operacion in operaciones: 
+        
+        if otra_operacion["posicion_id"] != posicion_id:
+            continue
+        
+        if otra_operacion["tipo"] == "venta":
+            return True
+        
     return False
+
+def validar_fecha(fecha_anterior,fecha):
+    
+    if fecha < fecha_anterior:
+        return False, "La fecha ingresada no puede ser anterior a una operación ya registrada."
+    return True, None
+
+def validar_fecha_cierre(fecha_apertura,fecha_cierre):
+    
+    if fecha_cierre < fecha_apertura:
+        return False, "La fecha de cierre no puede ser anterior a la fecha de apertura."
+    
+    return True, None
