@@ -97,7 +97,19 @@ La aplicación se construirá por etapas, priorizando primero un base sólida de
 
 ---
 
-## Sprint 11 - Integraciones
+## Sprint 11 - Gestión de fechas de operaciones
+
+- ✅ Permitir seleccionar la fecha al registrar una compra.
+- ✅ Permitir seleccionar la fecha al registrar una venta.
+- ✅ Validar el orden cronológico de las operaciones.
+- ✅ Calcular fecha de apertura según la primera compra.
+- ✅ Calcular fecha de cierre según la última venta.
+- ✅ Recalcular fechas al eliminar operaciones.
+- ✅ Calcular duración de posiciones abiertas y cerradas.
+
+---
+
+## Sprint 12 - Integraciones
 
 - [ ] Integrar API de precios.
 - [ ] Actualizar valor de mercado automáticamente.
