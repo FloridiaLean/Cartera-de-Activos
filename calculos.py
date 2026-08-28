@@ -69,6 +69,25 @@ def calcular_rentabilidad(ganancia_realizada,capital_historico):
         rentabilidad = (ganancia_realizada / capital_historico) * 100
     return rentabilidad
 
+def calcular_precio_break_even(capital_historico,capital_recuperado,cantidad_actual):
+    
+    if cantidad_actual <= 0:
+        return 0
+    
+    capital_pendiente = capital_historico - capital_recuperado
+    precio_break_even = capital_pendiente / cantidad_actual
+    
+    return precio_break_even
+
+def calcular_asignacion(capital_activo,capital_total_portafolio):
+    
+    if capital_total_portafolio == 0:
+        return 0
+        
+    porcentaje_asignacion = (capital_activo / capital_total_portafolio) * 100
+    
+    return porcentaje_asignacion
+
 def analizar_operaciones(operaciones):
     
     capital_historico = 0
@@ -94,6 +113,9 @@ def analizar_operaciones(operaciones):
         precio_promedio = capital_historico / cantidad_total   
     
     capital_invertido_actual = cantidad_actual * precio_promedio
+    
+    precio_break_even = calcular_precio_break_even(capital_historico,capital_recuperado,cantidad_actual)
+    
     ganancia_realizada = 0
     
     for venta in ventas:
@@ -108,7 +130,8 @@ def analizar_operaciones(operaciones):
     "cantidad_actual": float(cantidad_actual),
     "capital_recuperado": float(capital_recuperado),
     "precio_promedio": float(precio_promedio),
-    'ganancia_realizada': float(ganancia_realizada),
+    "precio_break_even": float(precio_break_even),
+    "ganancia_realizada": float(ganancia_realizada),
     "rentabilidad": float(rentabilidad)
 }
 
@@ -176,6 +199,7 @@ def generar_resumen_posicion(operaciones,posiciones,posicion_id):
         'cantidad_total': analisis['cantidad_total'],
         'precio_promedio': analisis['precio_promedio'],
         'capital_recuperado': analisis['capital_recuperado'],
+        'precio_break_even': analisis['precio_break_even'],
         'ganancia_realizada': analisis['ganancia_realizada'],
         'rentabilidad': analisis['rentabilidad']
     }
@@ -201,7 +225,7 @@ def generar_resumen_dashboard(resumenes_abiertas,resumenes_todas,configuracion):
         "cantidad_posiciones_abiertas": calcular_cantidad_posiciones(resumenes_abiertas)
     }
     
-    dashboard["liquidez"] = calcular_liquidez(configuracion, dashboard)
+    dashboard["liquidez"] = calcular_liquidez(configuracion,dashboard)
     
     return dashboard
 
@@ -240,7 +264,9 @@ def generar_tarjetas_activos(operaciones,posiciones):
     return tarjetas
 
 def generar_resumen_activos_abiertos(resumenes_abiertas):
-
+    
+    capital_total = calcular_capital_invertido(resumenes_abiertas)
+    
     activos = []
     resumenes = []
     
@@ -268,11 +294,14 @@ def generar_resumen_activos_abiertos(resumenes_abiertas):
         else:
             precio_promedio = capital_invertido / cantidad_actual
         
+        asignacion = calcular_asignacion(capital_invertido,capital_total)
+        
         resumen = {
             "activo": activo,
             "cantidad_actual": cantidad_actual,
             "capital_invertido_actual": capital_invertido,
-            "precio_promedio": precio_promedio
+            "precio_promedio": precio_promedio,
+            "asignacion": asignacion
         }
         
         resumenes.append(resumen)

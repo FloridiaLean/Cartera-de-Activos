@@ -1,9 +1,6 @@
 from utilidades import (
     normalizar_activo
 )
-from operaciones import (
-    obtener_operaciones_por_posicion
-)
 
 def generar_id_posicion(posiciones):
     
@@ -41,14 +38,6 @@ def obtener_posicion_por_id(posiciones,posicion_id):
         
     return None
 
-def obtener_posicion_abierta_por_activo(posiciones,activo):
-    
-    for posicion in posiciones:
-        if posicion['activo'] == activo and posicion['estado'] == 'ABIERTA':
-            return posicion
-        
-    return None
-
 def obtener_posiciones_abiertas_por_activo(posiciones,activo):
     
     posiciones_abiertas = []
@@ -76,11 +65,11 @@ def eliminar_posicion(posiciones,posicion):
 def obtener_posiciones_abiertas(posiciones):
 
     posiciones_abiertas = []
-
+    
     for posicion in posiciones:
         if posicion["estado"] == "ABIERTA":
             posiciones_abiertas.append(posicion)
-
+    
     return posiciones_abiertas
 
 def obtener_posiciones_cerradas(posiciones):
@@ -104,22 +93,3 @@ def obtener_posiciones_cerradas_por_activo(posiciones,activo):
             posiciones_cerradas.append(posicion)
     
     return posiciones_cerradas
-
-def actualizar_fechas_posicion(operaciones,posiciones,posicion_id):
-    
-    posicion = obtener_posicion_por_id(posiciones,posicion_id)
-    
-    if posicion is None:
-        return False
-    
-    operaciones_posicion = obtener_operaciones_por_posicion(operaciones,posicion_id)
-    
-    if not operaciones_posicion:
-        return False
-    
-    compras = [operacion for operacion in operaciones_posicion if operacion["tipo"] == "compra"]
-    
-    if compras:
-        posicion["fecha_apertura"] = min(operacion["fecha"] for operacion in compras)
-    
-    return True

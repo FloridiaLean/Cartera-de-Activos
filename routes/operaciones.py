@@ -44,7 +44,7 @@ def historial_operaciones():
     for operacion in operaciones_filtradas:
         operacion_formateada = formatear_operacion(operacion)
         operaciones_formateadas.append(operacion_formateada)
-
+    
     return render_template("operaciones.html",operaciones=operaciones_formateadas,activo=activo,tipo=tipo)
 
 @operaciones_bp.route("/operaciones/<int:operacion_id>/editar",methods=["GET","POST"])
@@ -71,7 +71,7 @@ def editar_operacion(operacion_id):
             if exito:
                 flash("✅ Compra editada correctamente.")
             else:
-                flash("❌ {mensaje}")
+                flash(f"❌ {mensaje}")
         else: 
             
             cantidad = float(request.form["cantidad"])
@@ -82,7 +82,7 @@ def editar_operacion(operacion_id):
             if exito:
                 flash("✅ Venta editada correctamente.")
             else:
-                flash("❌ {mensaje}")
+                flash(f"❌ {mensaje}")
             
         return redirect(
             url_for("posiciones.detalle_posicion",posicion_id=posicion_id))

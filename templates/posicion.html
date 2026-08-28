@@ -45,21 +45,22 @@
     
     <h2>Resumen actual</h2>
     
-    <p>Capital histórico: {{ resumen["capital_historico_formateado"] }}</p>
-    <p>Capital invertido actual: {{ resumen["capital_invertido_formateado"] }}</p>
-    <p>Cantidad actual: {{ resumen["cantidad_formateada"] }}</p>
-    <p>Precio promedio: {{ resumen["ppc_formateado"] }}</p>
-    <p>Capital recuperado: {{ resumen["capital_recuperado_formateado"] }}</p>
-    <p>Ganancia realizada: {{ resumen["ganancia_realizada_formateada"] }}</p>
+    <p>Capital Histórico: {{ resumen["capital_historico_formateado"] }}</p>
+    <p>Capital Invertido Actual: {{ resumen["capital_invertido_formateado"] }}</p>
+    <p>Capital Recuperado: {{ resumen["capital_recuperado_formateado"] }}</p>
+    <p>Cantidad Actual: {{ resumen["cantidad_formateada"] }}</p>
+    <p>PPC: {{ resumen["ppc_formateado"] }}</p>
+    <p>Precio Break Even: {{ resumen["break_even_formateado"] }}</p>
+    <p>Ganancia Realizada: {{ resumen["ganancia_realizada_formateada"] }}</p>
 
 {% else %}
 
 <h2>Resultado de posición</h2>
 
-    <p>Total Capital Invertido:<strong>{{ resumen["capital_historico_formateado"] }}</strong></p>
-    <p>Capital recuperado:<strong>{{ resumen["capital_recuperado_formateado"] }}</strong></p>
-    <p> Ganancia realizada:<strong>{{ resumen["ganancia_realizada_formateada"] }}</strong></p>
-    <p>Rentabilidad:<strong>{{ resumen["rentabilidad_formateada"] }}</strong></p>
+    <p>Total Capital Invertido: <strong>{{ resumen["capital_historico_formateado"] }}</strong></p>
+    <p>Capital Recuperado: <strong>{{ resumen["capital_recuperado_formateado"] }}</strong></p>
+    <p>Ganancia Realizada: <strong>{{ resumen["ganancia_realizada_formateada"] }}</strong></p>
+    <p>Rentabilidad: <strong>{{ resumen["rentabilidad_formateada"] }}</strong></p>
 {% endif %}
 
 <hr>
@@ -88,7 +89,7 @@
         <th>Tipo</th>
         <th>Cantidad</th>
         <th>Precio Unitario</th>
-        <th>Monto</th>
+        <th>Monto Invertido</th>
         
         {% if resumen["estado"] == "ABIERTA" %}
             <th>Acciones</th>

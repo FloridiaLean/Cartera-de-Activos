@@ -10,7 +10,6 @@ from operaciones import (
     obtener_fecha_apertura_posicion
 )
 from calculos import (
-    analizar_activo,
     analizar_posicion,
     generar_resumen_posicion
 )
@@ -33,13 +32,11 @@ from validaciones import (
     validar_venta,
     validar_edicion_venta,
     tiene_ventas_asociadas,
-    validar_fecha_cierre,
     validar_fecha
 )
 from persistencia import (
     guardar_operaciones_sql,
     guardar_posiciones_sql,
-    eliminar_operacion_sql,
     eliminar_operaciones_por_posicion_sql,
     eliminar_posicion_sql,
     sincronizar_operaciones_sql
@@ -66,7 +63,10 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
         id_posicion = nueva_posicion['id']
         
     else:
-        posicion = validar_posicion(posiciones,posicion_id)
+        valido, posicion = validar_posicion(posiciones,posicion_id)
+        
+        if not valido:
+            return False, posicion
         
         if posicion is None:
             return False, "La posición seleccionada no existe."
@@ -76,10 +76,11 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
         ultima_operacion = obtener_ultima_operacion_por_posicion(operaciones,id_posicion) 
         
         if ultima_operacion is not None:
+            
             valido, mensaje = validar_fecha(ultima_operacion["fecha"],fecha)
-        
-        if not valido:
-            return False, mensaje
+            
+            if not valido:
+                return False, mensaje
     
     agregar_compra(operaciones,id_posicion,activo,monto_invertido,precio_compra,fecha)
     
@@ -87,13 +88,12 @@ def registrar_compra(operaciones,posiciones,posicion_id,activo,monto_invertido,p
     guardar_operaciones_sql(operaciones)
     
     return True, None
-    
+
 def registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio_venta,fecha):
     
-    posicion = validar_posicion(posiciones,posicion_id)
-    
-    if posicion is None:
-        return False, "La posición seleccionada no existe."
+    valido, posicion = validar_posicion(posiciones,posicion_id)
+    if not valido:
+        return False, posicion
     
     activo = posicion["activo"]
     
@@ -110,10 +110,11 @@ def registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio_venta,fec
     ultima_operacion = obtener_ultima_operacion_por_posicion(operaciones,id_posicion)
     
     if ultima_operacion is not None:
+        
         valido, mensaje = validar_fecha(ultima_operacion["fecha"],fecha)
-    
-    if not valido:
-        return False, mensaje
+        
+        if not valido:
+            return False, mensaje
     
     analisis = analizar_posicion(operaciones,id_posicion)
     
@@ -123,7 +124,7 @@ def registrar_venta(operaciones,posiciones,posicion_id,cantidad,precio_venta,fec
     
     agregar_venta(operaciones,id_posicion,activo,cantidad,precio_venta,fecha)
     
-    actualizar_estado_posicion(operaciones,posiciones,posicion_id,fecha)
+    actualizar_estado_posicion(operaciones,posiciones,posicion_id)
     
     guardar_operaciones_sql(operaciones)
     guardar_posiciones_sql(posiciones)
@@ -192,19 +193,15 @@ def eliminar_operacion_servicio(operaciones,posiciones,operacion):
     
     operaciones_posicion = obtener_operaciones_por_posicion(operaciones,posicion_id)
     
+    posicion = obtener_posicion_por_id(posiciones,posicion_id)
+    
     if not operaciones_posicion:
-        posicion = obtener_posicion_por_id(posiciones,posicion_id)
         
         eliminar_posicion(posiciones,posicion)
         eliminar_operaciones_por_posicion_sql(posicion_id)
         eliminar_posicion_sql(posicion_id)
-        
+    
     else:
-        posicion = obtener_posicion_por_id(posiciones,posicion_id)
-        
-        fecha_apertura = obtener_fecha_apertura_posicion(operaciones,posicion_id)
-        
-        posicion["fecha_apertura"] = fecha_apertura 
         
         actualizar_estado_posicion(operaciones,posiciones,posicion_id)
     

@@ -26,6 +26,7 @@
         <th>Capital invertido</th>
         <th>Cantidad actual</th>
         <th>PPC</th>
+        <th>Break Even</th>
         <th>Estado</th>
         <th>Acciones</th>
     </tr>
@@ -38,6 +39,7 @@
         <td>{{ posicion["capital_invertido_formateado"] }}</td>
         <td>{{ posicion["cantidad_formateada"] }}</td>
         <td>{{ posicion["ppc_formateado"] }}</td>
+        <td>{{ posicion["break_even_formateado"] }}</td>
         <td>🟢 ABIERTA</td>
         <td><a href="{{ url_for('posiciones.detalle_posicion',posicion_id=posicion['posicion']) }}">Ver detalle</a></td>
     </tr>

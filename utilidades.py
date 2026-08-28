@@ -19,6 +19,12 @@ def formatear_dinero(valor):
     
     return valor_formateado
 
+def formatear_por_magnitud(valor):
+    
+    decimales = 2 if abs(valor) >= 10 else 8
+    
+    return f"${valor:,.{decimales}f}"
+
 def formatear_cantidad(cantidad,activo):
     
     cantidad_formateada = f"{cantidad:.8f} {activo}"
@@ -28,14 +34,14 @@ def formatear_cantidad(cantidad,activo):
 def formatear_porcentaje(porcentaje):
 
     porcentaje_formateado = f"{porcentaje:.2f}%"
-
+    
     return porcentaje_formateado
 
 def formatear_fecha(fecha):
 
     if fecha is None:
         return "-"
-
+    
     return fecha
 
 def formatear_resumen_posicion(resumen):
@@ -43,9 +49,10 @@ def formatear_resumen_posicion(resumen):
     resumen["capital_historico_formateado"] = formatear_dinero(resumen["capital_historico"])
     resumen["capital_invertido_formateado"] = formatear_dinero(resumen["capital_invertido_actual"])
     resumen["cantidad_formateada"] = formatear_cantidad(resumen["cantidad_actual"],resumen["activo"])
-    resumen["ppc_formateado"] = formatear_dinero(resumen["precio_promedio"])
+    resumen["ppc_formateado"] = formatear_por_magnitud(resumen["precio_promedio"])
     resumen["ganancia_realizada_formateada"] = formatear_dinero(resumen["ganancia_realizada"])
     resumen["capital_recuperado_formateado"] = formatear_dinero(resumen["capital_recuperado"])
+    resumen["break_even_formateado"] = formatear_por_magnitud(resumen["precio_break_even"])
     resumen["rentabilidad_formateada"] = formatear_porcentaje(resumen["rentabilidad"])
     if resumen["estado"] == "ABIERTA":
         resumen["duracion_formateada"] = f"En curso hace: {resumen['duracion']} días"
@@ -72,15 +79,16 @@ def formatear_operacion(operacion):
 def formatear_resumen_activo(resumen):
     
     resumen["cantidad_formateada"] = formatear_cantidad(resumen["cantidad_actual"],resumen["activo"])
-    resumen["precio_promedio_formateado"] = formatear_dinero(resumen["precio_promedio"])
+    resumen["precio_promedio_formateado"] = formatear_por_magnitud(resumen["precio_promedio"])
     resumen["capital_invertido_formateado"] = formatear_dinero(resumen["capital_invertido_actual"])
+    resumen["asignacion_formateada"] = formatear_porcentaje(resumen["asignacion"])
     
     return resumen
 
 def formatear_tarjeta_activo(tarjeta):
     
-    tarjeta["ganancia_realizada"] = formatear_dinero(tarjeta["ganancia_realizada"])
-    tarjeta["rentabilidad"] = formatear_porcentaje(tarjeta["rentabilidad"])
+    tarjeta["ganancia_realizada_formateada"] = formatear_dinero(tarjeta["ganancia_realizada"])
+    tarjeta["rentabilidad_formateada"] = formatear_porcentaje(tarjeta["rentabilidad"])
     
     return tarjeta
 
@@ -91,48 +99,3 @@ def formatear_dashboard(dashboard):
     dashboard["liquidez_formateada"] = formatear_dinero(dashboard["liquidez"])
     
     return dashboard
-
-def leer_float(mensaje,permitir_cancelar=False):
-    
-    while True:
-        try:
-            numero = float(input(mensaje))
-            
-            if permitir_cancelar and numero == 0:
-                return None 
-            
-            return numero
-        
-        except ValueError:
-            print("Debe ingresar un número válido.")
-
-def leer_int(mensaje,permitir_cancelar=False):
-    
-    while True:
-        try:
-            numero = int(input(mensaje))
-            
-            if permitir_cancelar and numero == 0:
-                return None
-            return numero
-        
-        except ValueError:
-            print("Debe ingresar un número entero.")
-
-def leer_texto(mensaje,permitir_cancelar=False):
-
-    while True:
-
-        texto = input(mensaje).strip()
-
-        if permitir_cancelar and texto == "0":
-            return None
-
-        if texto == "":
-            print("Debe ingresar un texto válido.")
-            continue
-
-        return texto
-
-def pausar():
-    input("\nPresione ENTER para continuar...")

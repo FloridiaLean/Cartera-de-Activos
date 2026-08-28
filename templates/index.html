@@ -33,8 +33,8 @@
 
 <div>
     <h3>{{ tarjeta["activo"] }}</h3>
-    <p>Ganancia realizada: <strong>{{ tarjeta["ganancia_realizada"] }}</strong> USD</p>
-    <p>Rentabilidad: <strong>{{ tarjeta["rentabilidad"] }}</strong></p>
+    <p>Ganancia realizada: <strong>{{ tarjeta["ganancia_realizada_formateada"] }}</strong> USD</p>
+    <p>Rentabilidad: <strong>{{ tarjeta["rentabilidad_formateada"] }}</strong></p>
 </div>
 
 {% endfor %}
@@ -58,6 +58,7 @@
         <th>Cantidad</th>
         <th>PPC</th>
         <th>Capital invertido</th>
+        <th>Asignacion</th>
     </tr>
     
     {% for resumen in resumenes_activos %}
@@ -66,6 +67,7 @@
         <td>{{ resumen["cantidad_formateada"] }}</td>
         <td>{{ resumen["precio_promedio_formateado"] }}</td>
         <td>{{ resumen["capital_invertido_formateado"] }}</td>
+        <td>{{ resumen["asignacion_formateada"] }}</td>
     </tr>
     {% endfor %}
 </table>

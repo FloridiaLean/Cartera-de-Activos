@@ -29,16 +29,16 @@ def validar_cantidad(cantidad):
 def validar_posicion(posiciones,posicion_id):
     
     posicion = obtener_posicion_por_id(posiciones,posicion_id)
-        
-    if posicion is None:
-        print("La posición con el ID proporcionado no existe.")
-        return None
-        
-    if posicion['estado'] != 'ABIERTA':
-        print("La posición no se encuentra abierta.")
-        return None
     
-    return posicion
+    if posicion is None:
+        
+        return False, "La posición seleccionada no existe."
+    
+    if posicion['estado'] != 'ABIERTA':
+        
+        return False, "La posición no se encuentra abierta."
+    
+    return True, posicion
 
 def validar_venta(analisis,cantidad):
     
@@ -79,11 +79,4 @@ def validar_fecha(fecha_anterior,fecha):
     
     if fecha < fecha_anterior:
         return False, "La fecha ingresada no puede ser anterior a una operación ya registrada."
-    return True, None
-
-def validar_fecha_cierre(fecha_apertura,fecha_cierre):
-    
-    if fecha_cierre < fecha_apertura:
-        return False, "La fecha de cierre no puede ser anterior a la fecha de apertura."
-    
     return True, None
