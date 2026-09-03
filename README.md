@@ -39,6 +39,8 @@ El proyecto tiene como objetivo principal aplicar buenas prácticas de desarroll
 - Dashboard con métricas generales.
 - Configuración del capital inicial.
 - Cálculos financieros automáticos.
+- Cálculo de precio de break-even.
+- Cálculo de asignación de capital por activo.
 - Resúmenes por activo y por posición.
 - Historial de posiciones cerradas.
 - Historial completo de operaciones.
@@ -66,8 +68,10 @@ Entre las funcionalidades implementadas se encuentran:
 - Cálculo de liquidez.
 - Cálculo de capital invertido.
 - Cálculo de precio promedio.
-- Cálculo de Ganancia realizada.
+- Cálculo de ganancia realizada.
 - Cálculo de rentabilidad.
+- Cálculo de precio de break-even.
+- Cálculo de asignación de capital por activo.
 - Resumen por posición.
 - Resumen consolidado por activo.
 - Visualización de todas las operaciones.
@@ -75,6 +79,18 @@ Entre las funcionalidades implementadas se encuentran:
 - Filtros por activo y tipo de operación.
 - Persistencia de datos mediante SQLite.    
 - Persistencia de cambios después de reiniciar la aplicación.
+
+El siguiente objetivo es mejorar la experiencia de uso y completar las funcionalidades necesarias para utilizar la aplicación como herramienta principal de gestión de la cartera.
+
+### Próxima etapa
+
+- Gestión manual de liquidez disponible.
+- Registro de compras y ventas desde las posiciones.
+- Duración de posiciones abiertas.
+- Mejoras en navegación y filtros del historial.
+- Definición de rentabilidad consolidada de la cuenta.
+- Mejoras en la organización visual de la interfaz.
+- Integración futura con una API de precios de mercado.
 
 ---
 
@@ -118,7 +134,7 @@ Entre las funcionalidades implementadas se encuentran:
 El proyecto está dividido por responsabilidades:
 
 - routes/ → recibe las solicitudes HTTP y conecta la interfaz web con los servicios de la aplicación.
-- servicios.py → contiene la lógica de negocio coordina las operaciones entre los diferentes módulos.
+- servicios.py → contiene la lógica de negocio y coordina las operaciones entre los diferentes módulos.
 - validaciones.py → contiene las validaciones necesarias para mantener la consistencia de los datos.
 - operaciones.py → gestiona la creación, edición, eliminación y consulta de operaciones.
 - posiciones.py → gestiona la creación, apertura, cierre, reapertura y eliminación de posiciones.
@@ -202,20 +218,6 @@ Durante el desarrollo de este proyecto se aplican conceptos como:
 - Arquitectura escalable.
 - Refactorización continua.
 - Control de versiones con Git.
-
----
-
-## 🧩 Próximos pasos
-
-### Integraciones
-
-- [ ] Obtener precios mediante APIs.
-- [ ] Actualización automática del valor de mercado.
-
-### Interfaz
-
-- [ ] Mejorar el diseño responsive.
-- [ ] Incorporar gráficos y visualizaciones.
 
 ---
 
