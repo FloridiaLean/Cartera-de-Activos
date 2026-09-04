@@ -32,9 +32,11 @@ from validaciones import (
     validar_venta,
     validar_edicion_venta,
     tiene_ventas_asociadas,
-    validar_fecha
+    validar_fecha,
+    validar_retiro_liquidez
 )
 from persistencia import (
+    guardar_configuracion_sql,
     guardar_operaciones_sql,
     guardar_posiciones_sql,
     eliminar_operaciones_por_posicion_sql,
@@ -249,3 +251,26 @@ def eliminar_posicion_servicio(operaciones,posiciones,posicion):
     eliminar_posicion_sql(posicion_id)
     
     return True
+
+def ajustar_liquidez(configuracion,monto,accion,liquidez):
+    
+    valido, mensaje = validar_monto(monto)
+    
+    if not valido:
+        return False, mensaje
+    
+    if accion == "agregar":
+        configuracion["ajuste_liquidez"] += monto
+    
+    elif accion == "restar":
+        
+        valido, mensaje = validar_retiro_liquidez(liquidez,monto)
+        
+        if not valido:
+            return False, mensaje
+        
+        configuracion["ajuste_liquidez"] -= monto
+    
+    guardar_configuracion_sql(configuracion)
+    
+    return True, "Liquidez ajustada correctamente."

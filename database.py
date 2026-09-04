@@ -47,7 +47,8 @@ def crear_tablas():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS configuracion (
             id INTEGER PRIMARY KEY,
-            capital_inicial REAL NOT NULL
+            capital_inicial REAL NOT NULL,
+            ajuste_liquidez REAL NOT NULL DEFAULT 0
         )
     """)
     

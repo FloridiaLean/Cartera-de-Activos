@@ -12,13 +12,36 @@
 
 <h1>Configuración</h1>
 
+{% with mensajes = get_flashed_messages() %}
+    {% if mensajes %}
+        {% for mensaje in mensajes %}
+            <p>{{ mensaje }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
 <form method="POST">
-
+    
     <label>Capital inicial</label>
-    <input type="number" name="capital_inicial" step="any" min="0" value="{{ configuracion['capital_inicial'] }}" required>
+    <input type="number" name="capital_inicial" step="any" min="0.01" value="{{ configuracion['capital_inicial'] }}" required>
     <button type="submit">Guardar configuración</button>
-
+    
 </form>
+
+<br>
+
+<p>Liquidez actual: <strong>{{ dashboard["liquidez_formateada"] }}</strong> USD</p>
+
+<form method="POST">
+    
+    <label>Monto</label>
+    
+    <input type="number" name="monto_liquidez" step="any" min="0" required>
+    <button type="submit" name="accion" value="agregar">Agregar</button>
+    <button type="submit" name="accion" value="restar">Restar</button>
+    
+</form>
+
 
 </body>
 

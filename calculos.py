@@ -54,10 +54,11 @@ def calcular_cantidad_posiciones(resumenes):
 def calcular_liquidez(configuracion,dashboard):
     
     capital_inicial = configuracion["capital_inicial"]
+    ajuste_liquidez = configuracion["ajuste_liquidez"]
     capital_invertido = dashboard["capital_invertido"]
     ganancia_realizada = dashboard["ganancia_realizada"]
     
-    liquidez = (capital_inicial - capital_invertido + ganancia_realizada)
+    liquidez = (capital_inicial + ajuste_liquidez - capital_invertido + ganancia_realizada)
     
     return liquidez
 

@@ -12,7 +12,7 @@ def validar_activo(activo):
 
 def validar_monto(monto):
     if monto <= 0:
-        return False,"El monto invertido debe ser mayor a 0"
+        return False,"El monto debe ser mayor a 0"
     return True,None
 
 def validar_precio(precio):
@@ -79,4 +79,10 @@ def validar_fecha(fecha_anterior,fecha):
     
     if fecha < fecha_anterior:
         return False, "La fecha ingresada no puede ser anterior a una operación ya registrada."
+    return True, None
+
+def validar_retiro_liquidez(liquidez,monto):
+    
+    if monto > liquidez:
+        return False, "No puedes retirar más dinero del disponible."
     return True, None

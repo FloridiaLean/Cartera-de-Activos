@@ -87,12 +87,14 @@ def guardar_configuracion_sql(configuracion):
     cursor.execute("""
         INSERT OR REPLACE INTO configuracion (
             id,
-            capital_inicial
+            capital_inicial,
+            ajuste_liquidez
         )
-        VALUES (?,?)
+        VALUES (?,?,?)
     """, (
         1,
-        configuracion["capital_inicial"]
+        configuracion["capital_inicial"],
+        configuracion["ajuste_liquidez"]
     ))
     
     conexion.commit()
@@ -165,7 +167,8 @@ def cargar_configuracion_sql():
     cursor = conexion.cursor()
     
     cursor.execute("""
-        SELECT capital_inicial
+        SELECT capital_inicial,
+                ajuste_liquidez
         FROM configuracion
         WHERE id = 1
     """)
@@ -176,11 +179,13 @@ def cargar_configuracion_sql():
     
     if fila is None:
         return {
-            "capital_inicial": 0
+            "capital_inicial": 0,
+            "ajuste_liquidez": 0
         }
     
     return {
-        "capital_inicial": fila[0]
+        "capital_inicial": fila[0],
+        "ajuste_liquidez": fila[1]
     }
 
 def eliminar_operacion_sql(operacion_id):
