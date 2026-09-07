@@ -58,9 +58,16 @@ def ventas():
             
             if exito:
                 flash("✅ Venta registrada correctamente.")
+                
+                if request.form.get("origen") == "dashboard":
+                    return redirect(url_for("inicio.inicio"))
+                
                 return redirect(url_for("ventas.ventas"))
             
             flash(f"❌ {mensaje}")
+            
+            if request.form.get("origen") == "dashboard":
+                return redirect(url_for("inicio.inicio"))
         
         resumen = generar_resumen_posicion(operaciones,posiciones,posicion_id)
         

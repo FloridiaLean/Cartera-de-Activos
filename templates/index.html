@@ -43,7 +43,7 @@
 
 <h2>DashBoard</h2>
 
-<p>Capital invertido: <strong>{{ dashboard["capital_invertido_formateado"] }}</strong> USD</p>
+<p>Capital invertido Actual: <strong>{{ dashboard["capital_invertido_formateado"] }}</strong> USD</p>
 <p>Ganancia realizada: <strong>{{ dashboard["ganancia_realizada_formateada"] }}</strong> USD</p>
 <p>Cantidad de posiciones: <strong>{{ dashboard["cantidad_posiciones"] }}</strong></p>
 <p>Liquidez: <strong>{{ dashboard["liquidez_formateada"] }}</strong> USD</p>
@@ -89,7 +89,7 @@
     
     {% for resumen in resumenes %}
     <tr>
-        <td>{{ resumen['posicion'] }}</td>
+        <td># {{ resumen['posicion'] }}</td>
         <td>{{ resumen['activo'] }}</td>
         <td>{{ resumen['capital_invertido_formateado'] }}</td>
         <td>{{ resumen['cantidad_formateada'] }}</td>
@@ -112,6 +112,19 @@
                     <button type="submit">Registrar compra</button>
                 </form>
             </details>
+            <details>
+                <summary style="cursor: pointer;">Vender</summary>
+                <form method="POST" action="{{ url_for('ventas.ventas') }}">
+                
+                    <input type="hidden" name="posicion_id" value="{{ resumen['posicion'] }}">
+                    <input type="hidden" name="origen" value="dashboard">
+                    <label>Cantidad<input type="number" id="cantidad-{{ resumen['posicion'] }}" name="cantidad" step="any" min="0" max="{{ resumen['cantidad_actual'] }}" required></label>
+                    <button type="button" data-cantidad="{{ resumen['cantidad_actual'] }}" data-input-id="cantidad-{{ resumen['posicion'] }}" onclick="venderTodo(this.dataset.cantidad,this.dataset.inputId)">Max</button>
+                    <label>Precio de venta<input type="number" name="precio" step="any" min="0" required></label>
+                    <label>Fecha<input type="date" name="fecha" required></label>
+                    <button type="submit">Registrar venta</button>
+                </form>
+            </details>
         </td>
     </tr>   
     {% endfor %}
@@ -126,6 +139,12 @@
     <li><a href="{{ url_for('posiciones.historial_posiciones') }}">Ver posiciones cerradas</a></li>
     <li><a href="{{ url_for('operaciones.historial_operaciones') }}">Ver historial de operaciones</a></li>
 </ul>
+
+<script>
+function venderTodo(cantidad,inputId) {
+    document.getElementById(inputId).value = cantidad;
+}
+</script>
 
 </body>
 
