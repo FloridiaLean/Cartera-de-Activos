@@ -76,7 +76,7 @@
 
 <h2>Posiciones Abiertas (<strong>{{ dashboard["cantidad_posiciones_abiertas"] }}</strong>)</h2>
 
-<table>
+<table width="55%">
     <tr>
         <th>Posicion</th>
         <th>Activo</th>
@@ -95,8 +95,25 @@
         <td>{{ resumen['cantidad_formateada'] }}</td>
         <td>{{ resumen['ppc_formateado'] }}</td>
         <td>🟢 ABIERTA</td> 
-        <td><a href="{{ url_for('posiciones.detalle_posicion',posicion_id=resumen['posicion']) }}">Ver Detalle</a></td>   
+        <td><a href="{{ url_for('posiciones.detalle_posicion', posicion_id=resumen['posicion']) }}">Ver Detalle</a></td> 
     </tr>
+    <tr>    
+        <td colspan="7">
+            <details>
+                <summary style="cursor: pointer;">Comprar</summary>
+                <form method="POST" action="{{ url_for('compras.compras') }}">
+                
+                    <input type="hidden" name="activo" value="{{ resumen['activo'] }}">
+                    <input type="hidden" name="posicion_id" value="{{ resumen['posicion'] }}">
+                    <input type="hidden" name="origen" value="dashboard">
+                    <label>Monto invertido<input type="number" name="monto" step="any" min="0" required></label>
+                    <label>Precio de compra<input type="number" name="precio" step="any" min="0" required></label>
+                    <label>Fecha<input type="date" name="fecha" required></label>
+                    <button type="submit">Registrar compra</button>
+                </form>
+            </details>
+        </td>
+    </tr>   
     {% endfor %}
 </table>   
 

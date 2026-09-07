@@ -34,7 +34,7 @@
 
     <hr>
     <h2>Activo seleccionado: {{ activo }}</h2>
-
+    
     {% if posiciones %}
         <form action="{{ url_for('compras.compras') }}" method="POST">
                 <input type="hidden" name="activo" value="{{ activo }}">

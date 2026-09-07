@@ -72,6 +72,10 @@ def compras():
                 
                 if exito:
                     flash("✅ Compra registrada correctamente.")
+                    
+                    if request.form.get("origen") == "dashboard":
+                        return redirect(url_for("inicio.inicio"))
+                    
                     return redirect(url_for("compras.compras"))
                 
                 flash(f"❌ {mensaje}")
