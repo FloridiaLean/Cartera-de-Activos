@@ -274,3 +274,10 @@ def ajustar_liquidez(configuracion,monto,accion,liquidez):
     guardar_configuracion_sql(configuracion)
     
     return True, "Liquidez ajustada correctamente."
+
+def filtrar_por_activo(elementos,activo):
+    
+    if not activo:
+        return elementos
+    
+    return [elemento for elemento in elementos if elemento["activo"] == activo]

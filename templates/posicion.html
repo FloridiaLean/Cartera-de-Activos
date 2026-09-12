@@ -37,7 +37,7 @@
     <p>Fecha de cierre: {{ resumen["fecha_cierre"] }}</p>
 {% endif %}
 
-<p>{{ resumen["duracion_formateada"] }}</p>
+<p>Duración: {{ resumen["duracion_formateada"] }}</p>
 
 <hr>
 
@@ -74,10 +74,11 @@
     <br>
 {% endif %}
 
-<form 
-    action="{{ url_for('posiciones.eliminar_posicion',posicion_id=posicion['id']) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que querés eliminar esta posición? Se eliminarán también todas sus operaciones.');">
+<form action="{{ url_for('posiciones.eliminar_posicion',posicion_id=posicion['id']) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que querés eliminar esta posición? Se eliminarán también todas sus operaciones.');">
     <button type="submit">Eliminar posición</button>
 </form>
+
+<br>
 
 <hr>
 

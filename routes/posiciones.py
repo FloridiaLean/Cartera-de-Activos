@@ -3,7 +3,8 @@ from flask import (
     render_template,
     redirect,
     url_for,
-    flash
+    flash,
+    request
 )
 from datos import (
     posiciones,
@@ -26,7 +27,8 @@ from utilidades import (
 )
 from servicios import (
     eliminar_posicion_servicio,
-    eliminar_operacion_servicio
+    eliminar_operacion_servicio,
+    filtrar_por_activo
 )
 
 posiciones_bp = Blueprint("posiciones",__name__)
@@ -34,13 +36,27 @@ posiciones_bp = Blueprint("posiciones",__name__)
 @posiciones_bp.route("/posiciones")
 
 def todas_las_posiciones():
-
+    
+    activo_abierto = request.args.get("activo_abierto","").strip().upper()
+    activo_cerrado = request.args.get("activo_cerrado","").strip().upper()
+    
     resumenes = generar_resumen_todas_posiciones(operaciones,posiciones)
     
     for resumen in resumenes:
         formatear_resumen_posicion(resumen)
     
-    return render_template("posiciones.html",posiciones=resumenes)
+    posiciones_abiertas = [resumen for resumen in resumenes if resumen["estado"] == "ABIERTA"]
+    posiciones_cerradas = [resumen for resumen in resumenes if resumen["estado"] == "CERRADA"]
+    
+    activos_abiertos = sorted({resumen["activo"]for resumen in posiciones_abiertas})
+    activos_cerrados = sorted({resumen["activo"]for resumen in posiciones_cerradas})
+    
+    posiciones_abiertas = filtrar_por_activo(posiciones_abiertas,activo_abierto)
+    posiciones_cerradas = filtrar_por_activo(posiciones_cerradas,activo_cerrado)
+    
+    return render_template(
+        "posiciones.html",posiciones_abiertas=posiciones_abiertas,posiciones_cerradas=posiciones_cerradas,activos_abiertos=activos_abiertos,
+        activos_cerrados=activos_cerrados,activo_abierto=activo_abierto,activo_cerrado=activo_cerrado)
 
 @posiciones_bp.route("/posiciones/<int:posicion_id>")
 

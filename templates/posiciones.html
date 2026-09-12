@@ -16,10 +16,29 @@
 
 <h2>🟢 Posiciones abiertas</h2>
 
-{% set abiertas = posiciones | selectattr("estado","equalto","ABIERTA") | list %}
-{% if abiertas %}
 
-<table>
+{% if posiciones_abiertas %}
+
+<form method="GET" action="{{ url_for('posiciones.todas_las_posiciones') }}">
+
+    <label for="activo_abierto">Activo:</label>
+    
+    <select id="activo_abierto" name="activo_abierto">      
+        <option value="" {% if not activo_abierto %}selected{% endif %}>Todos</option>
+        
+        {% for activo in activos_abiertos %}
+        <option value="{{ activo }}"{% if activo_abierto == activo %}selected{% endif %}>{{ activo }}</option>
+        {% endfor %}
+        
+    </select>
+    
+    <input type="hidden" name="activo_cerrado" value="{{ activo_cerrado }}">
+    <button type="submit">Filtrar</button>
+    <a href="{{ url_for('posiciones.todas_las_posiciones') }}">Limpiar filtros</a>
+</form>
+
+
+<table id="tabla-posiciones-abiertas">
     <tr>
         <th>Posición</th>
         <th>Activo</th>
@@ -27,11 +46,13 @@
         <th>Cantidad actual</th>
         <th>PPC</th>
         <th>Break Even</th>
+        <th><button type="button" id="ordenar-inicio">Inicio</button></th>
+        <th>Duracion</th>
         <th>Estado</th>
         <th>Acciones</th>
     </tr>
     
-    {% for posicion in abiertas %}
+    {% for posicion in posiciones_abiertas %}
     
     <tr>
         <td>{{ posicion["posicion"] }}</td>
@@ -40,6 +61,8 @@
         <td>{{ posicion["cantidad_formateada"] }}</td>
         <td>{{ posicion["ppc_formateado"] }}</td>
         <td>{{ posicion["break_even_formateado"] }}</td>
+        <td data-campo="fecha-apertura">{{ posicion["fecha_apertura"] }}</td>
+        <td>{{ posicion["duracion_formateada"] }}</td>
         <td>🟢 ABIERTA</td>
         <td><a href="{{ url_for('posiciones.detalle_posicion',posicion_id=posicion['posicion']) }}">Ver detalle</a></td>
     </tr>
@@ -54,21 +77,41 @@
 
 <h2>🔴 Posiciones cerradas</h2>
 
-{% set cerradas = posiciones | selectattr("estado","equalto","CERRADA") | list %}
-{% if cerradas %}
 
-<table>
+{% if posiciones_cerradas %}
+
+<form method="GET" action="{{ url_for('posiciones.todas_las_posiciones') }}">
+    
+    <label for="activo_cerrado">Activo:</label>
+    
+    <select id="activo_cerrado" name="activo_cerrado">
+        <option value="" {% if not activo_cerrado %}selected{% endif %}>Todos</option>
+        
+        {% for activo in activos_cerrados %}
+        <option value="{{ activo }}" {% if activo_cerrado == activo %}selected{% endif %}>{{ activo }}</option>
+        {% endfor %}
+        
+    </select>
+    
+    <input type="hidden" name="activo_abierto" value="{{ activo_abierto }}">
+    <button type="submit">Filtrar</button>  
+    <a href="{{ url_for('posiciones.todas_las_posiciones') }}">Limpiar filtros</a>
+</form>
+
+<table id="tabla-posiciones-cerradas">
     <tr>
         <th>Posición</th>
         <th>Activo</th>
         <th>Capital histórico</th>
         <th>Capital recuperado</th>
         <th>Ganancia realizada</th>
+        <th><button type="button" id="ordenar-inicio-cerradas">Inicio</button></th>
+        <th>Duracion</th>
         <th>Estado</th>
         <th>Acciones</th>
     </tr>
     
-    {% for posicion in cerradas %}
+    {% for posicion in posiciones_cerradas %}
     
     <tr>
         <td>{{ posicion["posicion"] }}</td>
@@ -76,6 +119,8 @@
         <td>{{ posicion["capital_historico_formateado"] }}</td>
         <td>{{ posicion["capital_recuperado_formateado"] }}</td>
         <td>{{ posicion["ganancia_realizada_formateada"] }}</td>
+        <td data-campo="fecha-apertura">{{ posicion["fecha_apertura"] }}</td>
+        <td>{{ posicion["duracion_formateada"] }}</td>
         <td>🔴 CERRADA</td>
         <td><a href="{{ url_for('posiciones.detalle_posicion',posicion_id=posicion['posicion']) }}">Ver detalle</a></td>
     </tr>
@@ -85,6 +130,8 @@
 {% else %}
 <p>No existen posiciones cerradas.</p>
 {% endif %}
+
+<script src="{{ url_for('static',filename='script.js') }}"></script>
 
 </body>
 

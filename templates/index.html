@@ -83,22 +83,24 @@
         <th>Capital Invertido</th>
         <th>Cantidad Actual</th>
         <th>PPC</th>
-        <th>Estado</th>
+        <th>Inicio</th>
+        <th>Duracion</th>
         <th>Acciones</th>
     </tr>
     
     {% for resumen in resumenes %}
     <tr>
-        <td># {{ resumen['posicion'] }}</td>
+        <td> # {{ resumen['posicion'] }}</td>
         <td>{{ resumen['activo'] }}</td>
         <td>{{ resumen['capital_invertido_formateado'] }}</td>
         <td>{{ resumen['cantidad_formateada'] }}</td>
         <td>{{ resumen['ppc_formateado'] }}</td>
-        <td>🟢 ABIERTA</td> 
+        <td>{{ resumen["fecha_apertura"] }}</td>
+        <td>{{ resumen["duracion_formateada"] }}</td>
         <td><a href="{{ url_for('posiciones.detalle_posicion', posicion_id=resumen['posicion']) }}">Ver Detalle</a></td> 
     </tr>
     <tr>    
-        <td colspan="7">
+        <td colspan="8">
             <details>
                 <summary style="cursor: pointer;">Comprar</summary>
                 <form method="POST" action="{{ url_for('compras.compras') }}">
@@ -126,9 +128,11 @@
                 </form>
             </details>
         </td>
-    </tr>   
+    </tr>
     {% endfor %}
-</table>   
+</table>
+
+<br>   
 
 <hr>
 

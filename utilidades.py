@@ -55,9 +55,9 @@ def formatear_resumen_posicion(resumen):
     resumen["break_even_formateado"] = formatear_por_magnitud(resumen["precio_break_even"])
     resumen["rentabilidad_formateada"] = formatear_porcentaje(resumen["rentabilidad"])
     if resumen["estado"] == "ABIERTA":
-        resumen["duracion_formateada"] = f"En curso hace: {resumen['duracion']} días"
+        resumen["duracion_formateada"] = f"{resumen['duracion']} días"   
     else:
-        resumen["duracion_formateada"] = f"Duración: {resumen['duracion']} días"
+        resumen["duracion_formateada"] = f"{resumen['duracion']} días"
     
     return resumen
 
