@@ -89,6 +89,10 @@ def calcular_asignacion(capital_activo,capital_total_portafolio):
     
     return porcentaje_asignacion
 
+def calcular_total_cartera(capital_invertido,liquidez):
+    
+    return capital_invertido + liquidez
+
 def analizar_operaciones(operaciones):
     
     capital_historico = 0
@@ -228,6 +232,8 @@ def generar_resumen_dashboard(resumenes_abiertas,resumenes_todas,configuracion):
     
     dashboard["liquidez"] = calcular_liquidez(configuracion,dashboard)
     
+    dashboard["total_cartera"] = calcular_total_cartera(dashboard["capital_invertido"],dashboard["liquidez"])
+    
     return dashboard
 
 def generar_tarjeta_activo(activo,operaciones,posiciones):
@@ -306,5 +312,33 @@ def generar_resumen_activos_abiertos(resumenes_abiertas):
         }
         
         resumenes.append(resumen)
+    
+    return resumenes
+
+def generar_resumen_asignacion_global(resumenes_activos,dashboard):
+    
+    resumenes = []
+    
+    for resumen in resumenes_activos:
+        
+        asignacion = calcular_asignacion(resumen["capital_invertido_actual"],dashboard["total_cartera"])
+        
+        datos = {
+            "activo": resumen["activo"],
+            "capital": resumen["capital_invertido_actual"],
+            "asignacion": asignacion
+        }
+        
+        resumenes.append(datos)
+    
+    asignacion_liquidez = calcular_asignacion(dashboard["liquidez"],dashboard["total_cartera"]) 
+    
+    datos_liquidez = {
+        "activo": "LIQUIDEZ",
+        "capital": dashboard["liquidez"],
+        "asignacion": asignacion_liquidez
+    }   
+    
+    resumenes.append(datos_liquidez)
     
     return resumenes

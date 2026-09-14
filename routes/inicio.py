@@ -14,9 +14,11 @@ from calculos import (
     generar_resumen_todas_posiciones,
     generar_resumen_dashboard,
     generar_tarjetas_activos,
-    generar_resumen_activos_abiertos
+    generar_resumen_activos_abiertos,
+    generar_resumen_asignacion_global
 )
 from utilidades import (
+    formatear_asignacion_global,
     formatear_resumen_posicion,
     formatear_tarjeta_activo,
     formatear_resumen_activo,
@@ -39,13 +41,16 @@ def inicio():
     resumenes_todas = generar_resumen_todas_posiciones(operaciones,posiciones)
     resumenes_activos = generar_resumen_activos_abiertos(resumenes_abiertas)
     
-    for resumen in resumenes_activos:
-    
-        formatear_resumen_activo(resumen)
-    
     dashboard = generar_resumen_dashboard(resumenes_abiertas,resumenes_todas,configuracion)
     
+    asignacion_global = generar_resumen_asignacion_global(resumenes_activos,dashboard)
+    
+    for resumen in resumenes_activos:
+        
+            formatear_resumen_activo(resumen)
+    
     formatear_dashboard(dashboard)
+    formatear_asignacion_global(asignacion_global)
     
     tarjetas = generar_tarjetas_activos(operaciones,posiciones)
     
@@ -53,4 +58,4 @@ def inicio():
     
         formatear_tarjeta_activo(tarjeta)
     
-    return render_template("index.html",resumenes=resumenes_abiertas,dashboard=dashboard,tarjetas=tarjetas,resumenes_activos=resumenes_activos)
+    return render_template("index.html",resumenes=resumenes_abiertas,dashboard=dashboard,tarjetas=tarjetas,resumenes_activos=resumenes_activos, asignacion_global=asignacion_global)

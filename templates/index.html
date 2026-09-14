@@ -43,10 +43,17 @@
 
 <h2>DashBoard</h2>
 
+<p>Total en Cartera: <strong>{{ dashboard["total_cartera_formateado"] }}</strong> USD</p>
+<p>Liquidez: <strong>{{ dashboard["liquidez_formateada"] }}</strong> USD</p>
 <p>Capital invertido Actual: <strong>{{ dashboard["capital_invertido_formateado"] }}</strong> USD</p>
 <p>Ganancia realizada: <strong>{{ dashboard["ganancia_realizada_formateada"] }}</strong> USD</p>
 <p>Cantidad de posiciones: <strong>{{ dashboard["cantidad_posiciones"] }}</strong></p>
-<p>Liquidez: <strong>{{ dashboard["liquidez_formateada"] }}</strong> USD</p>
+
+<h3>Composicion de la Cartera</h3>
+
+{% for resumen in asignacion_global %}
+    <p>{{ resumen["activo"] }}: <strong>{{ resumen["asignacion_formateada"] }}</strong></p>
+{% endfor %}
 
 <hr>
 
@@ -58,7 +65,7 @@
         <th>Cantidad</th>
         <th>PPC</th>
         <th>Capital invertido</th>
-        <th>Asignacion</th>
+        <th>Asignación Neta</th>
     </tr>
     
     {% for resumen in resumenes_activos %}

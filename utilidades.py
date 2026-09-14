@@ -93,9 +93,18 @@ def formatear_tarjeta_activo(tarjeta):
     return tarjeta
 
 def formatear_dashboard(dashboard):
-
+    
     dashboard["capital_invertido_formateado"] = formatear_dinero(dashboard["capital_invertido"])
     dashboard["ganancia_realizada_formateada"] = formatear_dinero(dashboard["ganancia_realizada"])
     dashboard["liquidez_formateada"] = formatear_dinero(dashboard["liquidez"])
+    dashboard["total_cartera_formateado"] = formatear_dinero(dashboard["total_cartera"])
     
     return dashboard
+
+def formatear_asignacion_global(asignacion_global):
+    
+    for resumen in asignacion_global:
+        resumen["capital_formateado"] = formatear_dinero(resumen["capital"])
+        resumen["asignacion_formateada"] = formatear_porcentaje(resumen["asignacion"])
+        
+    return asignacion_global
