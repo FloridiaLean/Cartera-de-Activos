@@ -1,0 +1,773 @@
+/*BASE*/
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --fondo: #0b1117;
+    --panel: #111a20;
+    --panel-hover: #162229;
+    --borde: #26343b;
+    --texto: #f1f3f2;
+    --texto-secundario: #82939b;
+    --acento: #c47a32;
+    --verde: #4f9d73;
+    --rojo: #b85c52;
+}
+
+/*ESTRUCTURA GENERAL*/
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--fondo);
+    color: var(--texto);
+}
+
+main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 0;
+}
+
+h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+}
+
+h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.barra-superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+}
+
+.bloque-superior h2 {
+    margin: 0 0 15px;
+    text-align: center;
+}
+
+.gestion {
+    text-align: right;
+}
+
+.gestion-enlaces {
+    display: flex;
+    gap: 10px;
+}
+
+.acciones {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 0;
+}
+
+/*DASHBOARD*/
+
+.dashboard {
+    margin-bottom: 30px;
+}
+
+.dashboard-contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.panel {
+    background-color: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+}
+
+.historico-activos {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.tarjeta-activo {
+    width: 220px;
+    padding: 14px;
+}
+
+.tarjeta-activo h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 17px;
+}
+
+.tarjeta-activo p {
+    margin: 6px 0;
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.tarjeta-activo strong {
+    color: var(--texto);
+}
+
+.dashboard-metricas {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.metrica {
+    padding: 12px;
+}
+
+.metrica-label {
+    display: block;
+    color: var(--texto-secundario);
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.metrica-valor {
+    display: block;
+    color: var(--acento);
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.composicion {
+    padding: 14px;
+}
+
+.composicion h3 {
+    text-align: center;
+}
+
+.tabla-composicion,
+.tabla-resumen-activos {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-composicion th,
+.tabla-composicion td {
+    padding: 9px 10px;
+    text-align: center;
+}
+
+.tabla-composicion th {
+    color: var(--texto-secundario);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.tabla-composicion td {
+    border-top: 1px solid var(--borde);
+    font-size: 14px;
+}
+
+.resumen-activos {
+    margin: 25px 0;
+    padding: 10px;
+}
+
+.resumen-activos h2 {
+    margin: 0;
+    padding: 16px;
+    text-align: center;
+}
+
+.tabla-resumen-activos th,
+.tabla-resumen-activos td {
+    padding: 10px 12px;
+    text-align: center;
+}
+
+.tabla-resumen-activos th {
+    color: var(--texto-secundario);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.tabla-resumen-activos td {
+    border-top: 1px solid var(--borde);
+    font-size: 14px;
+}
+
+/*TABLAS GENERALES*/
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+.tabla th,
+.tabla td {
+    padding: 12px 14px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.tabla th {
+    color: var(--texto-secundario);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: var(--panel-hover);
+}
+
+.tabla td {
+    border-top: 1px solid var(--borde);
+    font-size: 14px;
+}
+
+.tabla tr:hover {
+    background-color: var(--panel-hover);
+}
+
+.accion-tabla {
+    color: var(--texto-secundario);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.accion-tabla:hover {
+    color: var(--acento);
+}
+
+.acciones-tabla {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
+/*FORMULARIOS*/
+
+.pagina-formulario {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.pagina-formulario h1 {
+    margin-bottom: 30px;
+}
+
+.volver {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: var(--texto-secundario);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.volver:hover {
+    color: var(--acento);
+}
+
+.formulario-contenedor {
+    background-color: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.formulario-contenedor h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.formulario-contenedor form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formulario-contenedor label {
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.formulario-contenedor input {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: var(--fondo);
+    border: 1px solid var(--borde);
+    border-radius: 7px;
+    color: var(--texto);
+    font-size: 14px;
+}
+
+.formulario-posicion {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--borde);
+}
+
+.formulario-posicion h4 {
+    margin: 0 0 15px;
+    color: var(--texto);
+    font-size: 14px;
+}
+
+.formulario-posicion form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formulario-posicion label {
+    color: var(--texto-secundario);
+    font-size: 12px;
+}
+
+.formulario-posicion input {
+    width: 100%;
+    padding: 9px 10px;
+    background-color: var(--fondo);
+    border: 1px solid var(--borde);
+    border-radius: 7px;
+    color: var(--texto);
+    font-size: 13px;
+}
+
+.formulario-compra-final {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formulario-compra-final label {
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.formulario-compra-final input {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: var(--fondo);
+    border: 1px solid var(--borde);
+    border-radius: 7px;
+    color: var(--texto);
+    font-size: 14px;
+}
+
+.formulario-contenedor input:focus,
+.formulario-posicion input:focus,
+.formulario-compra-final input:focus,
+.filtros input:focus,
+.filtros select:focus {
+    outline: none;
+    border-color: var(--acento);
+}
+
+.mensaje-flash {
+    margin: 0 0 20px;
+    padding: 10px 12px;
+    background-color: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 7px;
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.seleccion-activo {
+    margin-top: 25px;
+}
+
+.encabezado-activo {
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    background-color: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+}
+
+.encabezado-activo span {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--texto-secundario);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.encabezado-activo h2 {
+    margin: 0;
+    color: var(--texto);
+    font-size: 22px;
+}
+
+.posicion-compra {
+    margin-bottom: 15px;
+    padding: 18px;
+    background-color: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+}
+
+.posicion-compra h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.posicion-compra p {
+    margin: 6px 0;
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.datos-posicion {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.datos-posicion p {
+    margin: 0;
+    padding: 10px 14px;
+    background-color: var(--fondo);
+    border-radius: 7px;
+    font-size: 13px;
+}
+
+.datos-posicion span {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--texto-secundario);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.sin-posiciones {
+    padding: 18px;
+    background-color: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+}
+
+.sin-posiciones p {
+    margin: 0 0 15px;
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.formulario-final {
+    max-width: 700px;
+    margin: 30px auto 0;
+    padding: 20px;
+    background-color: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+}
+
+.encabezado-formulario-final {
+    margin-bottom: 20px;
+}
+
+.encabezado-formulario-final span {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--texto-secundario);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.encabezado-formulario-final h2 {
+    margin: 0;
+    color: var(--texto);
+    font-size: 22px;
+}
+
+.formulario-final p {
+    margin: 15px 0 20px;
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.titulo-agregar-compra {
+    margin: 25px 0 15px;
+    padding-top: 20px;
+    border-top: 1px solid var(--borde);
+    font-size: 16px;
+}
+
+.formulario-nueva-posicion {
+    margin: 0;
+}
+
+/*POSICIONES*/
+
+.posiciones-abiertas {
+    overflow: hidden;
+    margin: 25px 0;
+}
+
+.posiciones-abiertas h2 {
+    margin: 0;
+    padding: 16px;
+    text-align: center;
+}
+
+.tabla-posiciones {
+    width: 92%;
+    margin: 0 auto 20px;
+    border-collapse: collapse;
+}
+
+.tabla-posiciones th,
+.tabla-posiciones td {
+    padding: 10px 12px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.tabla-posiciones th {
+    color: var(--texto-secundario);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.tabla-posiciones td {
+    border-top: 1px solid var(--borde);
+    font-size: 13px;
+}
+
+.pagina-posiciones {
+    max-width: 1200px;
+}
+
+.seccion-posiciones th button {
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--texto-secundario);
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.seccion-posiciones th button::after {
+    content: "▲\A▼";
+    white-space: pre;
+    display: inline-block;
+    margin-left: 5px;
+    color: var(--texto-secundario);
+    font-size: 7px;
+    line-height: 6px;
+    vertical-align: middle;
+}
+
+.seccion-posiciones th button:hover {
+    color: var(--texto);
+}
+
+.seccion-posiciones th button:hover::after {
+    color: var(--acento);
+}
+
+.fila-acciones-posicion td {
+    padding: 8px 12px 12px;
+}
+
+.acciones-posicion {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.botones-posicion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.botones-posicion details {
+    width: 100%;
+}
+
+.botones-posicion summary {
+    width: 90px;
+    margin: 0;
+    padding: 7px 0;
+    background-color: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 7px;
+    color: var(--texto);
+    cursor: pointer;
+    font-size: 12px;
+    list-style: none;
+}
+
+.acciones-posicion summary:hover {
+    background-color: var(--panel-hover);
+    border-color: var(--acento);
+}
+
+.acciones-posicion form {
+    width: 100%;
+    margin: 8px 0 3px;
+    padding: 8px 10px;
+    background-color: var(--fondo);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 10px;
+}
+
+.acciones-posicion label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--texto-secundario);
+    font-size: 12px;
+}
+
+.acciones-posicion input {
+    width: 100%;
+    padding: 6px 8px;
+    background-color: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    color: var(--texto);
+    font-size: 12px;
+}
+
+.acciones-posicion button {
+    padding: 8px 14px;
+    background-color: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    color: var(--texto);
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.boton-max {
+    margin-left: -8px;
+    height: 28px;
+    padding: 0 8px;
+    font-size: 10px;
+}
+
+.acciones-posicion button[type="submit"] {
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.acciones-posicion button:hover {
+    border-color: var(--acento);
+}
+
+/*BOTONES*/
+
+.boton {
+    display: inline-block;
+    width: auto;
+    margin: 0;
+    padding: 10px 14px;
+    background-color: var(--panel-hover);
+    border: 1px solid var(--borde);
+    border-radius: 7px;
+    color: var(--texto);
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.boton:hover {
+    border-color: var(--acento);
+}
+
+
+/* FILTROS*/
+
+.filtros {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filtros label {
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.filtros input,
+.filtros select {
+    padding: 8px 10px;
+    background-color: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 7px;
+    color: var(--texto);
+    font-size: 13px;
+}
+
+.filtros input {
+    width: 120px;
+}
+
+.filtros button {
+    padding: 8px 12px;
+    background-color: var(--panel-hover);
+    border: 1px solid var(--borde);
+    border-radius: 7px;
+    color: var(--texto);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.filtros button:hover {
+    border-color: var(--acento);
+}
+
+.filtros a {
+    color: var(--texto-secundario);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.filtros a:hover {
+    color: var(--acento);
+}
+
+/*PÁGINAS ESPECÍFICAS*/
+
+.pagina-operaciones {
+    max-width: 1200px;
+}
+
+.pagina-detalle-posicion {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.acciones-liquidez {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

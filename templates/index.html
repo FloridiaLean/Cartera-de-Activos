@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Cartera de Activos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
+<main>
 
 <h1>Mi Cartera</h1>
-<h2>Menú principal</h2>
 
 {% with mensajes = get_flashed_messages() %}
     {% if mensajes %}
@@ -19,136 +20,192 @@
     {% endif %}
 {% endwith %}
 
-<ul>
-    <li><a href="{{ url_for('configuracion.mostrar_configuracion') }}">Configuración</a></li>
-    <li><a href="{{ url_for('compras.compras') }}">Registrar compra</a></li>
-    <li><a href="{{ url_for('ventas.ventas') }}">Registrar venta</a></li>
-</ul>
+<div class="barra-superior">
+    <div class="bloque-superior">
+        <h2>Acciones</h2>
+        <div class="acciones">
+            <a href="{{ url_for('configuracion.mostrar_configuracion') }}" class="boton">Configuración</a>
+            <a href="{{ url_for('compras.compras') }}" class="boton">Registrar compra</a>
+            <a href="{{ url_for('ventas.ventas') }}" class="boton">Registrar venta</a>
+        </div>
+    </div>
+    <div class="bloque-superior gestion">
+        <h2>Gestión</h2>
+        <div class="gestion-enlaces">
+            <a href="{{ url_for('posiciones.todas_las_posiciones') }}" class="boton">Posiciones</a>
+            <a href="{{ url_for('operaciones.historial_operaciones') }}" class="boton">Operaciones</a>
+        </div>
+    </div>
+</div>  
 
 <hr>
 
 <h2>Histórico por activo</h2>
 
-{% for tarjeta in tarjetas %}
-
-<div>
-    <h3>{{ tarjeta["activo"] }}</h3>
-    <p>Ganancia realizada: <strong>{{ tarjeta["ganancia_realizada_formateada"] }}</strong> USD</p>
-    <p>Rentabilidad: <strong>{{ tarjeta["rentabilidad_formateada"] }}</strong></p>
+<div class="historico-activos">
+    {% for tarjeta in tarjetas %}
+    <div class="tarjeta-activo panel">
+        <h3>{{ tarjeta["activo"] }}</h3>
+        <p>Ganancia realizada: <strong>{{ tarjeta["ganancia_realizada_formateada"] }}</strong></p>
+        <p>Rentabilidad: <strong>{{ tarjeta["rentabilidad_formateada"] }}</strong></p>
+    </div>
+    {% endfor %}
 </div>
 
-{% endfor %}
-
 <hr>
 
-<h2>DashBoard</h2>
-
-<p>Total en Cartera: <strong>{{ dashboard["total_cartera_formateado"] }}</strong> USD</p>
-<p>Liquidez: <strong>{{ dashboard["liquidez_formateada"] }}</strong> USD</p>
-<p>Capital invertido Actual: <strong>{{ dashboard["capital_invertido_formateado"] }}</strong> USD</p>
-<p>Ganancia realizada: <strong>{{ dashboard["ganancia_realizada_formateada"] }}</strong> USD</p>
-<p>Cantidad de posiciones: <strong>{{ dashboard["cantidad_posiciones"] }}</strong></p>
-
-<h3>Composicion de la Cartera</h3>
-
-{% for resumen in asignacion_global %}
-    <p>{{ resumen["activo"] }}: <strong>{{ resumen["asignacion_formateada"] }}</strong></p>
-{% endfor %}
-
-<hr>
-
-<h2>Resumen por activo</h2>
-
-<table>
-    <tr>
-        <th>Activo</th>
-        <th>Cantidad</th>
-        <th>PPC</th>
-        <th>Capital invertido</th>
-        <th>Asignación Neta</th>
-    </tr>
+<section class="dashboard">
     
-    {% for resumen in resumenes_activos %}
-    <tr>
-        <td>{{ resumen["activo"] }}</td>
-        <td>{{ resumen["cantidad_formateada"] }}</td>
-        <td>{{ resumen["precio_promedio_formateado"] }}</td>
-        <td>{{ resumen["capital_invertido_formateado"] }}</td>
-        <td>{{ resumen["asignacion_formateada"] }}</td>
-    </tr>
-    {% endfor %}
-</table>
-
-<hr>
-
-<h2>Posiciones Abiertas (<strong>{{ dashboard["cantidad_posiciones_abiertas"] }}</strong>)</h2>
-
-<table width="55%">
-    <tr>
-        <th>Posicion</th>
-        <th>Activo</th>
-        <th>Capital Invertido</th>
-        <th>Cantidad Actual</th>
-        <th>PPC</th>
-        <th>Inicio</th>
-        <th>Duracion</th>
-        <th>Acciones</th>
-    </tr>
+    <h2>DashBoard</h2>
     
-    {% for resumen in resumenes %}
-    <tr>
-        <td> # {{ resumen['posicion'] }}</td>
-        <td>{{ resumen['activo'] }}</td>
-        <td>{{ resumen['capital_invertido_formateado'] }}</td>
-        <td>{{ resumen['cantidad_formateada'] }}</td>
-        <td>{{ resumen['ppc_formateado'] }}</td>
-        <td>{{ resumen["fecha_apertura"] }}</td>
-        <td>{{ resumen["duracion_formateada"] }}</td>
-        <td><a href="{{ url_for('posiciones.detalle_posicion', posicion_id=resumen['posicion']) }}">Ver Detalle</a></td> 
-    </tr>
-    <tr>    
-        <td colspan="8">
-            <details>
-                <summary style="cursor: pointer;">Comprar</summary>
-                <form method="POST" action="{{ url_for('compras.compras') }}">
-                
-                    <input type="hidden" name="activo" value="{{ resumen['activo'] }}">
-                    <input type="hidden" name="posicion_id" value="{{ resumen['posicion'] }}">
-                    <input type="hidden" name="origen" value="dashboard">
-                    <label>Monto invertido<input type="number" name="monto" step="any" min="0" required></label>
-                    <label>Precio de compra<input type="number" name="precio" step="any" min="0" required></label>
-                    <label>Fecha<input type="date" name="fecha" required></label>
-                    <button type="submit">Registrar compra</button>
-                </form>
-            </details>
-            <details>
-                <summary style="cursor: pointer;">Vender</summary>
-                <form method="POST" action="{{ url_for('ventas.ventas') }}">
-                
-                    <input type="hidden" name="posicion_id" value="{{ resumen['posicion'] }}">
-                    <input type="hidden" name="origen" value="dashboard">
-                    <label>Cantidad<input type="number" id="cantidad-{{ resumen['posicion'] }}" name="cantidad" step="any" min="0" max="{{ resumen['cantidad_actual'] }}" required></label>
-                    <button type="button" data-cantidad="{{ resumen['cantidad_actual'] }}" data-input-id="cantidad-{{ resumen['posicion'] }}" onclick="venderTodo(this.dataset.cantidad,this.dataset.inputId)">Max</button>
-                    <label>Precio de venta<input type="number" name="precio" step="any" min="0" required></label>
-                    <label>Fecha<input type="date" name="fecha" required></label>
-                    <button type="submit">Registrar venta</button>
-                </form>
-            </details>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-
-<br>   
+    <div class="dashboard-contenido">
+        
+        <div class="dashboard-metricas">
+            <div class="metrica panel">
+                <span class="metrica-label">Total en cartera</span>
+                <span class="metrica-valor">{{ dashboard["total_cartera_formateado"] }}</span>
+            </div>
+            <div class="metrica panel">
+                <span class="metrica-label">Liquidez</span>
+                <span class="metrica-valor">{{ dashboard["liquidez_formateada"] }}</span>
+            </div>
+            <div class="metrica panel">
+                <span class="metrica-label">Capital invertido</span>
+                <span class="metrica-valor">{{ dashboard["capital_invertido_formateado"] }}</span>
+            </div>
+            <div class="metrica panel">
+                <span class="metrica-label">Ganancia realizada</span>
+                <span class="metrica-valor">{{ dashboard["ganancia_realizada_formateada"] }}</span>
+            </div>
+            <div class="metrica panel">
+                <span class="metrica-label">Cantidad de posiciones</span>
+                <span class="metrica-valor">{{ dashboard["cantidad_posiciones"] }}</span>
+            </div>
+        </div>  
+        <div class="composicion panel">
+            <h3>Composicion de Cartera Actual</h3>
+            <table class="tabla-composicion">
+                <thead>
+                    <tr>
+                        <th>Activo</th>
+                        <th>Capital</th>
+                        <th>Asignación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resumen in asignacion_global %}
+                    <tr>
+                        <td>{{ resumen["activo"] }}</td>
+                        <td>{{ resumen["capital_formateado"] }}</td>
+                        <td>{{ resumen["asignacion_formateada"] }}</td>
+                    </tr>
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
 <hr>
 
-<h2>Gestion</h2>
+<div class="resumen-activos panel">
+    
+    <h2>Resumen por activo</h2>
+    
+    <table class="tabla-resumen-activos">
+        <tr>
+            <th>Activo</th>
+            <th>Cantidad</th>
+            <th>PPC</th>
+            <th>Capital invertido</th>
+            <th>Asignación Neta</th>
+        </tr>
+        
+        {% for resumen in resumenes_activos %}
+        <tr>
+            <td>{{ resumen["activo"] }}</td>
+            <td>{{ resumen["cantidad_formateada"] }}</td>
+            <td>{{ resumen["precio_promedio_formateado"] }}</td>
+            <td>{{ resumen["capital_invertido_formateado"] }}</td>
+            <td>{{ resumen["asignacion_formateada"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 
-<ul>
-    <li><a href="{{ url_for('posiciones.todas_las_posiciones') }}">Ver todas las posiciones</a></li>
-    <li><a href="{{ url_for('operaciones.historial_operaciones') }}">Ver historial de operaciones</a></li>
-</ul>
+<hr>
+
+<div class="posiciones-abiertas panel">
+    
+    <h2>Posiciones Abiertas (<strong>{{ dashboard["cantidad_posiciones_abiertas"] }}</strong>)</h2>
+        
+    <table class="tabla-posiciones">
+        <thead>
+            <tr>
+                <th>Posicion</th>
+                <th>Activo</th>
+                <th>Capital Invertido</th>
+                <th>Cantidad Actual</th>
+                <th>PPC</th>
+                <th>Inicio</th>
+                <th>Duracion</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for resumen in resumenes %}
+            <tr>
+                <td> # {{ resumen['posicion'] }}</td>
+                <td>{{ resumen['activo'] }}</td>
+                <td>{{ resumen['capital_invertido_formateado'] }}</td>
+                <td>{{ resumen['cantidad_formateada'] }}</td>
+                <td>{{ resumen['ppc_formateado'] }}</td>
+                <td>{{ resumen["fecha_apertura"] }}</td>
+                <td>{{ resumen["duracion_formateada"] }}</td>
+                <td><a href="{{ url_for('posiciones.detalle_posicion', posicion_id=resumen['posicion']) }}" class="accion-tabla">Ver Detalle</a></td> 
+            </tr>
+            <tr class="fila-acciones-posicion">    
+                <td colspan="8">
+                    <div class="acciones-posicion">
+                        <div class="botones-posicion">
+                            <details>
+                                <summary>Comprar</summary>
+                                <form method="POST" action="{{ url_for('compras.compras') }}">
+                                    
+                                    <input type="hidden" name="activo" value="{{ resumen['activo'] }}">
+                                    <input type="hidden" name="posicion_id" value="{{ resumen['posicion'] }}">
+                                    <input type="hidden" name="origen" value="dashboard">
+                                    
+                                    <label>Monto invertido<input type="number" name="monto" step="any" min="0" required></label>
+                                    <label>Precio de compra<input type="number" name="precio" step="any" min="0" required></label>
+                                    <label>Fecha<input type="date" name="fecha" required></label>
+                                    <button type="submit">Registrar compra</button>
+                                </form>
+                            </details>
+                            <details>
+                                <summary>Vender</summary>
+                                <form method="POST" action="{{ url_for('ventas.ventas') }}">
+                                
+                                    <input type="hidden" name="posicion_id" value="{{ resumen['posicion'] }}">
+                                    <input type="hidden" name="origen" value="dashboard">    
+                                    <label>Cantidad<input type="number" id="cantidad-{{ resumen['posicion'] }}" name="cantidad" step="any" min="0" max="{{ resumen['cantidad_actual'] }}" required></label>
+                                    <button type="button" class="boton-max" data-cantidad="{{ resumen['cantidad_actual'] }}" data-input-id="cantidad-{{ resumen['posicion'] }}" onclick="venderTodo(this.dataset.cantidad,this.dataset.inputId)">Max</button>
+                                    <label>Precio de venta<input type="number" name="precio" step="any" min="0" required></label>
+                                    <label>Fecha<input type="date" name="fecha" required></label>
+                                    <button type="submit">Registrar venta</button>
+                                </form>
+                            </details>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>    
+    </table>
+</div> 
+
+</main>
 
 <script>
 function venderTodo(cantidad,inputId) {

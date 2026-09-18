@@ -4,126 +4,133 @@
 <head>
     <meta charset="UTF-8">
     <title>Registrar Compra</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
-
-<a href="{{ url_for('inicio.inicio') }}">← Volver al inicio</a>
-
-<h1>Registrar Compra</h1>
-
-{% if not mostrar_formulario_compra %}
-    <form action="{{ url_for('compras.compras') }}" method="POST">
-        <label for="activo">Activo</label>
-        <br>
-        <input type="text" id="activo" name="activo" required>
-        <br><br>
-        <button type="submit">Continuar</button>
-    </form>
-{% endif %}
-
-{% with mensajes = get_flashed_messages() %}
-    {% if mensajes %}
-        {% for mensaje in mensajes %}
-            <p>{{ mensaje }}</p>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
-
-{% if activo and not mostrar_formulario_compra %}
-
-    <hr>
-    <h2>Activo seleccionado: {{ activo }}</h2>
+<main class="pagina-formulario">
     
-    {% if posiciones %}
-        <form action="{{ url_for('compras.compras') }}" method="POST">
-                <input type="hidden" name="activo" value="{{ activo }}">
-                <input type="hidden" name="posicion_id" value="">
-                <button type="submit">Crear nueva posición</button>
-        </form>
-    <hr>
+    <a href="{{ url_for('inicio.inicio') }}" class="volver">← Volver al inicio</a>
     
-        <h3>Posiciones abiertas encontradas:</h3>
+    <h1>Registrar Compra</h1>
     
-    {% for posicion in posiciones %}
-        <div>
-            <h3>Posición #{{ posicion["posicion"] }}</h3> 
-            <p>{{ posicion["duracion_formateada"] }}</p>
-            <p>Activo: {{ posicion["activo"] }}</p>
-            <p>Capital histórico: {{ posicion["capital_historico_formateado"] }}</p>
-            <p>Capital actual: {{ posicion["capital_invertido_formateado"] }}</p>
-            <p>Cantidad actual: {{ posicion["cantidad_formateada"] }}</p>
-            <p>Precio promedio: {{ posicion["ppc_formateado"] }}</p>
-            <p>Ganancia realizada: {{ posicion["ganancia_realizada_formateada"] }}</p>
-            
-            <button type="button" data-posicion="{{ posicion['posicion'] }}" onclick="mostrarFormulario(this.dataset.posicion)">Agregar compra a esta posición</button>
-            <div id="formulario-{{ posicion['posicion'] }}" style="display:none;">
-                
-                <hr>
-                <h4>Agregar compra a posición #{{ posicion["posicion"] }}</h4>
-                
-                <form action="{{ url_for('compras.compras') }}" method="POST">
-                    <input type="hidden" name="activo" value="{{ posicion['activo'] }}">
-                    <input type="hidden" name="posicion_id" value="{{ posicion['posicion'] }}">
-                    <label for="monto-{{ posicion['posicion'] }}">Monto invertido</label>
-                    <input type="number" id="monto-{{ posicion['posicion'] }}" name="monto" step="any" required>
-                    <br><br>
-                    <label for="precio-{{ posicion['posicion'] }}">Precio de compra</label>
-                    <input type="number" id="precio-{{ posicion['posicion'] }}" name="precio" step="any" required>
-                    <br><br>
-                    <input type="date" id="fecha" name="fecha" required>
-                    <br><br>
-                    <button type="submit">Registrar compra</button>
-                </form>
-            </div>
-        </div>
-    <hr>
-    {% endfor %}
-    {% else %}
-        <p>No existen posiciones abiertas para {{ activo }}.</p>
+    {% with mensajes = get_flashed_messages() %}
+        {% if mensajes %}
+            {% for mensaje in mensajes %}
+                <p class="mensaje-flash">{{ mensaje }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="formulario-contenedor">
+        {% if not mostrar_formulario_compra %}
+            <form action="{{ url_for('compras.compras') }}" method="POST">
+                <label for="activo">Activo</label>
+                <input type="text" id="activo" name="activo" required>
+                <button type="submit" class="boton">Continuar</button>
+            </form>
+        {% endif %}
+    </div>
+    
+    {% if activo and not mostrar_formulario_compra %}
         
-        <form action="{{ url_for('compras.compras') }}" method="POST">
-        <input type="hidden" name="activo" value="{{ activo }}">
-        <input type="hidden" name="posicion_id" value="">
-        <button type="submit">Crear nueva posición</button>
-        </form>
+        <section class="seleccion-activo">
+            <div class="encabezado-activo">
+                <span>Activo seleccionado</span>
+                <h2>{{ activo }}</h2>
+            </div>
+            {% if posiciones %}
+                <form action="{{ url_for('compras.compras') }}" method="POST" class="formulario-nueva-posicion">
+                        <input type="hidden" name="activo" value="{{ activo }}">
+                        <input type="hidden" name="posicion_id" value="">
+                        <button type="submit" class="boton">Crear nueva posición</button>
+                </form>
+                
+                <h3>Posiciones abiertas encontradas:</h3>
+                {% for posicion in posiciones %}
+                    <div class="posicion-compra">
+                        <h3>Posición #{{ posicion["posicion"] }} - <strong>{{ posicion["activo"] }}</strong></h3>
+                        <div class="datos-posicion">
+                            <p><span>Duración:</span> {{ posicion["duracion_formateada"] }}</p>
+                            <p><span>Capital histórico:</span> {{ posicion["capital_historico_formateado"] }}</p>
+                            <p><span>Capital actual:</span> {{ posicion["capital_invertido_formateado"] }}</p>
+                            <p><span>Cantidad actual:</span> {{ posicion["cantidad_formateada"] }}</p>
+                            <p><span>Precio promedio:</span> {{ posicion["ppc_formateado"] }}</p>
+                            <p><span>Ganancia realizada:</span> {{ posicion["ganancia_realizada_formateada"] }}</p>
+                        </div> 
+                        <button type="button" data-posicion="{{ posicion['posicion'] }}" onclick="mostrarFormulario(this.dataset.posicion)" class="boton">Agregar compra a esta posición</button>
+
+                        <div id="formulario-{{ posicion['posicion'] }}" class="formulario-posicion" style="display:none;">
+                            
+                            <h4>Agregar compra a posición #{{ posicion["posicion"] }}</h4>
+                            
+                            <form action="{{ url_for('compras.compras') }}" method="POST">
+                                <input type="hidden" name="activo" value="{{ posicion['activo'] }}">
+                                <input type="hidden" name="posicion_id" value="{{ posicion['posicion'] }}">
+                                <label for="monto-{{ posicion['posicion'] }}">Monto invertido</label>
+                                <input type="number" id="monto-{{ posicion['posicion'] }}" name="monto" step="any" required>
+                                <label for="precio-{{ posicion['posicion'] }}">Precio de compra</label>
+                                <input type="number" id="precio-{{ posicion['posicion'] }}" name="precio" step="any" required>
+                                <label for="fecha-{{ posicion['posicion'] }}">Fecha</label>
+                                <input type="date" id="fecha-{{ posicion['posicion'] }}" name="fecha" required>
+                                <button type="submit" class="boton">Registrar compra</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="sin-posiciones">
+                    <p>No existen posiciones abiertas para {{ activo }}.</p>
+                    
+                    <form action="{{ url_for('compras.compras') }}" method="POST" class="formulario-nueva-posicion">
+                        <input type="hidden" name="activo" value="{{ activo }}">
+                        <input type="hidden" name="posicion_id" value="">
+                        <button type="submit" class="boton">Crear nueva posición</button>
+                    </form>
+                </div>
+            {% endif %}
+        </section>
     {% endif %}
-{% endif %}
-
-{% if mostrar_formulario_compra %}
-
-    <hr>
-    {% if posicion_id is none %}
-        <h2>Nueva posición de {{ activo }}</h2>
-    {% else %}
-        <h2>Posición seleccionada #{{ resumen["posicion"] }}</h2>
-        <p>{{ resumen["duracion_formateada"] }}</p>
-        <p>Activo: {{ resumen["activo"] }}</p>
-        <p>Capital histórico: {{ resumen["capital_historico_formateado"] }}</p>
-        <p>Capital invertido actual: {{ resumen["capital_invertido_formateado"] }}</p>
-        <p>Cantidad actual: {{ resumen["cantidad_formateada"] }}</p>
-        <p>Precio promedio: {{ resumen["ppc_formateado"] }}</p>
-        <p>Ganancia realizada: {{ resumen["ganancia_realizada_formateada"] }}</p>
-
-        <h2>Agregar compra a posición #{{ posicion_id }}</h2>
+    
+    {% if mostrar_formulario_compra %}
+    
+        <section class="formulario-final">
+            {% if posicion_id is none %}
+                <div class="encabezado-formulario-final">
+                    <span>Nueva posición</span>
+                    <h2>Nueva posición de {{ activo }}</h2>
+                </div>
+            {% else %}
+                <div class="encabezado-formulario-final">
+                    <span>Posición seleccionada</span>
+                    <h2>#{{ resumen["posicion"] }} - <strong>{{ resumen["activo"] }}</strong></h2>
+                </div>
+                <div class="datos-posicion">
+                    <p><span>Duración:</span> {{ resumen["duracion_formateada"] }}</p>
+                    <p><span>Capital histórico:</span> {{ resumen["capital_historico_formateado"] }}</p>
+                    <p><span>Capital invertido actual:</span> {{ resumen["capital_invertido_formateado"] }}</p>
+                    <p><span>Cantidad actual:</span> {{ resumen["cantidad_formateada"] }}</p>
+                    <p><span>Precio promedio:</span> {{ resumen["ppc_formateado"] }}</p>
+                    <p><span>Ganancia realizada:</span> {{ resumen["ganancia_realizada_formateada"] }}</p>
+                </div>
+                <h2 class="titulo-agregar-compra">Agregar compra a posición #{{ posicion_id }}</h2>
+            {% endif %}
+            
+            <form action="{{ url_for('compras.compras') }}" method="POST" class="formulario-compra-final">
+                <input type="hidden" name="activo" value="{{ activo }}">
+                <input type="hidden" name="posicion_id" value="{{ posicion_id if posicion_id is not none else '' }}">
+                <label for="monto">Monto invertido</label>
+                <input type="number" id="monto" name="monto" step="any" required>
+                <label for="precio">Precio de compra</label>
+                <input type="number" id="precio" name="precio" step="any" required>
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha" name="fecha" required>
+                <button type="submit" class="boton">Registrar compra</button>
+            </form>
+        </section>
     {% endif %}
-
-    <form action="{{ url_for('compras.compras') }}" method="POST">
-        <input type="hidden" name="activo" value="{{ activo }}">
-        <input type="hidden" name="posicion_id" value="{{ posicion_id if posicion_id is not none else '' }}">
-        <label for="monto">Monto invertido</label>
-        <br>
-        <input type="number" id="monto" name="monto" step="any" required>
-        <br><br>
-        <label for="precio">Precio de compra</label>
-        <br>
-        <input type="number" id="precio" name="precio" step="any" required>
-        <br><br>
-        <input type="date" id="fecha" name="fecha" required>
-        <br><br>
-        <button type="submit">Registrar compra</button>
-    </form>
-{% endif %}
+    
+</main>
 
 <script>
 function mostrarFormulario(posicionId) {
@@ -138,6 +145,6 @@ function mostrarFormulario(posicionId) {
         formulario.style.display = "none";}
 }
 </script>
-</body>
 
+</body>
 </html>

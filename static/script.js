@@ -8,8 +8,8 @@ const botonDuracion = document.getElementById("ordenar-duracion");
 const botonDuracionCerradas = document.getElementById("ordenar-duracion-cerradas");
 const tablaAbiertas = document.getElementById("tabla-posiciones-abiertas");
 const tablaCerradas = document.getElementById("tabla-posiciones-cerradas");
-const filas = tablaAbiertas.querySelectorAll("tr");
-const filasCerradas = tablaCerradas.querySelectorAll("tr");
+const filas = tablaAbiertas ? tablaAbiertas.querySelectorAll("tr") : [];
+const filasCerradas = tablaCerradas ? tablaCerradas.querySelectorAll("tr") : [];
 const filasPosiciones = Array.from(filas).slice(1);
 const filasPosicionesCerradas = Array.from(filasCerradas).slice(1);
 
@@ -126,9 +126,26 @@ function ordenarPorDuracionCerradas() {
     );
 }
 
-botonInicio.addEventListener("click",ordenarPorInicio);
-botonInicioCerradas.addEventListener("click",ordenarPorInicioCerradas);
-botonCapital.addEventListener("click",ordenarPorCapital);
-botonGanancia.addEventListener("click",ordenarPorGanancia);
-botonDuracion.addEventListener("click",ordenarPorDuracion);
-botonDuracionCerradas.addEventListener("click",ordenarPorDuracionCerradas);
+if (botonInicio) {
+    botonInicio.addEventListener("click",ordenarPorInicio);
+}
+
+if (botonInicioCerradas) {
+    botonInicioCerradas.addEventListener("click",ordenarPorInicioCerradas);
+}
+
+if (botonCapital){
+    botonCapital.addEventListener("click",ordenarPorCapital);
+}
+
+if(botonGanancia) {
+    botonGanancia.addEventListener("click",ordenarPorGanancia);
+}
+
+if (botonDuracion) {
+    botonDuracion.addEventListener("click",ordenarPorDuracion);
+}
+
+if (botonDuracionCerradas) {
+    botonDuracionCerradas.addEventListener("click",ordenarPorDuracionCerradas);
+}

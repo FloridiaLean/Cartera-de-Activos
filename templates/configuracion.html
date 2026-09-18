@@ -4,45 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Configuración</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
-
-<a href="{{ url_for('inicio.inicio') }}">← Volver al inicio</a>
-
-<h1>Configuración</h1>
-
-{% with mensajes = get_flashed_messages() %}
-    {% if mensajes %}
-        {% for mensaje in mensajes %}
-            <p>{{ mensaje }}</p>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
-
-<form method="POST">
+<main class="pagina-formulario">
     
-    <label>Capital inicial</label>
-    <input type="number" name="capital_inicial" step="any" min="0.01" value="{{ configuracion['capital_inicial'] }}" required>
-    <button type="submit">Guardar configuración</button>
+    <a href="{{ url_for('inicio.inicio') }}" class="volver">← Volver al inicio</a>
     
-</form>
-
-<br>
-
-<p>Liquidez actual: <strong>{{ dashboard["liquidez_formateada"] }}</strong> USD</p>
-
-<form method="POST">
+    <h1>Configuración</h1>
     
-    <label>Monto</label>
+    {% with mensajes = get_flashed_messages() %}
+        {% if mensajes %}
+            {% for mensaje in mensajes %}
+                <p class="mensaje-flash">{{ mensaje }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     
-    <input type="number" name="monto_liquidez" step="any" min="0" required>
-    <button type="submit" name="accion" value="agregar">Agregar</button>
-    <button type="submit" name="accion" value="restar">Restar</button>
-    
-</form>
-
+    <section class="formulario-contenedor">
+        
+        <h2>Capital Inicial</h2>
+        
+        <form method="POST">
+            <label>Monto :</label>
+            <input type="number" name="capital_inicial" step="any" min="0.01" value="{{ configuracion['capital_inicial'] }}" required>
+            <button type="submit" class="boton">Guardar configuración</button>
+        </form>
+    </section>
+    <section class="formulario-final">
+        <div class="encabezado-formulario-final">
+            <h2>Estado Actual</h2>
+        </div>
+        <p>Liquidez actual: <strong>{{ dashboard["liquidez_formateada"] }}</strong> USD</p>
+        
+        <form method="POST" class="formulario-compra-final">
+            
+            <label>Ajuste :</label>
+            <div class="acciones-liquidez">
+                <input type="number" name="monto_liquidez" step="any" min="0" required>
+                <button type="submit" name="accion" value="agregar" class="boton">Agregar</button>
+                <button type="submit" name="accion" value="restar" class="boton">Restar</button>
+            </div>
+        </form>
+    </section>
+</main>
 
 </body>
-
 </html>
