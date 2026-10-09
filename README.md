@@ -26,6 +26,8 @@ La aplicación busca ofrecer una visión completa de la cartera mediante indicad
 
 El proyecto tiene como objetivo principal aplicar buenas prácticas de desarrollo de software mediante una arquitectura modular, separación de responsabilidades, validación de datos y persistencia estructurada en una base de datos SQLite.
 
+El objetivo es continuar evolucionando la aplicación mediante mejoras en su arquitectura, experiencia de usuario, persistencia y seguridad, incorporando progresivamente nuevas funcionalidades y tecnologías.
+
 ---
 
 ## ⭐ Características principales
@@ -52,45 +54,16 @@ El proyecto tiene como objetivo principal aplicar buenas prácticas de desarroll
 
 🚧 En desarrollo activo.
 
-El sistema cuenta actualmente con una aplicación web funcional desarrollada en Flask, respaldada por un núcleo de lógica de negocio organizado mediante una arquitectura modular.
+La aplicación web se encuentra funcional y cuenta con persistencia de datos mediante SQLite. Actualmente permite gestionar operaciones de compra y venta, administrar posiciones abiertas y cerradas, consultar métricas financieras y mantener los cambios guardados entre reinicios de la aplicación.
 
-Entre las funcionalidades implementadas se encuentran:
-
-- Registro de compras.
-- Registro de ventas.
-- Edición de compras y ventas.
-- Eliminación de operaciones.
-- Creación automática de posiciones.
-- Gestión de posiciones abiertas y cerradas.
-- Eliminación de posiciones.
-- Dashboard con indicadores generales.
-- Configuración del capital inicial.
-- Cálculo de liquidez.
-- Cálculo de capital invertido.
-- Cálculo de precio promedio.
-- Cálculo de ganancia realizada.
-- Cálculo de rentabilidad.
-- Cálculo de precio de break-even.
-- Cálculo de asignación de capital por activo.
-- Resumen por posición.
-- Resumen consolidado por activo.
-- Visualización de todas las operaciones.
-- Historial de posiciones cerradas.
-- Filtros por activo y tipo de operación.
-- Persistencia de datos mediante SQLite.    
-- Persistencia de cambios después de reiniciar la aplicación.
-
-El siguiente objetivo es mejorar la experiencia de uso y completar las funcionalidades necesarias para utilizar la aplicación como herramienta principal de gestión de la cartera.
+El proyecto también funciona como una herramienta de uso personal y como entorno de aprendizaje para seguir incorporando conocimientos de desarrollo web, arquitectura de software y bases de datos.
 
 ### Próxima etapa
 
-- Gestión manual de liquidez disponible.
-- Registro de compras y ventas desde las posiciones.
-- Duración de posiciones abiertas.
-- Mejoras en navegación y filtros del historial.
-- Definición de rentabilidad consolidada de la cuenta.
-- Mejoras en la organización visual de la interfaz.
-- Integración futura con una API de precios de mercado.
+- Desplegar la aplicación para acceder desde distintos dispositivos mediante un enlace.
+- Garantizar la persistencia y la seguridad de los datos en el entorno desplegado.
+- Incorporar autenticación de usuarios como etapa posterior.
+- Continuar mejorando la interfaz y evaluar futuras integraciones con APIs financieras.
 
 ---
 
@@ -204,6 +177,19 @@ Cantidad calculada: 0.00341498 BTC
 La aplicación valida los datos, registra la operación dentro de una posición y persiste la información en SQLite.
 
 Cuando posteriormente se registra una venta, la aplicación actualiza la posición, recalcula sus métricas y determina si la posición continúa abierta o pasa a estado cerrado.
+
+---
+
+## 🖥️ Capturas de pantalla
+
+### Dashboard
+![Dashboard de Cartera de Activos](docs/screenshots/Dashboard.png)
+
+### Detalle de una posición
+![Detalle de una posición](docs/screenshots/DetallePosicion.png)
+
+### Gestión de operaciones
+![Registro de compra](docs/screenshots/RegistroCompra.png)
 
 ---
 
