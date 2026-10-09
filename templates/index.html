@@ -190,7 +190,7 @@
                                     <input type="hidden" name="posicion_id" value="{{ resumen['posicion'] }}">
                                     <input type="hidden" name="origen" value="dashboard">    
                                     <label>Cantidad<input type="number" id="cantidad-{{ resumen['posicion'] }}" name="cantidad" step="any" min="0" max="{{ resumen['cantidad_actual'] }}" required></label>
-                                    <button type="button" class="boton-max" data-cantidad="{{ resumen['cantidad_actual'] }}" data-input-id="cantidad-{{ resumen['posicion'] }}" onclick="venderTodo(this.dataset.cantidad,this.dataset.inputId)">Max</button>
+                                    <button type="button" class="boton-max" data-cantidad="{{ resumen['cantidad_actual'] }}" data-input-id="cantidad-{{ resumen['posicion'] }}">Max</button>
                                     <label>Precio de venta<input type="number" name="precio" step="any" min="0" required></label>
                                     <label>Fecha<input type="date" name="fecha" required></label>
                                     <button type="submit">Registrar venta</button>
@@ -207,12 +207,7 @@
 
 </main>
 
-<script>
-function venderTodo(cantidad,inputId) {
-    document.getElementById(inputId).value = cantidad;
-}
-</script>
+<script src="{{ url_for('static',filename='script.js') }}"></script>
 
 </body>
-
 </html>

@@ -58,9 +58,9 @@
                             <p><span>Precio promedio:</span> {{ posicion["ppc_formateado"] }}</p>
                             <p><span>Ganancia realizada:</span> {{ posicion["ganancia_realizada_formateada"] }}</p>
                         </div> 
-                        <button type="button" data-posicion="{{ posicion['posicion'] }}" onclick="mostrarFormulario(this.dataset.posicion)" class="boton">Agregar compra a esta posición</button>
+                        <button type="button" class="boton boton-mostrar-formulario" data-formulario-id="formulario-{{ posicion['posicion'] }}">Agregar compra a esta posición</button>
 
-                        <div id="formulario-{{ posicion['posicion'] }}" class="formulario-posicion" style="display:none;">
+                        <div id="formulario-{{ posicion['posicion'] }}" class="formulario-posicion formulario-oculto">
                             
                             <h4>Agregar compra a posición #{{ posicion["posicion"] }}</h4>
                             
@@ -132,19 +132,7 @@
     
 </main>
 
-<script>
-function mostrarFormulario(posicionId) {
-
-    const formulario = document.getElementById(
-        "formulario-" + posicionId
-    );
-
-    if (formulario.style.display === "none") {
-        formulario.style.display = "block";
-    }else {
-        formulario.style.display = "none";}
-}
-</script>
+<script src="{{ url_for('static',filename='script.js') }}"></script>
 
 </body>
 </html>

@@ -149,3 +149,42 @@ if (botonDuracion) {
 if (botonDuracionCerradas) {
     botonDuracionCerradas.addEventListener("click",ordenarPorDuracionCerradas);
 }
+
+function venderTodo(cantidad, inputId) {
+    
+    const inputCantidad = document.getElementById(inputId);
+    
+    if (inputCantidad) {
+        inputCantidad.value = cantidad;
+    }
+}
+
+const botonesMax = document.querySelectorAll(".boton-max");
+
+botonesMax.forEach(function(boton) {
+
+    boton.addEventListener("click", function() {
+        venderTodo(
+            boton.dataset.cantidad,
+            boton.dataset.inputId
+        );
+    });
+});
+
+function mostrarFormulario(formularioId) {
+    
+    const formulario = document.getElementById(formularioId);
+    
+    if (formulario) {
+        formulario.classList.toggle("formulario-oculto");
+    }
+}
+
+const botonesMostrarFormulario = document.querySelectorAll(".boton-mostrar-formulario");
+
+botonesMostrarFormulario.forEach(function(boton) {
+    
+    boton.addEventListener("click", function() {
+        mostrarFormulario(boton.dataset.formularioId);
+    });
+});

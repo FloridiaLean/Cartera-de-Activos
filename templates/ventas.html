@@ -76,7 +76,7 @@
                 <input type="hidden" name="posicion_id" value="{{ resumen['posicion'] }}">
                 <label for="cantidad">Cantidad a vender</label>
                 <input type="number" id="cantidad" name="cantidad" step="any" required>
-                <button type="button" data-cantidad="{{ resumen['cantidad_actual'] }}" onclick="venderTodo(this.dataset.cantidad)" class="boton">Vender todo lo disponible</button>
+                <button type="button" class="boton boton-max" data-cantidad="{{ resumen['cantidad_actual'] }}" data-input-id="cantidad">Vender todo lo disponible</button>
                 <label for="precio">Precio de venta</label>
                 <input type="number" id="precio" name="precio" step="any" required>
                 <label for="fecha">Fecha de venta</label>
@@ -87,11 +87,7 @@
     {% endif %}
 </main>
 
-<script>
-function venderTodo(cantidad) {
-    document.getElementById("cantidad").value = cantidad;
-}
-</script>
+<script src="{{ url_for('static',filename='script.js') }}"></script>
 
 </body>
 </html>
